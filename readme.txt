@@ -3,6 +3,6 @@ Write your name below to make sure everything is working.
 I think we'll need each others phonenumbers so write them as well.
 
 Names:
-Johannes - 070066138
+Johannes - 0700696138
 Kike
 Gabriel - If you want my number you have to obtain it. Dates are accepted.
