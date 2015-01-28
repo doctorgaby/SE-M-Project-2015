@@ -5,5 +5,3 @@ Names:
 Johannes
 Kike
 Gabriel
-Ava
-Tristan
