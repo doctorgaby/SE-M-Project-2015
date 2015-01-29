@@ -5,6 +5,7 @@ Names:
 Johannes
 Kike
 Gabriel
+Hampus
 
 
 git add readme.txt
