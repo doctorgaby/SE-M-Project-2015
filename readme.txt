@@ -5,7 +5,7 @@ Names:
 Johannes Flood
 Kike
 Gabriel
-Hampus Gunnrup
+Hampus
 
 
 git add readme.txt
