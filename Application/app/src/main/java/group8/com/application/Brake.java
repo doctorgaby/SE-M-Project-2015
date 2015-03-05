@@ -26,7 +26,7 @@ public class Brake extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_brake);
+        setContentView(R.layout.main_display);
 
         db = (TextView) findViewById(R.id.displayBrake);
 
@@ -42,7 +42,7 @@ public class Brake extends Activity {
                             @Override
                             public void receive(final AutomotiveSignal automotiveSignal) {
                                 db.post(new Runnable() {
-                                    public void run() {
+                                    public void run() {//ID = 317 for breaking
 
                                         String output;
 

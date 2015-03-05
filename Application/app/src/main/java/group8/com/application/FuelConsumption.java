@@ -27,7 +27,7 @@ public class FuelConsumption extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fuelconsumption);
+        setContentView(R.layout.main_display);
 
         dfc = (TextView) findViewById(R.id.displayFuelConsumption);
 
@@ -44,7 +44,7 @@ public class FuelConsumption extends Activity {
                             public void receive(final AutomotiveSignal automotiveSignal) {
                                 dfc.post(new Runnable() {
                                     public void run() {
-                                        dfc.setText(String.format("%.1f km/L", ((SCSFloat) automotiveSignal.getData()).getFloatValue()));
+                                        //dfc.setText(String.format("%.1f km/L", ((SCSFloat) automotiveSignal.getData()).getFloatValue())); //ID = 323
                                     }
                                 });
                             }
