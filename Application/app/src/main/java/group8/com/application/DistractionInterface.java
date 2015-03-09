@@ -1,3 +1,0 @@
-interface DistractionInterface{
-	void driverDistractionLevelChanged(DriverDistractionLevel driverDistractionLevel);
-}
