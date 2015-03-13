@@ -9,6 +9,7 @@ public interface DriverAction{
 	private void subtractPoints(int points);
 	private void addPoints(int points);
 	public int getScore();
+	public void reset();
 
 	public enum Type{
 		BRAKING, SPEED, DISTRACTION, FEUL;
