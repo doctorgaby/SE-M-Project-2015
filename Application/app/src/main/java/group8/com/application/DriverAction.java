@@ -3,6 +3,7 @@
 public interface DriverAction{
 	Object controller;
 	int score = 50;
+	int started; // unix timestamp of when the app started messurement
 	Type type;
 
 	public DriverActions(Object controller, Type type);
