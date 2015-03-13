@@ -1,6 +1,6 @@
 // author Johannes Flood 2015-03-13 12:40, did not receive any help from Hampus
 
-public interface DriverAction{
+public interface DriverAction implements Runnable{
 	Object controller;
 	int score = 50;
 	int started; // unix timestamp of when the app started messurement
