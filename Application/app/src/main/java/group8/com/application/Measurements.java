@@ -113,4 +113,30 @@ public class Measurements
         else
             return 0;
     }
+
+    public boolean getMaxBrake()
+    {
+        if (!brake.isEmpty())
+            return Collections.max(brake);
+        else
+            return false;
+    }
+
+    public int getMaxDriverDistractionLevel()
+    {
+        if (!driverDistractionLevel.isEmpty())
+            return Collections.max(driverDistractionLevel);
+        else
+            return 0;
+    }
+
+    public int getMaxLength()
+    {
+        List<Integer> temp = new ArrayList();
+        temp.add(speed.size());
+        temp.add(fuelConsumption.size());
+        temp.add(brake.size());
+        temp.add(driverDistractionLevel.size());
+        return Collections.max(temp);
+    }
 }

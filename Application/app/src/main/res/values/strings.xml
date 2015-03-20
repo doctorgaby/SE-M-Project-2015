@@ -4,5 +4,6 @@
     <string name="app_name">Group Awesome</string>
     <string name="action_settings">Settings</string>
     <string name="points_grapher">Points Graph</string>
+    <string name="action_search">Action Bar</string>
 
 </resources>

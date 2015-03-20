@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools" tools:context=".ActionBarElements"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+     <item android:id="@+id/speed"
+        android:icon="@drawable/ic_launcher"
+        android:title="Speed"
+        app:showAsAction="ifRoom"  />
+     <item android:id="@+id/fuel_consumption"
+        android:icon="@drawable/ic_launcher"
+        android:title="Fuel Consumption"
+        app:showAsAction="ifRoom"  />
+     <item android:id="@+id/breaks"
+        android:icon="@drawable/ic_launcher"
+        android:title="Breaks"
+        app:showAsAction="ifRoom"  />
+     <item android:id="@+id/driver_distraction"
+        android:icon="@drawable/ic_launcher"
+        android:title="Driver Distraction"
+        app:showAsAction="ifRoom"  />
+
+</menu>

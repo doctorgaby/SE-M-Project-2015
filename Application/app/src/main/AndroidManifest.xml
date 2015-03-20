@@ -18,10 +18,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".GraphPoints"
             android:label="@string/points_grapher">
         </activity>
+
+        <activity
+            android:name=".SpeedGraph"
+            android:label="Speed Graph">
+        </activity>
+
+        <activity
+            android:name=".BreakGraph"
+            android:label="Break Graph">
+        </activity>
+
+        <activity
+        android:name=".FuelConsumptionGraph"
+        android:label="Fuel Consumption">
+        </activity>
+
+        <activity
+            android:name=".DriverDistractionGraph"
+            android:label="Driver Distraction">
+        </activity>
+
     </application>
 
 </manifest>

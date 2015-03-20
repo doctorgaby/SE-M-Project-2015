@@ -1,7 +1,10 @@
 package group8.com.application;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
@@ -80,7 +83,7 @@ public class GraphPoints extends Activity {
         XYSeries speedSeries = new SimpleXYSeries(
         data.getSpeed(),
         SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use the element index as the x value
-        "Speed");
+        "S");
 
         XYSeries fuelConsumptionSeries = new SimpleXYSeries(
         data.getFuelConsumption(),
@@ -90,7 +93,7 @@ public class GraphPoints extends Activity {
         XYSeries brakeSeries = new SimpleXYSeries(
         data.getBrake(),
         SimpleXYSeries.ArrayFormat.Y_VALS_ONLY, // Y_VALS_ONLY means use the element index as the x value
-        "Brake");
+        "B");
 
         XYSeries driverDistractionSeries = new SimpleXYSeries(
         data.getDriverDistractionLevel(),
@@ -127,4 +130,44 @@ public class GraphPoints extends Activity {
         plot.addSeries(brakeSeries, brakeFormat);
         plot.addSeries(driverDistractionSeries, driverDistractionFormat);
     }
+
+    //Integration done by Kristiyan
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.speed:
+                Intent intentS = new Intent(this, SpeedGraph.class);
+                this.startActivity(intentS);
+                return true;
+            case R.id.fuel_consumption:
+                Intent intentFC = new Intent(this, FuelConsumptionGraph.class);
+                this.startActivity(intentFC);
+
+                return true;
+            case R.id.breaks:
+                Intent intentB = new Intent(this, BreakGraph.class);
+                this.startActivity(intentB);
+
+                return true;
+            case R.id.driver_distraction:
+                  Intent intentDDL = new Intent(this,DriverDistractionGraph.class);
+                  this.startActivity(intentDDL);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+
 }
