@@ -26,6 +26,7 @@ public class Measure extends Activity {
     private TextView ds;
     private TextView dfc;
     private TextView db;
+    private TextView dd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,15 @@ public class Measure extends Activity {
         ds = (TextView) findViewById(R.id.displaySpeed);
         dfc = (TextView) findViewById(R.id.displayFuelConsumption);
         db = (TextView) findViewById(R.id.displayBrake);
+        dd = (TextView) findViewById(R.id.displayDistraction);
         Button graphBtn = (Button) findViewById(R.id.graphBtn);
 
+        ds.setText("50.0");
+        dfc.setText("50.0");
+        db.setText("50.0");
+        dd.setText("50.0");
+
+        final GradingSystem gs = new GradingSystem();
 
         new AsyncTask() {
 
@@ -52,30 +60,25 @@ public class Measure extends Activity {
                                     case 320: //Speed has signalID 320.
                                         ds.post(new Runnable() { // Post the result back to the View/UI thread
                                             public void run() {
-                                                ds.setText(String.format("%.1f km/h", ((SCSFloat) automotiveSignal.getData()).getFloatValue()));//ID = 320 for speed
-                                                //ds.setText(Integer.toString(automotiveSignal.getSignalId()));
+                                                // ((SCSFloat) automotiveSignal.getData()).getFloatValue();
+                                                gs.updateSpeedScore();
+                                                ds.setText(Double.toString(gs.getSpeedScore()));
                                             }
                                         });
                                         break;
                                     case 323: //Instantaneous fuel economy has signalID 323.
                                         dfc.post(new Runnable() {
                                             public void run() {
-                                                dfc.setText(String.format("%.1f km/L", ((SCSFloat) automotiveSignal.getData()).getFloatValue())); //ID = 323
+                                                gs.updateFuelConsumptionScore(((SCSFloat) automotiveSignal.getData()).getFloatValue());
+                                                dfc.setText(Double.toString(gs.getFuelConsumptionScore()));
                                             }
                                         });
                                         break;
                                     case 317: //Brake has signalID 317.
                                         db.post(new Runnable() {
                                             public void run() {//ID = 317 for breaking
-
-                                                String output;
-
-                                                if (((Uint8) automotiveSignal.getData()).getIntValue() == 0) // If the brake is in a "Released" state.
-                                                    output = "No!";
-                                                else
-                                                    output = "Yes!";
-
-                                                db.setText(output);
+                                                gs.updateBrakingScore(((Uint8) automotiveSignal.getData()).getIntValue(), db);
+                                                db.setText(Double.toString(gs.getBrakingScore()));
                                             }
                                         });
                                         break;
@@ -97,7 +100,10 @@ public class Measure extends Activity {
                             public void levelChanged(final DriverDistractionLevel driverDistractionLevel) {
                                 ds.post(new Runnable() { // Post the result back to the View/UI thread
                                     public void run() {
-                                        ds.setTextSize(driverDistractionLevel.getLevel()*10.0F + 12.0F);
+
+                                        gs.updateDistractionLevelScore(driverDistractionLevel.getLevel());
+                                        dd.setText(Double.toString(gs.getDistractionLevelScore()));
+
                                     }
                                 });
                             }

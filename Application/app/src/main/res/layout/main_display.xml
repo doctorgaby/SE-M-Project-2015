@@ -10,7 +10,7 @@
     tools:context=".Speed, .Brake, .FuelConsumption">
 
     <TextView
-        android:text="Speed"
+        android:text="score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/displaySpeed"
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/displayFuelConsumption"
-        android:text="FuelConsumption"
+        android:text="score"
         android:layout_marginTop="40dp"
         android:layout_below="@+id/displayBrake"
         android:layout_alignStart="@+id/displayBrake" />
@@ -30,13 +30,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/displayBrake"
-        android:text="Braking?"
+        android:text="score"
         android:layout_marginTop="28dp"
         android:layout_below="@+id/displaySpeed"
         android:layout_alignStart="@+id/displaySpeed" />
 
     <TextView
-        android:text="Speed"
+        android:text="Speed:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/labelSpeed"
@@ -48,7 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/labelBreak"
-        android:text="Braking?"
+        android:text="Braking:"
         android:layout_alignTop="@+id/displayBrake"
         android:layout_alignEnd="@+id/labelSpeed" />
 
@@ -56,9 +56,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/labelFuelConsumption"
-        android:text="FuelConsumption"
+        android:text="FuelConsumption:"
         android:layout_alignTop="@+id/displayFuelConsumption"
         android:layout_alignEnd="@+id/labelBreak" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/displayDistraction"
+        android:text="score"
+        android:layout_marginTop="33dp"
+        android:layout_below="@+id/displayFuelConsumption"
+        android:layout_toEndOf="@+id/labelSpeed" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/labelDistraction"
+        android:text="Distraction:"
+        android:layout_alignTop="@+id/displayDistraction"
+        android:layout_alignEnd="@+id/labelFuelConsumption" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
