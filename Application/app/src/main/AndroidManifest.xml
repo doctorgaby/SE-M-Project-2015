@@ -10,18 +10,40 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Measure"
+            android:name=".UI.MainView"
             android:label="@string/app_name" >
+        </activity>
+
+        <activity
+            android:name=".UI.ResultsView"
+            android:label="@string/points_grapher">
+        </activity>
+
+        <activity
+            android:name=".UI.Graphs.SpeedGraph"
+            android:label="Speed Graph">
+        </activity>
+
+        <activity
+        android:name=".UI.Graphs.FuelConsumptionGraph"
+        android:label="Fuel Consumption">
+        </activity>
+
+        <activity
+            android:name=".UI.Graphs.DriverDistractionGraph"
+            android:label="Driver Distraction">
+        </activity>
+
+        <activity
+            android:name=".UI.LoginView"
+            android:label="Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".GraphPoints"
-            android:label="@string/points_grapher">
-        </activity>
+
     </application>
 
 </manifest>

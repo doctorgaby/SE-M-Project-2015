@@ -1,4 +1,4 @@
-package group8.com.application;
+package group8.com.application.Application;
 
 import android.os.CountDownTimer;
 import android.widget.TextView;
@@ -6,7 +6,7 @@ import android.widget.TextView;
 /**
  * Created by Hampus on 2015-03-18.
  */
-public class GradingSystem {
+public abstract class GradingSystem {
 
     private float currentSpeed;
     private int lastDistractionLevel;
