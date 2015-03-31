@@ -1,16 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/linearLayoutLogin">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:id="@+id/linearLayout">
 
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:id="@+id/loginDisplay_loginButton"
-        android:layout_gravity="center_horizontal"
-        android:text="Login"
-        android:layout_marginTop="10dp"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:id="@+id/RL_LoginDisplay">
 
-</LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Username:"
+                android:id="@+id/loginViewUsernameLbl" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/loginViewusernameTxt"
+                android:layout_toRightOf="@+id/loginViewUsernameLbl"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Password:"
+                android:id="@+id/loginViewPasswordLbl"
+                android:layout_gravity="center_vertical" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:ems="10"
+                android:id="@+id/loginViewPasswordTxt"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@+id/loginViewPasswordLbl"
+                android:layout_marginLeft="5dp"
+                android:layout_weight="1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Back"
+                android:id="@+id/loginViewBackButton" />
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:id="@+id/loginViewLoginButton"
+                android:layout_toRightOf="@+id/loginViewBackButton"
+                android:layout_marginLeft="5dp" />
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>
+

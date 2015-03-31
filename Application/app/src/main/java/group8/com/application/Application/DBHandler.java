@@ -5,15 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 
 public abstract class DBHandler {
     //The important information about the database to make the connection.
     private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    private final static String DB_USERNAME = "sql457184";
-    private final static String DB_URL = "jdbc:mysql://sql4.freesqldatabase.com/" + DB_USERNAME;
-    private final static String DB_PASSWORD = "kV1%xI3*";
+    private final static String DB_USERNAME = "sql370476";
+    private final static String DB_URL = "jdbc:mysql://sql3.freesqldatabase.com/" + DB_USERNAME;
+    private final static String DB_PASSWORD = "sX8*nC3%";
     //The connection is used to do querys, updates and connections to the DB.
     private static Connection connection = null;
 
