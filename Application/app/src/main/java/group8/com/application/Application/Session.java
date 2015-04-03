@@ -1,22 +1,27 @@
 package group8.com.application.Application;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import group8.com.application.Model.DataList;
 
-/**
- * Created by enriquecordero on 30/03/15.
- */
-public class Session {
-    String userName;
-    DataList currentPoints;
-    DataList currentMeasurements;
+public abstract class Session {
+    private static String userName = "";
+    private static DataList currentPoints = new DataList();
+    private static DataList currentMeasurements = new DataList();
 
-    public Session (String userName)
-    {
-        this.userName = userName;
+    public static void setUserName(String username) {
+        Session.userName = username;
+    }
+
+    public static String getUserName() {
+        return userName;
+    }
+
+    public static boolean isLoggedIn() {
+        return !userName.equals("");
+    }
+
+    public static void restart() {
         currentPoints = new DataList();
         currentMeasurements = new DataList();
+        userName = "";
     }
 }

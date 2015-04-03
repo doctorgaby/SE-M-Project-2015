@@ -31,11 +31,7 @@
 
         <activity
             android:name=".UI.Login.LoginView"
-            android:label="Welcome"></activity>
-
-        <activity
-            android:name=".UI.Login.IntroView"
-            android:label="Welcome">
+            android:label="@string/welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,9 +39,10 @@
             </intent-filter>
         </activity>
 
+
         <activity
             android:name=".UI.Login.RegisterView"
-            android:label="Welcome"></activity>
+            android:label="@string/register"></activity>
 
     </application>
 
