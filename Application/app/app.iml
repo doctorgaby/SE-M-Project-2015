@@ -105,7 +105,7 @@
     <orderEntry type="library" exported="" name="VIL-1.1" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="androidplot-core-0.6.1" level="project" />
-     <orderEntry type="library" exported="" name="mysql-connector-java-5.1.6" level="project" />
+    <orderEntry type="library" exported="" name="mysql-connector-java-5.1.6" level="project" />
     <orderEntry type="library" exported="" name="bolts-android-1.1.4" level="project" />
   </component>
 </module>
