@@ -74,8 +74,19 @@
             android:layout_alignLeft="@+id/login"
             android:layout_alignRight="@+id/login"
             android:layout_below="@+id/login"
-            android:layout_marginBottom="25dp"
             android:text="Register" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_alignLeft="@+id/login"
+            android:layout_alignRight="@+id/login"
+            android:layout_below="@+id/register"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />
+
     </RelativeLayout>
 
 </RelativeLayout>

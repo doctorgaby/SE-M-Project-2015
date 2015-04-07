@@ -21,6 +21,7 @@ import com.swedspot.vil.distraction.StealthMode;
 import com.swedspot.vil.policy.AutomotiveCertificate;
 
 import group8.com.application.Application.GradingSystem;
+import group8.com.application.Application.Session;
 import group8.com.application.R;
 
 
@@ -32,14 +33,17 @@ public class MainView extends Activity {
         setContentView(R.layout.main_display);
 
         Button graphBtn = (Button) findViewById(R.id.graphBtn);
+        TextView userTxt = (TextView) findViewById(R.id.username);
 
         graphBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent (v.getContext(), ResultsView.class);
+                Intent intent = new Intent(v.getContext(), ResultsView.class);
                 startActivityForResult(intent, 0);
             }
         });
+
+        userTxt.setText(Session.getUserName());
     }
 
 }

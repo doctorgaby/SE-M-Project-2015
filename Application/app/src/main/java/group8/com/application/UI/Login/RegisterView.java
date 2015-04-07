@@ -2,8 +2,11 @@ package group8.com.application.UI.Login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,8 +22,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import group8.com.application.Application.Session;
 import group8.com.application.Foundation.JSONParser;
 import group8.com.application.R;
+import group8.com.application.UI.MainView;
 
 public class RegisterView extends Activity implements OnClickListener {
 
@@ -35,11 +40,12 @@ public class RegisterView extends Activity implements OnClickListener {
 
     //php register script
     //testing from a real server:
-    private static final String REGISTER_URL = "http://semprojectgroup8.site50.net/project_systems_dev/register.php";
+    private static final String REGISTER_URL = "http://semprojectgroup8.site50.net/project_systems_dev/index.php";
 
     //ids
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+    private static final String TAG_ACTION = "register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +82,7 @@ public class RegisterView extends Activity implements OnClickListener {
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<>();
+                params.add(new BasicNameValuePair("action", TAG_ACTION));
                 params.add(new BasicNameValuePair("username", username));
                 params.add(new BasicNameValuePair("password", password));
                 Log.d("request!", "starting");
@@ -88,7 +95,17 @@ public class RegisterView extends Activity implements OnClickListener {
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Log.d("User Created!", json.toString());
+                    // save user data
+                    SharedPreferences sp = PreferenceManager
+                            .getDefaultSharedPreferences(RegisterView.this);
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putString("username", username);
+                    edit.commit();
+                    Session.restart(username);
+                    //finish();
+                    Intent i = new Intent(RegisterView.this, MainView.class);
                     finish();
+                    startActivity(i);
                     return json.getString(TAG_MESSAGE);
                 } else {
                     Log.d("Registering Failure!", json.getString(TAG_MESSAGE));

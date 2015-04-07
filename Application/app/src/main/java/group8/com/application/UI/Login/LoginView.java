@@ -15,6 +15,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -23,6 +30,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import group8.com.application.Application.Session;
 import group8.com.application.Foundation.JSONParser;
 import group8.com.application.R;
 import group8.com.application.UI.MainView;
@@ -37,14 +45,26 @@ public class LoginView extends Activity implements OnClickListener {
     JSONParser jsonParser = new JSONParser();
     // php login script location:
     // testing from a real server:
-    private static final String LOGIN_URL = "http://semprojectgroup8.site50.net/project_systems_dev/login.php";
+    private static final String LOGIN_URL = "http://semprojectgroup8.site50.net/project_systems_dev/index.php";
     // JSON element ids from repsonse of php script:
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+    private static final String TAG_ACTION_LOGIN = "login";
+    private static final String TAG_ACTION_FBLOGIN = "fblogin";
+
+    //Facebook part
+    CallbackManager callbackManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Facebook Initialization
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+
+        //Regular initialization
         setContentView(R.layout.login_display);
         // setup input fields
         username = (EditText) findViewById(R.id.username);
@@ -55,13 +75,61 @@ public class LoginView extends Activity implements OnClickListener {
         // register listeners
         mSubmit.setOnClickListener(this);
         mRegister.setOnClickListener(this);
+
+        //Facebook part
+
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("email");
+
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("Facebook: ", "SUCCESS");
+                /*Profile profile = Profile.getCurrentProfile();
+                GraphRequest request = new LoginClient.Request(
+                        loginResult.getAccessToken(),
+                        "/{user-id}",
+                        null,
+                        HttpMethod.GET,
+                        new GraphRequest.Callback() {
+                            public void onCompleted(GraphResponse response) {
+                            }
+                        }
+                ).executeAsync();
+
+
+                And at some point add
+                new AttemptLogin().execute(TAG_ACTION_FBLOGIN);
+                */
+
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("Facebook: ", "CANCEL");
+                Toast.makeText(LoginView.this, "Canceled to log in with Facebook.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Log.d("Facebook: ", "ERROR");
+                Toast.makeText(LoginView.this, "Fail to log in with Facebook.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:
-                new AttemptLogin().execute();
+                new AttemptLogin().execute(TAG_ACTION_LOGIN);
                 break;
             case R.id.register:
                 Intent i = new Intent(this, RegisterView.class);
@@ -87,11 +155,17 @@ public class LoginView extends Activity implements OnClickListener {
         protected String doInBackground(String... args) {
             // Check for success tag
             int success;
-            String user = username.getText().toString();
+            String tag = args[0];
+            String user;
+            if (tag.equals(TAG_ACTION_FBLOGIN))
+                user = "temp";                          ///////NEEDS TO CHANGE!!!!
+            else
+                user = username.getText().toString();
             String password = pass.getText().toString();
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<>();
+                params.add(new BasicNameValuePair("action", tag));
                 params.add(new BasicNameValuePair("username", user));
                 params.add(new BasicNameValuePair("password", password));
                 Log.d("request!", "starting");
@@ -109,12 +183,12 @@ public class LoginView extends Activity implements OnClickListener {
                     Editor edit = sp.edit();
                     edit.putString("username", user);
                     edit.commit();
+                    Session.restart(user);
                     Intent i = new Intent(LoginView.this, MainView.class);
                     finish();
                     startActivity(i);
                     return json.getString(TAG_MESSAGE);
                 } else {
-                    Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);
                 }

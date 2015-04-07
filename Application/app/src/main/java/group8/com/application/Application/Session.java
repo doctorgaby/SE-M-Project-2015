@@ -24,4 +24,10 @@ public abstract class Session {
         currentMeasurements = new DataList();
         userName = "";
     }
+
+    public static void restart(String username) {
+        userName = username;
+        currentPoints = new DataList();
+        currentMeasurements = new DataList();
+    }
 }
