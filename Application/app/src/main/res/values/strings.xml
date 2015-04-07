@@ -6,7 +6,7 @@
     <string name="points_grapher">Points Graph</string>
     <string name="action_search">Action Bar</string>
     <string name="title_activity_test_grading">TestGrading</string>
-
     <string name="hello_world">Hello world!</string>
-
+    <string name="welcome">Welcome</string>
+    <string name="register">Register</string>
 </resources>

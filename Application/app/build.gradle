@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         applicationId "group8.com.application"
-        minSdkVersion 21
-        targetSdkVersion 21
+        minSdkVersion 18
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -27,6 +27,5 @@ dependencies {
     compile files('libs/VIL-1.1.jar')
     compile 'eu.lp0.slf4j:slf4j-android:1.7.10-0'
     compile files('libs/androidplot-core-0.6.1.jar')
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.android.support:appcompat-v7:22.0.0'
 }

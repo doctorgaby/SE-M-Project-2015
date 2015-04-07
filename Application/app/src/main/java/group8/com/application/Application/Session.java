@@ -11,7 +11,24 @@ public abstract class Session {
     static DataList currentPoints = new DataList();
     static DataList currentMeasurements = new DataList();
 
+    public static void setUserName(String username) {
+        Session.userName = username;
+    }
 
+    public static String getUserName() {
+        return userName;
+    }
+
+    public static boolean isLoggedIn() {
+        return !userName.equals("");
+    }
+
+    public static void restart() {
+        currentPoints = new DataList();
+        currentMeasurements = new DataList();
+        userName = "";
+    }
+    
     /* GRADING AND POINTS RELATED SETTERS */
     public static void setSpeedScore(int score) {
 
