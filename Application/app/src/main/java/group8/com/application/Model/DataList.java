@@ -40,16 +40,6 @@ public class DataList {
         this.fuelConsumption.add(new DataObject(time, (int) fuelConsumption));
     }
 
-    //Adds a new brake value to the list of measurements.
-    public void setBrake (int time, boolean brake) {
-        int temp;
-        if (brake)
-            temp=1;
-        else
-            temp=0;
-        this.brake.add(new DataObject(time, temp));
-    }
-
 //Points Setters.
     //Adds a new speed value to the list of points.
     public void setSpeed(int time, int speed) {
@@ -61,32 +51,43 @@ public class DataList {
         this.fuelConsumption.add(new DataObject(time, fuelConsumption));
     }
 
-    //Adds a new brake value to the list of points.
-    public void setBrake(int time, int brake) {
-        this.brake.add(new DataObject(time, brake));
-    }
-
 //Common Setters
     //Adds a new driver distraction value to the list of points or measurements.
     public void setDriverDistractionLevel(int time, int driverDistractionLevel) {
         this.driverDistractionLevel.add(new DataObject(time, driverDistractionLevel));
     }
 
+    //Adds a new brake value to the list of points.
+    public void setBrake(int time, int brake) {
+        this.brake.add(new DataObject(time, brake));
+    }
+
 //Place GETTERS -- These getters get the object from the defined list from a specific position.
-    public DataObject getSpeed(int position) {
-        return speed.get(position);
+    public DataObject getLastSpeed() {
+
+        //if(!speed.isEmpty())
+            return speed.get(speed.size() - 1);
+        //else
+          //  return null;
+
     }
 
-    public DataObject getFuelConsumption(int position) {
-        return fuelConsumption.get(position);
+    public DataObject getLastFuelConsumption() {
+
+        return fuelConsumption.get(fuelConsumption.size() - 1);
+
     }
 
-    public DataObject getBrake(int position) {
-        return brake.get(position);
+    public DataObject getLastBrake() {
+
+        return brake.get(brake.size() - 1);
+
     }
 
-    public DataObject getDriverDistractionLevel(int position) {
-        return driverDistractionLevel.get(position);
+    public DataObject getLastDriverDistractionLevel() {
+
+        return driverDistractionLevel.get(driverDistractionLevel.size() - 1);
+
     }
 
 //GETMAX -- These getters get the maxValue of each list depending on what the user wants. The user can also get the
