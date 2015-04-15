@@ -27,5 +27,14 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test Measurements"
+        android:id="@+id/testMeasurementsBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" />
+
 
 </RelativeLayout>

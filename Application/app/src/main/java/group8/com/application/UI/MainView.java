@@ -33,12 +33,21 @@ public class MainView extends Activity {
         setContentView(R.layout.main_display);
 
         Button graphBtn = (Button) findViewById(R.id.graphBtn);
+        Button testMeasurementBtn = (Button) findViewById(R.id.testMeasurementsBtn);
         TextView userTxt = (TextView) findViewById(R.id.username);
 
         graphBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ResultsView.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        testMeasurementBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), TestGrading.class);
                 startActivityForResult(intent, 0);
             }
         });
