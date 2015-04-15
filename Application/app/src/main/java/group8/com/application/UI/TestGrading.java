@@ -16,7 +16,6 @@ public class TestGrading extends Activity {
     TextView fuel;
     TextView brake;
     TextView distraction;
-    int value = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +50,7 @@ public class TestGrading extends Activity {
                             new Runnable() {
                                 @Override
                                 public void run() {
-                                    fuel.setText("" + Session.getFuelConsumptionScore() + " " + value);
-                                    // value++;
+                                    fuel.setText("" + Session.getFuelConsumptionScore());
                                 }
                             }
                     );

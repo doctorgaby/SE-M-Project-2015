@@ -30,7 +30,7 @@
             android:label="Driver Distraction"></activity>
 
         <activity
-            android:name=".UI.Login.LoginView"
+            android:name=".UI.TestGrading"
             android:label="Welcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

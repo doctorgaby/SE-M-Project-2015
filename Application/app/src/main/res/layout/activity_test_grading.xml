@@ -8,33 +8,72 @@
 
     <TextView android:text="Speed" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/speed" />
+        android:id="@+id/speed"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="116dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fuel"
+        android:text="Fuel"
         android:id="@+id/fuel"
-        android:layout_below="@+id/speed"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="25dp" />
+        android:layout_alignTop="@+id/labelFuel"
+        android:layout_alignStart="@+id/speed" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="brake"
+        android:text="Brake"
         android:id="@+id/brake"
-        android:layout_below="@+id/fuel"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp" />
+        android:layout_alignTop="@+id/labelBrake"
+        android:layout_alignStart="@+id/fuel" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="distraction"
-        android:id="@+id/distraction"
-        android:layout_below="@+id/brake"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Speed:"
+        android:id="@+id/labelSpeed"
+        android:layout_alignTop="@+id/speed"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Fuel:"
+        android:id="@+id/labelFuel"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/labelSpeed"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Brake:"
+        android:id="@+id/labelBrake"
+        android:layout_marginTop="61dp"
+        android:layout_below="@+id/labelFuel"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Distraction:"
+        android:id="@+id/labelDistraction"
+        android:layout_below="@+id/labelBrake"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="31dp" />
+        android:layout_marginTop="69dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distraction"
+        android:id="@+id/distraction"
+        android:layout_alignTop="@+id/labelDistraction"
+        android:layout_alignStart="@+id/brake" />
 
 </RelativeLayout>
