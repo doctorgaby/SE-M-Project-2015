@@ -15,10 +15,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -37,47 +42,56 @@ import group8.com.application.UI.MainView;
 
 public class LoginView extends Activity implements OnClickListener {
     private EditText username, pass;
-    private Button mSubmit;
+    private Button Login;
     private Button mRegister;
     // Progress Dialog
     private ProgressDialog pDialog;
     // JSON parser class
     JSONParser jsonParser = new JSONParser();
-    // php login script location:
-    // testing from a real server:
-    private static final String LOGIN_URL = "http://semprojectgroup8.site50.net/project_systems_dev/index.php";
+    // php login script location on real server:
+    private static final String INDEX_URL = "http://semprojectgroup8.site50.net/project_systems_dev/index.php";
     // JSON element ids from repsonse of php script:
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
     private static final String TAG_ACTION_LOGIN = "login";
     private static final String TAG_ACTION_FBLOGIN = "fblogin";
-
+    private static final String TAG_ACTION_REGISTER = "register";
     //Facebook part
     CallbackManager callbackManager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         //Facebook Initialization
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
 
+        //Checks if there is already someone logged in.
+        SharedPreferences sp = PreferenceManager
+                .getDefaultSharedPreferences(LoginView.this);
+        Log.d("sharedpreferences: ", sp.getString("username", ""));
+        if (!sp.getString("username", "").equals("")) {
+            Session.restart(sp.getString("username", ""));
+            Intent i = new Intent(LoginView.this, MainView.class);
+            finish();
+            startActivity(i);
+        }
+
         //Regular initialization
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.login_display);
+
         // setup input fields
         username = (EditText) findViewById(R.id.username);
         pass = (EditText) findViewById(R.id.password);
         // setup buttons
-        mSubmit = (Button) findViewById(R.id.login);
+        Login = (Button) findViewById(R.id.login);
         mRegister = (Button) findViewById(R.id.register);
         // register listeners
-        mSubmit.setOnClickListener(this);
+        Login.setOnClickListener(this);
         mRegister.setOnClickListener(this);
 
         //Facebook part
-
         LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
 
@@ -85,23 +99,21 @@ public class LoginView extends Activity implements OnClickListener {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("Facebook: ", "SUCCESS");
-                /*Profile profile = Profile.getCurrentProfile();
-                GraphRequest request = new LoginClient.Request(
-                        loginResult.getAccessToken(),
-                        "/{user-id}",
-                        null,
-                        HttpMethod.GET,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
+                //Makes the GraphRequest to be able to get the users email.
+                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    String email = object.getString("email");
+                                    Log.d("Email" + "user email ", email);
+                                    new AttemptLogin().execute(TAG_ACTION_FBLOGIN, email);
+                                } catch (JSONException e) {
+                                    Toast.makeText(LoginView.this, "Error with the facebook login." + e.toString(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                ).executeAsync();
-
-
-                And at some point add
-                new AttemptLogin().execute(TAG_ACTION_FBLOGIN);
-                */
-
+                        });
+                request.executeAsync();
             }
 
             @Override
@@ -116,6 +128,7 @@ public class LoginView extends Activity implements OnClickListener {
                 Toast.makeText(LoginView.this, "Fail to log in with Facebook.", Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 
@@ -132,8 +145,9 @@ public class LoginView extends Activity implements OnClickListener {
                 new AttemptLogin().execute(TAG_ACTION_LOGIN);
                 break;
             case R.id.register:
-                Intent i = new Intent(this, RegisterView.class);
-                startActivity(i);
+                new CreateUser().execute();
+                //Intent i = new Intent(this, RegisterView.class);
+                //startActivity(i);
                 break;
             default:
                 break;
@@ -156,10 +170,10 @@ public class LoginView extends Activity implements OnClickListener {
             // Check for success tag
             int success;
             String tag = args[0];
-            String user;
+            String user = "";
             if (tag.equals(TAG_ACTION_FBLOGIN))
-                user = "temp";                          ///////NEEDS TO CHANGE!!!!
-            else
+                user = args[1];
+            else if (tag.equals(TAG_ACTION_LOGIN))
                 user = username.getText().toString();
             String password = pass.getText().toString();
             try {
@@ -170,19 +184,21 @@ public class LoginView extends Activity implements OnClickListener {
                 params.add(new BasicNameValuePair("password", password));
                 Log.d("request!", "starting");
                 // getting product details by making HTTP request
-                JSONObject json = jsonParser.makeHttpRequest(LOGIN_URL, "POST", params);
+                JSONObject json = jsonParser.makeHttpRequest(INDEX_URL, "POST", params);
                 // check your log for json response
                 Log.d("Login attempt", json.toString());
                 // json success tag
                 success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
                     Log.d("Login Successful!", json.toString());
-                    // save user data
+                    // save user data (only saves it on normal logins.
+
                     SharedPreferences sp = PreferenceManager
                             .getDefaultSharedPreferences(LoginView.this);
                     Editor edit = sp.edit();
                     edit.putString("username", user);
-                    edit.commit();
+                    edit.apply();
+
                     Session.restart(user);
                     Intent i = new Intent(LoginView.this, MainView.class);
                     finish();
@@ -190,6 +206,70 @@ public class LoginView extends Activity implements OnClickListener {
                     return json.getString(TAG_MESSAGE);
                 } else {
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
+                    return json.getString(TAG_MESSAGE);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String file_url) {
+            // dismiss the dialog once product deleted
+            pDialog.dismiss();
+            if (file_url != null) {
+                Toast.makeText(LoginView.this, file_url, Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    class CreateUser extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(LoginView.this);
+            pDialog.setMessage("Creating User...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... args) {
+            // Check for success tag
+            int success;
+            String user = username.getText().toString();
+            String password = pass.getText().toString();
+            try {
+                // Building Parameters
+                List<NameValuePair> params = new ArrayList<>();
+                params.add(new BasicNameValuePair("action", TAG_ACTION_REGISTER));
+                params.add(new BasicNameValuePair("username", user));
+                params.add(new BasicNameValuePair("password", password));
+                Log.d("request!", "starting");
+                //Posting user data to script
+                JSONObject json = jsonParser.makeHttpRequest(
+                        INDEX_URL, "POST", params);
+                // full json response
+                Log.d("Registering attempt", json.toString());
+                // json success element
+                success = json.getInt(TAG_SUCCESS);
+                if (success == 1) {
+                    Log.d("User Created!", json.toString());
+                    // save user data
+                    SharedPreferences sp = PreferenceManager
+                            .getDefaultSharedPreferences(LoginView.this);
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putString("username", user);
+                    edit.apply();
+                    Session.restart(user);
+                    //finish();
+                    Intent i = new Intent(LoginView.this, MainView.class);
+                    finish();
+                    startActivity(i);
+                    return json.getString(TAG_MESSAGE);
+                } else {
+                    Log.d("Registering Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);
                 }
             } catch (JSONException e) {

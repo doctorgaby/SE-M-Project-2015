@@ -32,7 +32,6 @@ public class TestGrading extends Activity {
         fuel = (TextView) findViewById(R.id.fuel);
         brake = (TextView) findViewById(R.id.brake);
         distraction = (TextView) findViewById(R.id.distraction);
-        notRunningText = (TextView) findViewById(R.id.notRunningText);
         startGrading = (Button) findViewById(R.id.startGrading);
         stopGrading = (Button) findViewById(R.id.stopGrading);
 
@@ -43,7 +42,7 @@ public class TestGrading extends Activity {
             @Override
             protected Object doInBackground(Object[] params) {
 
-                while(!Thread.interrupted()) {
+                while (!Thread.interrupted()) {
 
                     if (GradingSystem.isGrading()) {
 
