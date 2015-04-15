@@ -76,4 +76,20 @@
         android:layout_alignTop="@+id/labelDistraction"
         android:layout_alignStart="@+id/brake" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Grading"
+        android:id="@+id/startGrading"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/stopGrading" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop Grading"
+        android:id="@+id/stopGrading"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/distraction" />
+
 </RelativeLayout>

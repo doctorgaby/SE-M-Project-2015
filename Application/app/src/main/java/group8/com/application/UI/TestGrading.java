@@ -3,6 +3,8 @@ package group8.com.application.UI;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import group8.com.application.Application.GradingSystem;
@@ -16,6 +18,9 @@ public class TestGrading extends Activity {
     TextView fuel;
     TextView brake;
     TextView distraction;
+    TextView notRunningText;
+    Button startGrading;
+    Button stopGrading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +28,15 @@ public class TestGrading extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test_grading);
 
-        MeasurementFactory.startMeasurements();
-        GradingSystem.startGradingSystem();
-
         speed = (TextView) findViewById(R.id.speed);
         fuel = (TextView) findViewById(R.id.fuel);
         brake = (TextView) findViewById(R.id.brake);
         distraction = (TextView) findViewById(R.id.distraction);
+        notRunningText = (TextView) findViewById(R.id.notRunningText);
+        startGrading = (Button) findViewById(R.id.startGrading);
+        stopGrading = (Button) findViewById(R.id.stopGrading);
+
+        MeasurementFactory.startMeasurements();
 
         new AsyncTask() {
 
@@ -37,41 +44,46 @@ public class TestGrading extends Activity {
             protected Object doInBackground(Object[] params) {
 
                 while(!Thread.interrupted()) {
-                    speed.post(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    speed.setText("" + Session.getSpeedScore());
-                                }
-                            }
-                    );
 
-                    fuel.post(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    fuel.setText("" + Session.getFuelConsumptionScore());
-                                }
-                            }
-                    );
+                    if (GradingSystem.isGrading()) {
 
-                    brake.post(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    brake.setText("" + Session.getBrakeScore());
+                        speed.post(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        speed.setText("" + Session.getSpeedScore());
+                                    }
                                 }
-                            }
-                    );
+                        );
 
-                    distraction.post(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    distraction.setText("" + Session.getDriverDistractionLevelScore());
+                        fuel.post(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        fuel.setText("" + Session.getFuelConsumptionScore());
+                                    }
                                 }
-                            }
-                    );
+                        );
+
+                        brake.post(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        brake.setText("" + Session.getBrakeScore());
+                                    }
+                                }
+                        );
+
+                        distraction.post(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        distraction.setText("" + Session.getDriverDistractionLevelScore());
+                                    }
+                                }
+                        );
+                    }
+
                 }
 
                 return null;
@@ -79,6 +91,20 @@ public class TestGrading extends Activity {
             }
 
         }.execute();
+
+        startGrading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GradingSystem.startGradingSystem();
+            }
+        });
+
+        stopGrading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GradingSystem.stopGradingSystem();
+            }
+        });
 
     }
 

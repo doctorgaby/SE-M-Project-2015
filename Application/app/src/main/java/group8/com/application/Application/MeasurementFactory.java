@@ -19,63 +19,101 @@ import com.swedspot.vil.policy.AutomotiveCertificate;
  */
 public abstract class MeasurementFactory {
 
+    private static boolean running = false;
+    private static AsyncTask measurementTask;
+
+    /**
+     * Start measuring.
+     * */
     public static void startMeasurements() {
 
-        new AsyncTask() {
+        running = true;
 
-            @Override
-            protected Object doInBackground(Object[] params) {
-                AutomotiveFactory.createAutomotiveManagerInstance(
-                        new AutomotiveCertificate(new byte[0]),
-                        new AutomotiveListener() { // Listener that observes the Signals
-                            @Override
-                            public void receive(final AutomotiveSignal automotiveSignal) {
-                                int choice = automotiveSignal.getSignalId();
-                                switch (choice) {
-                                    case 320: //Speed has signalID 320.
-                                        double speed = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
-                                        Controller.eventSpeedChanged(speed);
-                                        break;
-                                    case 323: //Instantaneous fuel economy has signalID 323.
-                                        double fuelConsumption = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
-                                        Controller.eventFuelConsumptionChanged(fuelConsumption);
-                                        break;
-                                    case 317: //Brake has signalID 317.
-                                        int brake = ((Uint8) automotiveSignal.getData()).getIntValue();
-                                        Controller.eventBrakeChanged(brake);
-                                        break;
-                                    default:
-                                        break;
+        if(measurementTask == null) {
+
+            measurementTask = new AsyncTask() {
+
+                @Override
+                protected Object doInBackground(Object[] params) {
+                    AutomotiveFactory.createAutomotiveManagerInstance(
+                            new AutomotiveCertificate(new byte[0]),
+                            new AutomotiveListener() { // Listener that observes the Signals
+                                @Override
+                                public void receive(final AutomotiveSignal automotiveSignal) {
+                                    int choice = automotiveSignal.getSignalId();
+                                    switch (choice) {
+                                        case 320: //Speed has signalID 320.
+                                            double speed = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
+                                            if(running)
+                                                Controller.eventSpeedChanged(speed);
+                                            break;
+                                        case 323: //Instantaneous fuel economy has signalID 323.
+                                            double fuelConsumption = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
+                                            if(running)
+                                                Controller.eventFuelConsumptionChanged(fuelConsumption);
+                                            break;
+                                        case 317: //Brake has signalID 317.
+                                            int brake = ((Uint8) automotiveSignal.getData()).getIntValue();
+                                            if(running)
+                                                Controller.eventBrakeChanged(brake);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+
+                                @Override
+                                public void timeout(int i) {
+                                }
+
+                                @Override
+                                public void notAllowed(int i) {
+                                }
+                            },
+                            new DriverDistractionListener() { // Observe driver distraction level
+                                @Override
+                                public void levelChanged(final DriverDistractionLevel driverDistractionLevel) {
+                                    if(running)
+                                        Controller.eventDriverDistractionLevelChanged(driverDistractionLevel.getLevel());
+                                }
+
+                                @Override
+                                public void lightModeChanged(LightMode lightMode) {
+                                }
+
+                                @Override
+                                public void stealthModeChanged(StealthMode stealthMode) {
                                 }
                             }
+                    ).register(AutomotiveSignalId.FMS_INSTANTANEOUS_FUEL_ECONOMY, AutomotiveSignalId.FMS_WHEEL_BASED_SPEED, AutomotiveSignalId.FMS_BRAKE_SWITCH); // Register for the speed signal
 
-                            @Override
-                            public void timeout(int i) {
-                            }
+                    return null;
+                }
+            };
+            measurementTask.execute();
 
-                            @Override
-                            public void notAllowed(int i) {
-                            }
-                        },
-                        new DriverDistractionListener() { // Observe driver distraction level
-                            @Override
-                            public void levelChanged(final DriverDistractionLevel driverDistractionLevel) {
-                                Controller.eventDriverDistractionLevelChanged(driverDistractionLevel.getLevel());
-                            }
+        }
 
-                            @Override
-                            public void lightModeChanged(LightMode lightMode) {
-                            }
+    }
 
-                            @Override
-                            public void stealthModeChanged(StealthMode stealthMode) {
-                            }
-                        }
-                ).register(AutomotiveSignalId.FMS_INSTANTANEOUS_FUEL_ECONOMY, AutomotiveSignalId.FMS_WHEEL_BASED_SPEED, AutomotiveSignalId.FMS_BRAKE_SWITCH); // Register for the speed signal
+    /**
+     * Stop measuring.
+     * */
+    public static void stopMeasurements() {
 
-                return null;
-            }
-        }.execute();
+        running = false;
+        GradingSystem.stopGradingSystem();
+
+    }
+
+    /**
+     * Check if the MeasurementFactory is measuring.
+     *
+     * @return true if the MeasurementFactory is measuring, and false if it is not.
+     * */
+    public static boolean isMeasuring() {
+
+        return running;
 
     }
 
