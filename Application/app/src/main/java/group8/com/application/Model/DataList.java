@@ -65,10 +65,7 @@ public class DataList {
 //Place GETTERS -- These getters get the object from the defined list from a specific position.
     public DataObject getLastSpeed() {
 
-        //if(!speed.isEmpty())
-            return speed.get(speed.size() - 1);
-        //else
-          //  return null;
+        return speed.get(speed.size() - 1);
 
     }
 

@@ -34,25 +34,29 @@ public abstract class Session {
     /* GRADING AND POINTS RELATED SETTERS */
     public static void setSpeedScore(int score) {
 
-        currentPoints.setSpeed(0, score);
+        int timeInSeconds = (int) (System.currentTimeMillis() / 1000);
+        currentPoints.setSpeed(timeInSeconds, score);
 
     }
 
     public static void setFuelConsumptionScore(int score) {
 
-        currentPoints.setFuelConsumption(0, score);
+        int timeInSeconds = (int) (System.currentTimeMillis() / 1000);
+        currentPoints.setFuelConsumption(timeInSeconds, score);
 
     }
 
     public static void setBrakeScore(int score) {
 
-        currentPoints.setBrake(0, score);
+        int timeInSeconds = (int) (System.currentTimeMillis() / 1000);
+        currentPoints.setBrake(timeInSeconds, score);
 
     }
 
     public static void setDriverDistractionLevelScore(int score) {
 
-        currentPoints.setDriverDistractionLevel(0, score);
+        int timeInSeconds = (int) (System.currentTimeMillis() / 1000);
+        currentPoints.setDriverDistractionLevel(timeInSeconds, score);
 
     }
     /* END - GRADING AND POINTS RELATED SETTERS */
@@ -108,25 +112,29 @@ public abstract class Session {
     /* MEASUREMENT RELATED SETTERS */
     public static void setSpeed(double speed) {
 
-        currentMeasurements.setSpeed(0, speed);
+        int timeInSeconds = (int) (System.currentTimeMillis() / 1000);
+        currentMeasurements.setSpeed(timeInSeconds, speed);
 
     }
 
     public static void setFuelConsumption(double fuelConsumption) {
 
-        currentMeasurements.setFuelConsumption(0, fuelConsumption);
+        int timeInSeconds = (int) (System.currentTimeMillis() / 1000);
+        currentMeasurements.setFuelConsumption(timeInSeconds, fuelConsumption);
 
     }
 
     public static void setBrake(int brake) {
 
-        currentMeasurements.setBrake(0, brake);
+        int timeInSeconds = (int) (System.currentTimeMillis() / 1000);
+        currentMeasurements.setBrake(timeInSeconds, brake);
 
     }
 
     public static void setDriverDistractionLevel(int driverDistractionLevel) {
 
-        currentMeasurements.setDriverDistractionLevel(0, driverDistractionLevel);
+        int timeInSeconds = (int) (System.currentTimeMillis() / 1000);
+        currentMeasurements.setDriverDistractionLevel(timeInSeconds, driverDistractionLevel);
 
     }
     /* END - MEASUREMENT RELATED SETTERS */
