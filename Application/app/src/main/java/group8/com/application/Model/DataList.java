@@ -14,33 +14,38 @@ public class DataList {
     private List<DataObject> brake;
     private List<DataObject> driverDistractionLevel;
 
-    public DataList()
-    {
+    public DataList(String type) {
         //Individual Lists for the speed, fuel consumption, brake and driver distraction level.
         //Each object in the list contains a time and a value, both of type integer.
         speed = new ArrayList<>();
         fuelConsumption = new ArrayList<>();
         brake = new ArrayList<>();
         driverDistractionLevel = new ArrayList<>();
-
-        speed.add(new DataObject(0, ConstantData.initialPoints));//ADD the initial value
-        fuelConsumption.add(new DataObject(0, ConstantData.initialPoints));//ADD the initial value
-        brake.add(new DataObject(0, ConstantData.initialPoints));//ADD the initial value
-        driverDistractionLevel.add(new DataObject(0, ConstantData.initialPoints));//ADD the initial value
+        if (type.equals("p")) {
+            speed.add(new DataObject(0, ConstantData.initialPoints));//ADD the initial value
+            fuelConsumption.add(new DataObject(0, ConstantData.initialPoints));//ADD the initial value
+            brake.add(new DataObject(0, ConstantData.initialPoints));//ADD the initial value
+            driverDistractionLevel.add(new DataObject(0, ConstantData.initialPoints));//ADD the initial value
+        } else {
+            speed.add(new DataObject(0, 0));//ADD the initial value
+            fuelConsumption.add(new DataObject(0, 0));//ADD the initial value
+            brake.add(new DataObject(0, 0));//ADD the initial value
+            driverDistractionLevel.add(new DataObject(0, 0));//ADD the initial value
+        }
     }
 
-//Measurements Setters
+    //Measurements Setters
     //Adds a new speed value to the list measurements.
-    public void setSpeed (int time, double speed) {
+    public void setSpeed(int time, double speed) {
         this.speed.add(new DataObject(time, (int) speed));
     }
 
     //Adds a new fuel consumption value to the list measurements..
-    public void setFuelConsumption (int time, double fuelConsumption) {
+    public void setFuelConsumption(int time, double fuelConsumption) {
         this.fuelConsumption.add(new DataObject(time, (int) fuelConsumption));
     }
 
-//Points Setters.
+    //Points Setters.
     //Adds a new speed value to the list of points.
     public void setSpeed(int time, int speed) {
         this.speed.add(new DataObject(time, speed));
@@ -51,7 +56,7 @@ public class DataList {
         this.fuelConsumption.add(new DataObject(time, fuelConsumption));
     }
 
-//Common Setters
+    //Common Setters
     //Adds a new driver distraction value to the list of points or measurements.
     public void setDriverDistractionLevel(int time, int driverDistractionLevel) {
         this.driverDistractionLevel.add(new DataObject(time, driverDistractionLevel));
@@ -62,13 +67,13 @@ public class DataList {
         this.brake.add(new DataObject(time, brake));
     }
 
-//Place GETTERS -- These getters get the object from the defined list from a specific position.
+    //Place GETTERS -- These getters get the object from the defined list from a specific position.
     public DataObject getLastSpeed() {
 
         //if(!speed.isEmpty())
-            return speed.get(speed.size() - 1);
+        return speed.get(speed.size() - 1);
         //else
-          //  return null;
+        //  return null;
 
     }
 
@@ -90,52 +95,50 @@ public class DataList {
 
     }
 
-//GETMAX -- These getters get the maxValue of each list depending on what the user wants. The user can also get the
+    //GETMAX -- These getters get the maxValue of each list depending on what the user wants. The user can also get the
 // maximum of all the lists. Take into account that it compares with help of the ValueComparator.
     public int getMaxSpeed() {
-        return (findMax (speed, new ValueComparator())).getValue();
+        return (findMax(speed, new ValueComparator())).getValue();
     }
 
-    public int getMaxFuelConsumption(){
-        return (findMax (fuelConsumption, new ValueComparator())).getValue();
+    public int getMaxFuelConsumption() {
+        return (findMax(fuelConsumption, new ValueComparator())).getValue();
     }
 
     public int getMaxBrake() {
-        return (findMax (brake, new ValueComparator())).getValue();
+        return (findMax(brake, new ValueComparator())).getValue();
     }
 
     public int getMaxDriverDistractionLevel() {
         return (findMax(driverDistractionLevel, new ValueComparator())).getValue();
     }
 
-//GETMAX -- These getters get the maxTime of each list depending on what the user wants. The user can also get the
+    //GETMAX -- These getters get the maxTime of each list depending on what the user wants. The user can also get the
 // maximum of all the lists. Take into account that it compares with help of the TimeComparator.
     public int getMaxSpeedTime() {
-        return (findMax (speed, new TimeComparator())).getTime();
+        return (findMax(speed, new TimeComparator())).getTime();
     }
 
-    public int getMaxFuelConsumptionTime(){
-        return (findMax (fuelConsumption, new TimeComparator())).getTime();
+    public int getMaxFuelConsumptionTime() {
+        return (findMax(fuelConsumption, new TimeComparator())).getTime();
     }
 
     public int getMaxBrakeTime() {
-        return (findMax (brake, new TimeComparator())).getTime();
+        return (findMax(brake, new TimeComparator())).getTime();
     }
 
     public int getMaxDriverDistractionLevelTime() {
-        return (findMax (driverDistractionLevel, new TimeComparator())).getTime();
+        return (findMax(driverDistractionLevel, new TimeComparator())).getTime();
     }
 
-//Helper function to find the max of a list according to a comparator.
-    private DataObject findMax (List<DataObject> list,  Comparator<DataObject> comp)
-    {
+    //Helper function to find the max of a list according to a comparator.
+    private DataObject findMax(List<DataObject> list, Comparator<DataObject> comp) {
         return Collections.max(list, comp);
     }
 
 
-//Gets the max points of all the lists.
-    public int getMaxPoints ()
-    {
+    //Gets the max points of all the lists.
+    public int getMaxPoints() {
         List<Integer> temp = new ArrayList();
         temp.add(getMaxSpeed());
         temp.add(getMaxFuelConsumption());
@@ -144,9 +147,8 @@ public class DataList {
         return Collections.max(temp);
     }
 
-//Gets the max time of all the lists.
-    public int getMaxTime()
-    {
+    //Gets the max time of all the lists.
+    public int getMaxTime() {
         List<Integer> temp = new ArrayList();
         temp.add(getMaxSpeedTime());
         temp.add(getMaxFuelConsumptionTime());
@@ -155,35 +157,29 @@ public class DataList {
         return Collections.max(temp);
     }
 
-//GETPLOTTABLE -- These getters get a copy of each list with a different format. Instead of being a
+    //GETPLOTTABLE -- These getters get a copy of each list with a different format. Instead of being a
 // list of DataObjects, its a list of Integers. The list has the format {x,y,x1,y1,x2,y2....xn,yn}.
 // The purpose of this is to make them plottable in the graph.
-    public List<Integer> getPlottableFuelConsumption()
-    {
+    public List<Integer> getPlottableFuelConsumption() {
         return transformList(fuelConsumption);
     }
 
-    public List<Integer> getPlottableSpeed()
-    {
+    public List<Integer> getPlottableSpeed() {
         return transformList(speed);
     }
 
-    public List<Integer> getPlottableBrake()
-    {
+    public List<Integer> getPlottableBrake() {
         return transformList(brake);
     }
 
-    public List<Integer> getPlottableDriverDistraction()
-    {
+    public List<Integer> getPlottableDriverDistraction() {
         return transformList(driverDistractionLevel);
     }
 
-// Helper function that transforms a list into a plottable list.
-    private List<Integer> transformList (List<DataObject> list)
-    {
+    // Helper function that transforms a list into a plottable list.
+    private List<Integer> transformList(List<DataObject> list) {
         List<Integer> temp = new ArrayList<>();
-        for (DataObject counter:list)
-        {
+        for (DataObject counter : list) {
             temp.add(counter.getTime());
             temp.add(counter.getValue());
         }

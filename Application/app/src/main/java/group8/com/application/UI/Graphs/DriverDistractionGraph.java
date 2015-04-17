@@ -32,25 +32,25 @@ public class DriverDistractionGraph extends Activity {
         //Android Plot
         plot = (XYPlot) findViewById(R.id.Graph);
         plot.getRangeLabelWidget().setText("Driver Distraction");
-        plot.getTitleWidget().setText("Distraction per Measurement" );
+        plot.getTitleWidget().setText("Distraction per Measurement");
 
         //Points Data
-        data = new DataList();
+        data = new DataList("p");
 
         //Test
 
-        data.setDriverDistractionLevel(1,1);
-        data.setDriverDistractionLevel(2,3);
-        data.setDriverDistractionLevel(3,2);
-        data.setDriverDistractionLevel(4,1);
-        data.setDriverDistractionLevel(5,4);
-        data.setDriverDistractionLevel(6,1);
+        data.setDriverDistractionLevel(1, 1);
+        data.setDriverDistractionLevel(2, 3);
+        data.setDriverDistractionLevel(3, 2);
+        data.setDriverDistractionLevel(4, 1);
+        data.setDriverDistractionLevel(5, 4);
+        data.setDriverDistractionLevel(6, 1);
         //end Test
 
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();
-        xRange = xMax/5;
+        xRange = xMax / 5;
         yMin = 0;
         yMax = 4;
         yRange = yMax;

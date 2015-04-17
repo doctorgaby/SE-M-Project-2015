@@ -4,8 +4,8 @@ import group8.com.application.Model.DataList;
 
 public abstract class Session {
     private static String userName = "";
-    private static DataList currentPoints = new DataList();
-    private static DataList currentMeasurements = new DataList();
+    private static DataList currentPoints = new DataList("p");
+    private static DataList currentMeasurements = new DataList("m");
 
     public static void setUserName(String username) {
         Session.userName = username;
@@ -20,17 +20,17 @@ public abstract class Session {
     }
 
     public static void restart() {
-        currentPoints = new DataList();
-        currentMeasurements = new DataList();
+        currentPoints = new DataList("p");
+        currentMeasurements = new DataList("m");
         userName = "";
     }
 
     public static void restart(String username) {
         userName = username;
-        currentPoints = new DataList();
-        currentMeasurements = new DataList();
+        currentPoints = new DataList("p");
+        currentMeasurements = new DataList("m");
     }
-    
+
     /* GRADING AND POINTS RELATED SETTERS */
     public static void setSpeedScore(int score) {
 
@@ -59,11 +59,12 @@ public abstract class Session {
 
 
     /* GRADING AND POINTS RELATED GETTERS */
+
     /**
      * Get the speed score for the current session.
      *
      * @return The speed score for the current session.
-     * */
+     */
     public static int getSpeedScore() {
 
         return currentPoints.getLastSpeed().getValue();
@@ -74,7 +75,7 @@ public abstract class Session {
      * Get the fuel consumption score for the current session.
      *
      * @return The fuel consumption score for the current session.
-     * */
+     */
     public static int getFuelConsumptionScore() {
 
         return currentPoints.getLastFuelConsumption().getValue();
@@ -85,7 +86,7 @@ public abstract class Session {
      * Get the braking score for the current session.
      *
      * @return The braking score for the current session.
-     * */
+     */
     public static int getBrakeScore() {
 
         return currentPoints.getLastBrake().getValue();
@@ -96,7 +97,7 @@ public abstract class Session {
      * Get the distraction level score for the current session.
      *
      * @return The distraction level score for the current session.
-     * */
+     */
     public static int getDriverDistractionLevelScore() {
 
         return currentPoints.getLastDriverDistractionLevel().getValue();

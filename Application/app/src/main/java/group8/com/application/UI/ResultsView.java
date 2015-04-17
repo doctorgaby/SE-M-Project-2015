@@ -3,6 +3,7 @@ package group8.com.application.UI;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,32 +15,36 @@ import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
+import group8.com.application.Application.Controller;
 import group8.com.application.Model.DataList;
 import group8.com.application.UI.Graphs.DriverDistractionGraph;
 import group8.com.application.UI.Graphs.FuelConsumptionGraph;
 import group8.com.application.UI.Graphs.SpeedGraph;
 import group8.com.application.R;
 
-/**
- * Created by enriquecordero on 15/03/15.
- */
 public class ResultsView extends Activity {
-    private static final String TAG = "GraphPoints";
 
-    private XYPlot plot;
-    DataList data;
     int xMin, xMax, xRange, yMin, yMax, yRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results_display);
+        XYPlot plot;
 
         //Android Plot
         plot = (XYPlot) findViewById(R.id.Graph);
 
+        //Test for the DBHandler
+        DataList data = Controller.eventGetMeasurements();
+        //DataList data = Controller.eventGetFilteredMeasurements(7,10);
+        //DataList data = Controller.eventGetPoints();                              !!!NOT WORKING YET
+        Log.d("ResultsView", "DataList loaded!");
+        //DataList data = Controller.eventGetFilteredPoints(0,5);                   !!!NOT WORKING YET
+/*
         //Points Data
-        data = new DataList();
+        DataList data;
+        data = new DataList("p");
 
         //Test
         data.setSpeed(1,10);
@@ -67,7 +72,7 @@ public class ResultsView extends Activity {
         data.setDriverDistractionLevel(5,60);
         data.setDriverDistractionLevel(6,90);
         //end Test
-
+*/
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();

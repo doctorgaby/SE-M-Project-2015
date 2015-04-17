@@ -1,207 +1,164 @@
 package group8.com.application.Application;
 
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
+import android.os.AsyncTask;
+import android.util.Log;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import group8.com.application.Foundation.JSONParser;
+import group8.com.application.Model.ConstantData;
+import group8.com.application.Model.DataList;
 
 public abstract class DBHandler {
-//    //The important information about the database to make the connection.
-//    private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-//    private final static String DB_USERNAME = "sql370476";
-//    private final static String DB_URL = "jdbc:mysql://sql3.freesqldatabase.com/" + DB_USERNAME;
-//    private final static String DB_PASSWORD = "sX8*nC3%";
-//    /*private final static String DB_USERNAME = "sql457184";
-//    private final static String DB_URL = "jdbc:mysql://sql4.freesqldatabase.com/" + DB_USERNAME;
-//    private final static String DB_PASSWORD = "kV1%xI3*";*/
-//    //The connection is used to do querys, updates and connections to the DB.
-//    private static Connection connection = null;
-//
-//    //                  ***************************
-//    //                  **      DB Functions     **
-//    //                  ***************************
-//
-//    /**
-//     * Initializes the connection to the Database.
-//     */
-//    public static void initializeDB() {
-//        try {
-//            Class.forName(JDBC_DRIVER);
-//
-//        } catch (ClassNotFoundException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        // Connect to a database
-//        try {
-//            connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        try {
-//            connection.setAutoCommit(false);
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    /**
-//     * Terminates the connection to the Database.
-//     */
-//    public static void terminateDB() {
-//        try {
-//            connection.close();
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    /**
-//     * Commits a specific event stored in the connection.
-//     */
-//    private static void commit() {
-//        try {
-//            connection.commit();
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    /**
-//     * Does the update of a specific SQL statement.
-//     *
-//     * @param stmt
-//     */
-//    protected static void update(PreparedStatement stmt) {
-//        try {
-//            stmt.executeUpdate();
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        commit();
-//    }
-//
-//    /**
-//     * Does a query with the provided sql statement.
-//     *
-//     * @param stmt
-//     * @return the resultSet product of the query in the database.
-//     */
-//    protected static ResultSet query(PreparedStatement stmt) {
-//        ResultSet rs = null;
-//        try {
-//            rs = stmt.executeQuery();
-//        } catch (SQLException e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//        commit();
-//        return rs;
-//    }
-//
-//    //                  *****************************
-//    //                  ** Session Query Functions **
-//    //                  *****************************
-//
-//    /**
-//     * The method checks if a specific username and password match in a specific table.
-//     *
-//     * @param username
-//     * @param password
-//     * @return True or false depending if the username and password exists in the table.
-//     */
-//    public static boolean checkCredentials(String username, String password) {
-//        initializeDB();
-//        PreparedStatement stmt = null;
-//        try {
-//
-//            stmt = connection.prepareStatement("SELECT Password FROM Users WHERE Username= ?");
-//            stmt.setString(1, username);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        ResultSet rs = query(stmt);
-//        try {
-//            if (rs.next()) {
-//                String correctPassword = rs.getString("Password");
-//                try {
-//                    return PasswordHash.validatePassword(password, correctPassword);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        terminateDB();
-//        return false;
-//    }
-//
-//    /**
-//     * Adds a user to the DB.
-//     *
-//     * @param username
-//     * @param password
-//     */
-//    public static void addUser(String username, String password) {
-//        initializeDB();
-//        PreparedStatement stmt = null;
-//        try {
-//            String hashedPassword;
-//            try {
-//                hashedPassword = PasswordHash.createHash(password);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return;
-//            }
-//            stmt = connection.prepareStatement("INSERT INTO Users (?,?) VALUES");
-//            stmt.setString(1, username);
-//            stmt.setString(2, hashedPassword);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        update(stmt);
-//        terminateDB();
-//    }
-//
-//    /**
-//     * Method checks if a specific username is already in use in a specific table.
-//     *
-//     * @param username
-//     * @return true or false depending if a username exists in that table.
-//     */
-//    public static boolean checkUsername(String username) {
-//        initializeDB();
-//        PreparedStatement stmt = null;
-//        try {
-//            stmt = connection.prepareStatement("SELECT * FROM Users WHERE Username= ? ");
-//            stmt.setString(1, username);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        ResultSet rs = query(stmt);
-//        try {
-//            if (rs.next()) {
-//                return true;
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//        terminateDB();
-//        return false;
-//    }
-//
-//    //                  *******************************
-//    //                  ** Additional functions here **
-//    //                  *******************************
+    //private static JSONParser jsonParser = new JSONParser();
 
+    /**
+     * @param
+     */
+    public static DataList getMeasurements(String user) {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETMEASUREMENTS));
+        params.add(new BasicNameValuePair("username", user));
+        Log.d("getMeasurements!", "starting");
+        // getting measurement details by making HTTP request
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with get Measurements.");
+        }
+
+        DataList list = new DataList("m");
+        jsonToList(list, json);
+        return list;
+    }
+
+    /**
+     * @param
+     */
+    public static DataList getFilteredMeasurements(String user, int start, int stop) {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETFILTEREDMEASUREMENTS));
+        params.add(new BasicNameValuePair("username", user));
+        params.add(new BasicNameValuePair("start", Integer.toString(start)));
+        params.add(new BasicNameValuePair("stop", Integer.toString(stop)));
+        Log.d("getFilteredMeasurements", "starting");
+        // getting measurement details by making HTTP request
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with get filtered Measurements.");
+        }
+        DataList list = new DataList("m");
+        jsonToList(list, json);
+        return list;
+    }
+
+    /**
+     * @param
+     */
+    public static DataList getPoints(String user) {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETPOINTS));
+        params.add(new BasicNameValuePair("username", user));
+        Log.d("getPoints!", "starting");
+        // getting measurement details by making HTTP request
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with get Points.");
+        }
+
+        DataList list = new DataList("p");
+        jsonToList(list, json);
+        return list;
+    }
+
+    /**
+     * @param
+     */
+    public static DataList getFilteredPoints(String user, int start, int stop) {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETFILTEREDPOINTS));
+        params.add(new BasicNameValuePair("username", user));
+        params.add(new BasicNameValuePair("start", Integer.toString(start)));
+        params.add(new BasicNameValuePair("stop", Integer.toString(stop)));
+        Log.d("getFilteredPoints", "starting");
+        // getting measurement details by making HTTP request
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with get filtered Points.");
+        }
+        DataList list = new DataList("p");
+        jsonToList(list, json);
+        return list;
+    }
+
+
+    //                              **************************
+    //                              *****                *****
+    //                              ***** Helper Methods *****
+    //                              *****                *****
+    //                              **************************
+
+    /**
+     * @param
+     */
+    private static void jsonToList(DataList list, JSONObject json) {
+        try {
+            JSONArray data = json.getJSONArray(ConstantData.TAG_POSTS);
+            for (int i = 0; i < data.length(); i++) {
+                JSONObject c = data.getJSONObject(i);
+
+                //gets the content of each JSON object
+                Integer speed = c.getInt(ConstantData.TAG_SPEED);
+                Integer brake = c.getInt(ConstantData.TAG_BRAKE);
+                Integer fuel = c.getInt(ConstantData.TAG_FUEL);
+                Integer distraction = c.getInt(ConstantData.TAG_DISTRACTION);
+                Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
+                list.setBrake(measuredAt, brake);
+                list.setDriverDistractionLevel(measuredAt, distraction);
+                list.setSpeed(measuredAt, speed);
+                list.setFuelConsumption(measuredAt, fuel);
+                Log.d("number: " + i, "value: " + measuredAt);
+            }
+        } catch (JSONException e) {
+            Log.e("DBHANDLER ERROR", "ERROR WITH THE JSON PARSER. " + e.toString());
+        }
+    }
+/*
+    private class doExecuteValues extends AsyncTask <String, String, JSONObject> {
+        List<NameValuePair> params;
+        String url;
+        String post;
+        JSONParser jsonParser;
+
+        public doExecuteValues (String url, String post, List<NameValuePair> params, JSONParser jsonParser) {
+            //params = params2;
+            //url = url2;
+            //post = post2;
+            this.params = params;
+            this.url = url;
+            this.post = post;
+            this.jsonParser = jsonParser;
+        }
+
+        protected JSONObject doInBackground(String... args) {
+            JSONObject json = jsonParser.makeHttpRequest(url, post, params);
+            return json;
+        }
+    }*/
 }
 
 

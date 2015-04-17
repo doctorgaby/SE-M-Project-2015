@@ -31,28 +31,28 @@ public class FuelConsumptionGraph extends Activity {
         //Android Plot
         plot = (XYPlot) findViewById(R.id.Graph);
         plot.getRangeLabelWidget().setText("Fuel Consumption");
-        plot.getTitleWidget().setText("Liters per Measurement" );
+        plot.getTitleWidget().setText("Liters per Measurement");
 
         //Points Data
-        data = new DataList();
+        data = new DataList("p");
 
         //Test
-        data.setFuelConsumption(1,1);
-        data.setFuelConsumption(2,5);
-        data.setFuelConsumption(3,10);
-        data.setFuelConsumption(4,20);
-        data.setFuelConsumption(5,3);
-        data.setFuelConsumption(6,6);
+        data.setFuelConsumption(1, 1);
+        data.setFuelConsumption(2, 5);
+        data.setFuelConsumption(3, 10);
+        data.setFuelConsumption(4, 20);
+        data.setFuelConsumption(5, 3);
+        data.setFuelConsumption(6, 6);
 
         //end Test
 
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();
-        xRange = xMax/5;
+        xRange = xMax / 5;
         yMin = 0;
         yMax = data.getMaxPoints();
-        yRange = (yMax-yMin)/5;
+        yRange = (yMax - yMin) / 5;
 
         //Domain: X-Axis
         plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, xRange);
@@ -60,7 +60,7 @@ public class FuelConsumptionGraph extends Activity {
 
         //Range: Y-Axis
         plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, yRange);
-        plot.setRangeBoundaries(yMin, yMax+yRange, BoundaryMode.FIXED);
+        plot.setRangeBoundaries(yMin, yMax + yRange, BoundaryMode.FIXED);
 
         XYSeries fuelConsumptionSeries = new SimpleXYSeries(
                 data.getPlottableFuelConsumption(),

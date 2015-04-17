@@ -18,7 +18,6 @@ public class TestGrading extends Activity {
     TextView fuel;
     TextView brake;
     TextView distraction;
-    TextView notRunningText;
     Button startGrading;
     Button stopGrading;
 

@@ -31,27 +31,27 @@ public class SpeedGraph extends Activity {
         //Android Plot
         plot = (XYPlot) findViewById(R.id.Graph);
         plot.getRangeLabelWidget().setText("Speed (km/h)");
-        plot.getTitleWidget().setText("Speed per Measurement" );
+        plot.getTitleWidget().setText("Speed per Measurement");
 
         //Points Data
-        data = new DataList();
+        data = new DataList("p");
 
         //Test
-        data.setSpeed(1,40);
-        data.setSpeed(2,35);
-        data.setSpeed(3,80);
-        data.setSpeed(4,120);
-        data.setSpeed(5,160);
-        data.setSpeed(6,90);
+        data.setSpeed(1, 40);
+        data.setSpeed(2, 35);
+        data.setSpeed(3, 80);
+        data.setSpeed(4, 120);
+        data.setSpeed(5, 160);
+        data.setSpeed(6, 90);
 
 
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();
-        xRange = xMax/5;
+        xRange = xMax / 5;
         yMin = 0;
         yMax = 300;
-        yRange = (yMax-yMin)/15;
+        yRange = (yMax - yMin) / 15;
 
         //Domain: X-Axis
         plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, xRange);
