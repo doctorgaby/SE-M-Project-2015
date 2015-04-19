@@ -1,8 +1,12 @@
 package group8.com.application.Application;
 
+import android.content.Intent;
 
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
+import group8.com.application.alert.BrakesActivity;
+import group8.com.application.alert.DistractionActivity;
+import group8.com.application.alert.SpeedActivity;
 
 public abstract class Controller {
 
@@ -44,4 +48,45 @@ public abstract class Controller {
         return DBHandler.getFilteredPoints(Session.getUserName(), start, stop);
     }
 
+
+
+    /**
+ * /**
+ * Created by Nicholas on 19/04/2015.
+ *
+ * The following 4 methods are used to call an alerting activity defined in the alert package
+ */
+
+    public void speedAlert() {
+
+        Intent nextScreen = new Intent(getApplicationContext(), SpeedActivity.class);
+
+        startActivity(nextScreen);
+    }
+
+
+
+    public void brakesAlert() {
+
+        Intent nextScreen = new Intent(getApplicationContext(), BrakesActivity.class);
+
+        startActivity(nextScreen);
+    }
+    public void distractionAlert() {
+
+        Intent nextScreen = new Intent(getApplicationContext(), DistractionActivity.class);
+
+        // starting new activity
+        startActivity(nextScreen);
+    }
+    public void fuelAlert() {
+
+        Intent nextScreen = new Intent(getApplicationContext(), FuelActivityActivity.class);
+
+        // starting new activity
+        startActivity(nextScreen);
+    }
+
+
+}
 }

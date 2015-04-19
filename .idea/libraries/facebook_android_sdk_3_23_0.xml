@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="facebook-android-sdk-3.23.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/FaceBook/facebook-android-sdk-3.23.0.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
