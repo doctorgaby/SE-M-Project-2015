@@ -1,6 +1,5 @@
-package group8.com.application.Application;
+package group8.com.application.Application.Database;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import group8.com.application.Foundation.JSONParser;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Model.DataList;
 
@@ -117,21 +115,41 @@ public abstract class DBHandler {
      */
     private static void jsonToList(DataList list, JSONObject json) {
         try {
-            JSONArray data = json.getJSONArray(ConstantData.TAG_POSTS);
-            for (int i = 0; i < data.length(); i++) {
-                JSONObject c = data.getJSONObject(i);
-
+            JSONArray speedArray = json.getJSONArray(ConstantData.TAG_SPEED);
+            for (int i = 0; i < speedArray.length(); i++) {
+                JSONObject c = speedArray.getJSONObject(i);
                 //gets the content of each JSON object
                 Integer speed = c.getInt(ConstantData.TAG_SPEED);
+                Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
+                list.setSpeed(measuredAt, speed);
+                Log.d("Speed number: " + i, "value: " + measuredAt);
+            }
+            JSONArray brakeArray = json.getJSONArray(ConstantData.TAG_BRAKE);
+            for (int i = 0; i < brakeArray.length(); i++) {
+                JSONObject c = brakeArray.getJSONObject(i);
+                //gets the content of each JSON object
                 Integer brake = c.getInt(ConstantData.TAG_BRAKE);
-                Integer fuel = c.getInt(ConstantData.TAG_FUEL);
-                Integer distraction = c.getInt(ConstantData.TAG_DISTRACTION);
                 Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
                 list.setBrake(measuredAt, brake);
-                list.setDriverDistractionLevel(measuredAt, distraction);
-                list.setSpeed(measuredAt, speed);
+                Log.d("Brake number: " + i, "value: " + measuredAt);
+            }
+            JSONArray fuelArray = json.getJSONArray(ConstantData.TAG_FUEL);
+            for (int i = 0; i < fuelArray.length(); i++) {
+                JSONObject c = fuelArray.getJSONObject(i);
+                //gets the content of each JSON object
+                Integer fuel = c.getInt(ConstantData.TAG_FUEL);
+                Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
                 list.setFuelConsumption(measuredAt, fuel);
-                Log.d("number: " + i, "value: " + measuredAt);
+                Log.d("Fuel number: " + i, "value: " + measuredAt);
+            }
+            JSONArray distractionArray = json.getJSONArray(ConstantData.TAG_DISTRACTION);
+            for (int i = 0; i < distractionArray.length(); i++) {
+                JSONObject c = distractionArray.getJSONObject(i);
+                //gets the content of each JSON object
+                Integer distraction = c.getInt(ConstantData.TAG_DISTRACTION);
+                Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
+                list.setDriverDistractionLevel(measuredAt, distraction);
+                Log.d("Distraction number: " + i, "value: " + measuredAt);
             }
         } catch (JSONException e) {
             Log.e("DBHANDLER ERROR", "ERROR WITH THE JSON PARSER. " + e.toString());

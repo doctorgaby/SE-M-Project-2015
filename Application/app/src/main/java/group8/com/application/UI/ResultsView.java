@@ -41,12 +41,18 @@ public class ResultsView extends Activity {
         //Test for the DBHandler
         //DataList data = Controller.eventGetMeasurements();
         //DataList data = Controller.eventGetFilteredMeasurements(7,10);
+<<<<<<< HEAD
         //DataList data = Controller.eventGetPoints();                              !!!NOT WORKING YET
         //Log.d("ResultsView", "DataList loaded!");
         //DataList data = Controller.eventGetFilteredPoints(0,5);                   !!!NOT WORKING YET
 
         data = Session.currentPoints;
 
+=======
+        DataList data = Controller.eventGetPoints();
+        Log.d("ResultsView", "DataList loaded!");
+        //DataList data = Controller.eventGetFilteredPoints(0,5);
+>>>>>>> origin/master
 /*
         //Points Data
         DataList data;
@@ -82,10 +88,10 @@ public class ResultsView extends Activity {
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();
-        xRange = xMax/5;
+        xRange = xMax / 5;
         yMin = 0;//This should be done according to the values depending whether or not to allow negative points.
         yMax = data.getMaxPoints();
-        yRange = (yMax-yMin)/5;
+        yRange = (yMax - yMin) / 5;
 
         //Domain: X-Axis
         plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, xRange);
@@ -93,29 +99,29 @@ public class ResultsView extends Activity {
 
         //Range: Y-Axis
         plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, yRange);
-        plot.setRangeBoundaries(yMin, yMax+yRange, BoundaryMode.FIXED);
+        plot.setRangeBoundaries(yMin, yMax + yRange, BoundaryMode.FIXED);
 
 
         //Initiate Series to Draw
         XYSeries speedSeries = new SimpleXYSeries(
-        data.getPlottableSpeed(),
-        SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-        "S");
+                data.getPlottableSpeed(),
+                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
+                "S");
 
         XYSeries fuelConsumptionSeries = new SimpleXYSeries(
-        data.getPlottableFuelConsumption(),
-        SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-        "FC");
+                data.getPlottableFuelConsumption(),
+                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
+                "FC");
 
         XYSeries brakeSeries = new SimpleXYSeries(
-        data.getPlottableBrake(),
-        SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-        "B");
+                data.getPlottableBrake(),
+                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
+                "B");
 
         XYSeries driverDistractionSeries = new SimpleXYSeries(
-        data.getPlottableDriverDistraction(),
-        SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-        "DDL");
+                data.getPlottableDriverDistraction(),
+                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
+                "DDL");
 
         //Initiate the formatters for the lines.
         // Create a formatter to use for drawing a series using LineAndPointRenderer
@@ -123,22 +129,22 @@ public class ResultsView extends Activity {
         LineAndPointFormatter speedFormat = new LineAndPointFormatter();
         speedFormat.setPointLabelFormatter(new PointLabelFormatter());
         speedFormat.configure(getApplicationContext(),
-        R.xml.lpf_speed);
+                R.xml.lpf_speed);
 
         LineAndPointFormatter fuelConsumptionFormat = new LineAndPointFormatter();
         fuelConsumptionFormat.setPointLabelFormatter(new PointLabelFormatter());
         fuelConsumptionFormat.configure(getApplicationContext(),
-        R.xml.lfp_fuelconsumption);
+                R.xml.lfp_fuelconsumption);
 
         LineAndPointFormatter brakeFormat = new LineAndPointFormatter();
         brakeFormat.setPointLabelFormatter(new PointLabelFormatter());
         brakeFormat.configure(getApplicationContext(),
-        R.xml.lpf_brake);
+                R.xml.lpf_brake);
 
         LineAndPointFormatter driverDistractionFormat = new LineAndPointFormatter();
         driverDistractionFormat.setPointLabelFormatter(new PointLabelFormatter());
         driverDistractionFormat.configure(getApplicationContext(),
-        R.xml.lpf_driverdistractionlevel);
+                R.xml.lpf_driverdistractionlevel);
 
         //Add series to the plot with the correct formats.
         plot.clear();
@@ -170,15 +176,14 @@ public class ResultsView extends Activity {
                 this.startActivity(intentFC);
                 return true;
             case R.id.menuDriverDistractionOption:
-                  Intent intentDDL = new Intent(this,DriverDistractionGraph.class);
-                  this.startActivity(intentDDL);
+                Intent intentDDL = new Intent(this, DriverDistractionGraph.class);
+                this.startActivity(intentDDL);
 
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 
 }
