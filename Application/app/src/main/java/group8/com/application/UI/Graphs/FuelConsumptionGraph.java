@@ -11,6 +11,8 @@ import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
+import group8.com.application.Application.Controller;
+import group8.com.application.Application.Session;
 import group8.com.application.Model.DataList;
 import group8.com.application.R;
 
@@ -33,9 +35,9 @@ public class FuelConsumptionGraph extends Activity {
         plot.getRangeLabelWidget().setText("Fuel Consumption");
         plot.getTitleWidget().setText("Liters per Measurement");
 
-        //Points Data
-        data = new DataList("p");
+        data = Session.currentMeasurements;
 
+/*
         //Test
         data.setFuelConsumption(1, 1);
         data.setFuelConsumption(2, 5);
@@ -45,7 +47,7 @@ public class FuelConsumptionGraph extends Activity {
         data.setFuelConsumption(6, 6);
 
         //end Test
-
+*/
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();

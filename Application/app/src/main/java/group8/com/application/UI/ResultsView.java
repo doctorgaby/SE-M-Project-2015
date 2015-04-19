@@ -16,6 +16,7 @@ import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
 import group8.com.application.Application.Controller;
+import group8.com.application.Application.Session;
 import group8.com.application.Model.DataList;
 import group8.com.application.UI.Graphs.DriverDistractionGraph;
 import group8.com.application.UI.Graphs.FuelConsumptionGraph;
@@ -25,6 +26,7 @@ import group8.com.application.R;
 public class ResultsView extends Activity {
 
     int xMin, xMax, xRange, yMin, yMax, yRange;
+    DataList data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +37,16 @@ public class ResultsView extends Activity {
         //Android Plot
         plot = (XYPlot) findViewById(R.id.Graph);
 
+
         //Test for the DBHandler
-        DataList data = Controller.eventGetMeasurements();
+        //DataList data = Controller.eventGetMeasurements();
         //DataList data = Controller.eventGetFilteredMeasurements(7,10);
         //DataList data = Controller.eventGetPoints();                              !!!NOT WORKING YET
-        Log.d("ResultsView", "DataList loaded!");
+        //Log.d("ResultsView", "DataList loaded!");
         //DataList data = Controller.eventGetFilteredPoints(0,5);                   !!!NOT WORKING YET
+
+        data = Session.currentPoints;
+
 /*
         //Points Data
         DataList data;

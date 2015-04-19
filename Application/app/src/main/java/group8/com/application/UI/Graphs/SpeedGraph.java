@@ -11,6 +11,8 @@ import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
+import group8.com.application.Application.Controller;
+import group8.com.application.Application.Session;
 import group8.com.application.Model.DataList;
 import group8.com.application.R;
 
@@ -33,8 +35,10 @@ public class SpeedGraph extends Activity {
         plot.getRangeLabelWidget().setText("Speed (km/h)");
         plot.getTitleWidget().setText("Speed per Measurement");
 
+        data = Session.currentMeasurements;
+/*
         //Points Data
-        data = new DataList("p");
+//        data = new DataList("p");
 
         //Test
         data.setSpeed(1, 40);
@@ -44,7 +48,7 @@ public class SpeedGraph extends Activity {
         data.setSpeed(5, 160);
         data.setSpeed(6, 90);
 
-
+*/
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();

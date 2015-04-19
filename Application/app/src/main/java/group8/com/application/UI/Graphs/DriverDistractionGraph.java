@@ -11,6 +11,8 @@ import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
+import group8.com.application.Application.Controller;
+import group8.com.application.Application.Session;
 import group8.com.application.Model.DataList;
 import group8.com.application.R;
 
@@ -34,9 +36,8 @@ public class DriverDistractionGraph extends Activity {
         plot.getRangeLabelWidget().setText("Driver Distraction");
         plot.getTitleWidget().setText("Distraction per Measurement");
 
-        //Points Data
-        data = new DataList("p");
-
+        data = Session.currentMeasurements;
+/*
         //Test
 
         data.setDriverDistractionLevel(1, 1);
@@ -46,7 +47,7 @@ public class DriverDistractionGraph extends Activity {
         data.setDriverDistractionLevel(5, 4);
         data.setDriverDistractionLevel(6, 1);
         //end Test
-
+*/
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();

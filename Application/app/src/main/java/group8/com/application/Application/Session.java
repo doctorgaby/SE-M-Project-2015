@@ -4,8 +4,8 @@ import group8.com.application.Model.DataList;
 
 public abstract class Session {
     private static String userName = "";
-    private static DataList currentPoints = new DataList("p");
-    private static DataList currentMeasurements = new DataList("m");
+    public static DataList currentPoints = new DataList("p");
+    public static DataList currentMeasurements = new DataList("m");
 
     public static void setUserName(String username) {
         Session.userName = username;
