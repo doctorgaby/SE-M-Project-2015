@@ -168,6 +168,6 @@ public class MainView extends Activity {
 
     }
        // public Intent getIntent(Context context) {
-
+//fagfsa
     }
 
