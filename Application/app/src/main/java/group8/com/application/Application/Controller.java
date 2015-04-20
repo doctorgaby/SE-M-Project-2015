@@ -1,12 +1,7 @@
 package group8.com.application.Application;
 
-import android.content.Intent;
-
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
-import group8.com.application.alert.BrakesActivity;
-import group8.com.application.alert.DistractionActivity;
-import group8.com.application.alert.SpeedActivity;
 
 public abstract class Controller {
 
@@ -55,7 +50,7 @@ public abstract class Controller {
  * Created by Nicholas on 19/04/2015.
  *
  * The following 4 methods are used to call an alerting activity defined in the alert package
- */
+
 
     public void speedAlert() {
 
@@ -86,7 +81,6 @@ public abstract class Controller {
         // starting new activity
         startActivity(nextScreen);
     }
+     */
 
-
-}
 }
