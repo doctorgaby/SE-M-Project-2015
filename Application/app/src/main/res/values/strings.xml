@@ -9,6 +9,10 @@
     <string name="hello_world">Hello world!</string>
     <string name="welcome">Welcome</string>
     <string name="register">Register</string>
+    <string name="month">Month</string>
+    <string name="current">Current</string>
+    <string name="one_week">One Week</string>
+    <string name="one_month">One Month</string>
 
     <string name="facebook_app_id">1569479389989613</string>
 

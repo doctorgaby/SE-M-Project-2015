@@ -7,22 +7,18 @@ public abstract class Controller {
 
     /* Methods for MeasurementsFactory */
     protected static void eventSpeedChanged(double speed) {
-        Session.setSpeed(speed);
         GradingSystem.updateSpeedScore(speed);
     }
 
     protected static void eventFuelConsumptionChanged(double fuelConsumption) {
-        Session.setFuelConsumption(fuelConsumption);
         GradingSystem.updateFuelConsumptionScore(fuelConsumption);
     }
 
     protected static void eventBrakeChanged(int brake) {
-        Session.setBrake(brake);
-        GradingSystem.updateBrakeScore(brake);
+        GradingSystem.updateBrakeScore(brake, false);
     }
 
     protected static void eventDriverDistractionLevelChanged(int driverDistractionLevel) {
-        Session.setDriverDistractionLevel(driverDistractionLevel);
         GradingSystem.updateDriverDistractionLevelScore(driverDistractionLevel);
     }
     /* END - Methods for MeasurementsFactory */

@@ -9,6 +9,7 @@
     android:paddingBottom="16dp"
     android:background="#b73e3e3e">
 
+
     <com.androidplot.xy.XYPlot
         android:id="@+id/Graph"
         android:layout_width="fill_parent"
@@ -34,10 +35,47 @@
         androidPlot.legendWidget.positionMetrics.anchor="right_bottom"
 
 
-        android:layout_alignParentStart="true"
+        android:layout_below="@+id/currBtn" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current"
+        android:id="@+id/currBtn"
+        android:layout_alignTop="@+id/weekBtn"
+        android:layout_toStartOf="@+id/weekBtn" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/one_week"
+        android:id="@+id/weekBtn"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_toStartOf="@+id/monthBtn" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/one_month"
+        android:id="@+id/monthBtn"
+        android:layout_above="@+id/Graph"
+        android:layout_alignEnd="@+id/Graph" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Filters:"
+        android:id="@+id/filter_text"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/Graph"
+        android:layout_toStartOf="@+id/currBtn"
+        android:textAlignment="center" />
+
 </RelativeLayout>
 
     <!--androidPlot.graphWidget.gridLinePaint.color="#000000"-->
