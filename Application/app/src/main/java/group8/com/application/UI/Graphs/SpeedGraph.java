@@ -22,9 +22,6 @@ import group8.com.application.Model.DataList;
 import group8.com.application.R;
 import group8.com.application.UI.ResultsView;
 
-import org.joda.time.LocalDate;
-import org.joda.time.*;
-import org.joda.time.format.*;
 /**
  * Created by Kristiyan on 3/16/2015.
  */
