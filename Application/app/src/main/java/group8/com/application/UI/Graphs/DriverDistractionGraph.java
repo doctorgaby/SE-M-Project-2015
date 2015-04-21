@@ -1,7 +1,12 @@
 package group8.com.application.UI.Graphs;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
@@ -15,6 +20,7 @@ import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.DataList;
 import group8.com.application.R;
+import group8.com.application.UI.ResultsView;
 
 /**
  * Created by Kristiyan on 3/16/2015.
@@ -23,7 +29,7 @@ public class DriverDistractionGraph extends Activity {
 
 
     private XYPlot plot;
-    DataList data;
+    private DataList data = Controller.eventGetMeasurements(); //Temporary;
     int xMin, xMax, xRange, yMin, yMax, yRange;
 
     @Override
@@ -31,23 +37,49 @@ public class DriverDistractionGraph extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results_display);
 
+
+        //build a default graph from session
+        buildDdlGraph(data);
+
+        //Listeners for filter buttons
+        Button currBtn = (Button) findViewById(R.id.currBtn);
+        currBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plot.clear();
+                buildDdlGraph(data);
+                plot.redraw();
+            }
+        });
+
+        Button weekBtn = (Button) findViewById(R.id.weekBtn);
+        weekBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plot.clear();
+                buildDdlGraph(weekFill());
+                plot.redraw();
+            }
+        });
+
+        Button monthBtn = (Button) findViewById(R.id.monthBtn);
+        monthBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                plot.clear();
+                buildDdlGraph(monthFill());
+                plot.redraw();
+            }
+        });
+    }
+
+    private void buildDdlGraph(DataList data){
+
         //Android Plot
         plot = (XYPlot) findViewById(R.id.Graph);
         plot.getRangeLabelWidget().setText("Driver Distraction");
         plot.getTitleWidget().setText("Distraction per Measurement");
 
-        data = Session.currentMeasurements;
-/*
-        //Test
-
-        data.setDriverDistractionLevel(1, 1);
-        data.setDriverDistractionLevel(2, 3);
-        data.setDriverDistractionLevel(3, 2);
-        data.setDriverDistractionLevel(4, 1);
-        data.setDriverDistractionLevel(5, 4);
-        data.setDriverDistractionLevel(6, 1);
-        //end Test
-*/
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();
@@ -82,5 +114,71 @@ public class DriverDistractionGraph extends Activity {
         plot.clear();
         plot.addSeries(driverDistractionSeries, driverDistractionFormat);
 
+    }
+
+    private DataList weekFill(){
+
+        DataList data = new DataList("w");
+
+        data.setDriverDistractionLevel(1, 1);
+        data.setDriverDistractionLevel(2, 3);
+        data.setDriverDistractionLevel(3, 2);
+        data.setDriverDistractionLevel(4, 1);
+        data.setDriverDistractionLevel(5, 4);
+        data.setDriverDistractionLevel(6, 1);
+
+        return data;
+    }
+
+    private DataList monthFill(){
+
+        DataList data = new DataList("w");
+
+        data.setDriverDistractionLevel(1, 4);
+        data.setDriverDistractionLevel(2, 3);
+        data.setDriverDistractionLevel(3, 1);
+        data.setDriverDistractionLevel(4, 2);
+        data.setDriverDistractionLevel(5, 1);
+        data.setDriverDistractionLevel(6, 4);
+
+        return data;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item= menu.findItem(R.id.menuDriverDistractionOption);
+        //depending on your conditions, either enable/disable
+        item.setEnabled(false);
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.menuSpeedOption:
+                Intent intentS = new Intent(this, ResultsView.class);
+                this.startActivity(intentS);
+                return true;
+            case R.id.menuFuel_consumptionOption:
+                Intent intentFC = new Intent(this, FuelConsumptionGraph.class);
+                this.startActivity(intentFC);
+                return true;
+            case R.id.menuPointsOption:
+                Intent intentP = new Intent(this, DriverDistractionGraph.class);
+                this.startActivity(intentP);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

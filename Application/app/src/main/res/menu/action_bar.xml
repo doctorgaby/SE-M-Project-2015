@@ -16,5 +16,9 @@
         android:icon="@drawable/ic_launcher"
         android:title="Driver Distraction"
         app:showAsAction="ifRoom"  />
+     <item android:id="@+id/menuPointsOption"
+        android:icon="@drawable/ic_launcher"
+        android:title="Total Points"
+        app:showAsAction="ifRoom"  />
 
 </menu>
