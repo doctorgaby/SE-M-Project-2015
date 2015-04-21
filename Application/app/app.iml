@@ -92,6 +92,7 @@
     <orderEntry type="library" exported="" name="SDP-1.1" level="project" />
     <orderEntry type="library" exported="" name="slf4j-android-1.7.10-0" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.10" level="project" />
+    <orderEntry type="library" exported="" name="VIL-1.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="androidplot-core-0.6.1" level="project" />
     <orderEntry type="library" exported="" name="facebook-android-sdk-4.0.1" level="project" />

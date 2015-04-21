@@ -33,8 +33,7 @@ public abstract class GradingSystem {
                     }
 
                     public void onFinish() {
-                        Session.setBrakeScore(Session.getBrakeScore() + 1);
-                        updateBrakeScore(Session.getLastBrake());
+                        updateBrakeScore(Session.getLastBrake(), true);
                     }
 
                 };
@@ -71,7 +70,19 @@ public abstract class GradingSystem {
     protected static void updateSpeedScore(double speed) {
 
         if(running) {
-            Session.setSpeedScore((int) speed); // update view here
+
+            // Store the current score and the new score
+            int currentScore = Session.getSpeedScore();
+            int newScore = currentScore;
+
+            // Evaluate the measurements
+
+            // Update the lists of measurements and scores
+            if(newScore != currentScore) {
+                Session.setSpeed(speed);
+                Session.setSpeedScore(newScore); // update view here
+            }
+
         }
 
     }
@@ -85,11 +96,22 @@ public abstract class GradingSystem {
 
         if(running) {
 
+            // Store the current score and the new score
+            int currentScore = Session.getFuelConsumptionScore();
+            int newScore = currentScore;
+
+            // Evaluate the measurements
             if (fuelConsumption > 60.0) { // If the fuel consumption is "good".
-                Session.setFuelConsumptionScore(Session.getFuelConsumptionScore() + 1);
+                newScore = currentScore + 1;
 
             } else                        // If the fuel consumption is "bad" and it has been good before(it should not count the same fuel count several times)
-                Session.setFuelConsumptionScore(Session.getFuelConsumptionScore() - 1);
+                newScore = currentScore - 1;
+
+            // Update the lists of measurements and scores
+            if(newScore != currentScore) {
+                Session.setFuelConsumption(fuelConsumption);
+                Session.setFuelConsumptionScore(newScore);
+            }
 
         }
 
@@ -99,10 +121,15 @@ public abstract class GradingSystem {
      * - 1 point when the brake is activated.
      * + 1 point every 10 seconds the brake is not activated.
      * */
-    protected static void updateBrakeScore(int brake) {
+    protected static void updateBrakeScore(int brake, boolean timerFinished) {
 
         if(running) {
 
+            // Store the current score and the new score
+            int currentScore = Session.getBrakeScore();
+            int newScore = currentScore;
+
+            // Evaluate the measurements
             if (brake == 0) {                    // If the brake is in a "Released" state.
 
                 shouldDecreaseBrakeScore = true; // The car has released the brake before it brakes again
@@ -114,8 +141,17 @@ public abstract class GradingSystem {
                     brakeTimer.cancel();
 
                 if (shouldDecreaseBrakeScore)    // If the brake is active and it has been released between brakes(it should not count the same brake several times)
-                    Session.setBrakeScore(Session.getBrakeScore() - 1);
+                    newScore = currentScore - 1;
 
+            }
+
+            if(timerFinished)
+                newScore = currentScore + 1;
+
+            // Update the lists of measurements and scores
+            if(newScore != currentScore) {
+                Session.setBrake(brake);
+                Session.setBrakeScore(newScore);
             }
 
         }
@@ -131,16 +167,27 @@ public abstract class GradingSystem {
 
         if(running) {
 
+            // Store the current score and the new score
+            int currentScore = Session.getDriverDistractionLevelScore();
+            int newScore = currentScore;
+
+            // Evaluate the measurements
             if (distractionLevel == 3 && lastDistractionLevel < 3)
-                Session.setDriverDistractionLevelScore(Session.getDriverDistractionLevelScore() - 1);
+                newScore = currentScore - 1;
 
             if (distractionLevel == 4 && lastDistractionLevel < 4)
-                Session.setDriverDistractionLevelScore(Session.getDriverDistractionLevelScore() - 2);
+                newScore = currentScore - 2;
 
             if (distractionLevel == 0 && lastDistractionLevel != 0)
-                Session.setDriverDistractionLevelScore(Session.getDriverDistractionLevelScore() + 1);
+                newScore = currentScore + 1;
 
             lastDistractionLevel = distractionLevel;
+
+            // Update the lists of measurements and scores
+            if(newScore != currentScore) {
+                Session.setDriverDistractionLevel(distractionLevel);
+                Session.setDriverDistractionLevelScore(newScore);
+            }
 
         }
 
