@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="libs">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Application/app/libs/SDP-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Application/app/libs/androidplot-core-0.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Application/app/libs/lib.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Application/app/libs/Automotive-API-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Application/app/libs/VIL-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
