@@ -28,7 +28,7 @@ import group8.com.application.UI.ResultsView;
 public class FuelConsumptionGraph extends Activity {
 
     private XYPlot plot;
-    private DataList data = Controller.eventGetMeasurements(); // Temporary
+    protected DataList data;
     int xMin, xMax, xRange, yMin, yMax, yRange;
 
     @Override
@@ -37,7 +37,7 @@ public class FuelConsumptionGraph extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildFcGraph(data);
+        buildFcGraph(data = Controller.eventGetMeasurements());
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);
@@ -45,7 +45,7 @@ public class FuelConsumptionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildFcGraph(data);
+                buildFcGraph(data = Controller.eventGetMeasurements());
                 plot.redraw();
             }
         });
@@ -55,7 +55,7 @@ public class FuelConsumptionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildFcGraph(weekFill());
+                buildFcGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis(), (int) System.currentTimeMillis() - 60480000));
                 plot.redraw();
             }
         });
@@ -65,7 +65,7 @@ public class FuelConsumptionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildFcGraph(monthFill());
+                buildFcGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis(), (int) System.currentTimeMillis() - 262800000));
                 plot.redraw();
             }
         });

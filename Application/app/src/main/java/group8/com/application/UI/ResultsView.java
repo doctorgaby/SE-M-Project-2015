@@ -28,7 +28,7 @@ import group8.com.application.R;
 public class ResultsView extends Activity {
 
     int xMin, xMax, xRange, yMin, yMax, yRange;
-    private DataList data = Controller.eventGetPoints();
+    protected DataList data;
     private XYPlot plot;
 
     @Override
@@ -37,7 +37,7 @@ public class ResultsView extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildPointsPlot(data);
+        buildPointsPlot(data = Controller.eventGetPoints());
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);
@@ -45,7 +45,7 @@ public class ResultsView extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildPointsPlot(data);
+                buildPointsPlot(data = Controller.eventGetPoints());
                 plot.redraw();
 
             }
@@ -56,7 +56,7 @@ public class ResultsView extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildPointsPlot(weekFill());
+                buildPointsPlot(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis(), (int) System.currentTimeMillis() - 60480000));
                 plot.redraw();
 
 
@@ -69,7 +69,7 @@ public class ResultsView extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildPointsPlot(monthFill());
+                buildPointsPlot(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis(), (int) System.currentTimeMillis() - 262800000));
                 plot.redraw();
 
 
