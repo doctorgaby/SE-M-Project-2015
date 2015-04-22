@@ -22,6 +22,14 @@
             android:label="Speed Graph"></activity>
 
         <activity
+            android:name="org.achartengine.GraphicalActivity"
+            android:label="Bar Chart"></activity>
+
+        <activity
+            android:name=".UI.BarChart"
+            android:label="BarChart"></activity>
+
+        <activity
             android:name=".UI.Graphs.FuelConsumptionGraph"
             android:label="Fuel Consumption"></activity>
 
