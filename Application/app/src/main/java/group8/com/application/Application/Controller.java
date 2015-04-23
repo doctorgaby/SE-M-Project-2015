@@ -28,7 +28,7 @@ public abstract class Controller {
 
     protected static void eventBrakeChanged(int brake) {
         Session.setBrake(brake);
-        GradingSystem.updateBrakeScore(brake);
+        GradingSystem.updateBrakeScore(brake, false);
     }
 
     protected static void eventDriverDistractionLevelChanged(int driverDistractionLevel) {
