@@ -103,6 +103,36 @@ public abstract class DBHandler {
         return list;
     }
 
+    /**
+     * @param
+     */
+    public static void setMeasurements(String user) {
+        /*List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETMEASUREMENTS));
+        params.add(new BasicNameValuePair("username", user));
+        Log.d("getMeasurements!", "starting");
+        // getting measurement details by making HTTP request
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with get Measurements.");
+        }
+
+        DataList list = new DataList("m");
+        jsonToList(list, json);*/
+
+        List<NameValuePair> params = new ArrayList<>();
+
+        List<NameValuePair> speedList = new ArrayList<>();
+        List<NameValuePair> fuelConsumptionList = new ArrayList<>();
+        List<NameValuePair> brakeList = new ArrayList<>();
+        List<NameValuePair> driverDistractionLevelList = new ArrayList<>();
+
+
+
+    }
+
 
     //                              **************************
     //                              *****                *****

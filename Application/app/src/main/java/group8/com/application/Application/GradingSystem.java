@@ -1,6 +1,9 @@
 package group8.com.application.Application;
 
 import android.os.CountDownTimer;
+import android.util.Log;
+
+import group8.com.application.Model.ConstantData;
 
 /**
  * Created by Hampus on 2015-03-18.
@@ -11,10 +14,11 @@ import android.os.CountDownTimer;
 public abstract class GradingSystem {
 
     /* Private variables */
-    static private int lastDistractionLevel;                // Stores the current distraction level(updates when the distraction level is changed)
-    static private boolean shouldDecreaseBrakeScore = true; // Is set to true when the brake is released
-    static private boolean running = false;                  // Flag used in the threads loop
-    static private CountDownTimer brakeTimer;               // Timer used for grading the braking
+    private static int lastDistractionLevel;                // Stores the current distraction level(updates when the distraction level is changed)
+    private static boolean shouldDecreaseBrakeScore = true; // Is set to true when the brake is released
+    private static boolean running = false;                  // Flag used in the threads loop
+    private static CountDownTimer brakeTimer;               // Timer used for grading the braking
+    private static CountDownTimer driverDistractionLevelTimer;
 
     /**
      * Start the grading system.
@@ -25,15 +29,26 @@ public abstract class GradingSystem {
             running = true;
             MeasurementFactory.startMeasurements();
 
-            if (brakeTimer == null) {
+            if(brakeTimer == null) {
                 brakeTimer = new CountDownTimer(10000, 1000) { // Create a new countdown. When the countdown has finished, the braking score increases by 1.
 
-                    public void onTick(long millisUntilFinished) {
-                        System.out.println("seconds remaining: " + millisUntilFinished / 1000);
-                    }
+                    public void onTick(long millisUntilFinished) {}
 
                     public void onFinish() {
-                        updateBrakeScore(Session.getLastBrake(), true);
+                        updateBrakeScore(0, true);
+                    }
+
+                };
+            }
+
+            if(driverDistractionLevelTimer == null) {
+                driverDistractionLevelTimer = new CountDownTimer(ConstantData.extremeDriverDistractionLevel, 100) { // Create a new countdown. When the countdown has finished, the braking score increases by 1.
+
+                    public void onTick(long millisUntilFinished) {}
+
+                    public void onFinish() {
+                        // Extreme event
+                        Log.d("distractionTimer", "EXTREME DISTRACTION");
                     }
 
                 };
@@ -83,6 +98,10 @@ public abstract class GradingSystem {
                 Session.setSpeedScore(newScore); // update view here
             }
 
+            if(speed > ConstantData.extremeSpeed) {
+                // Extreme event
+            }
+
         }
 
     }
@@ -101,7 +120,7 @@ public abstract class GradingSystem {
             int newScore = currentScore;
 
             // Evaluate the measurements
-            if (fuelConsumption > 60.0) { // If the fuel consumption is "good".
+            if (fuelConsumption > ConstantData.goodFuelConsumption) { // If the fuel consumption is "good".
                 newScore = currentScore + 1;
 
             } else                        // If the fuel consumption is "bad" and it has been good before(it should not count the same fuel count several times)
@@ -111,6 +130,10 @@ public abstract class GradingSystem {
             if(newScore != currentScore) {
                 Session.setFuelConsumption(fuelConsumption);
                 Session.setFuelConsumptionScore(newScore);
+            }
+
+            if(fuelConsumption >= ConstantData.extremeFuelConsumption) {
+                // Extreme event
             }
 
         }
@@ -172,11 +195,16 @@ public abstract class GradingSystem {
             int newScore = currentScore;
 
             // Evaluate the measurements
+
+            driverDistractionLevelTimer.cancel();
+
             if (distractionLevel == 3 && lastDistractionLevel < 3)
                 newScore = currentScore - 1;
 
-            if (distractionLevel == 4 && lastDistractionLevel < 4)
+            if (distractionLevel == 4 && lastDistractionLevel < 4) {
+                driverDistractionLevelTimer.start();
                 newScore = currentScore - 2;
+            }
 
             if (distractionLevel == 0 && lastDistractionLevel != 0)
                 newScore = currentScore + 1;
