@@ -20,6 +20,7 @@ import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.DataList;
 import group8.com.application.R;
+import group8.com.application.UI.NotificationSystem;
 import group8.com.application.UI.ResultsView;
 
 /**
@@ -37,7 +38,7 @@ public class FuelConsumptionGraph extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildFcGraph(data = Controller.eventGetMeasurements());
+        buildFcGraph(weekFill());
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);
@@ -55,7 +56,7 @@ public class FuelConsumptionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildFcGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis(), (int) System.currentTimeMillis() - 60480000));
+                buildFcGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 60480));
                 plot.redraw();
             }
         });
@@ -65,7 +66,7 @@ public class FuelConsumptionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildFcGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis(), (int) System.currentTimeMillis() - 262800000));
+                buildFcGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 262800));
                 plot.redraw();
             }
         });
@@ -78,6 +79,8 @@ public class FuelConsumptionGraph extends Activity {
         plot = (XYPlot) findViewById(R.id.Graph);
         plot.getRangeLabelWidget().setText("Fuel Consumption");
         plot.getTitleWidget().setText("Liters per Measurement");
+
+
 
         //Plotting Variables
         xMin = 0;

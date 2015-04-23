@@ -19,6 +19,8 @@ import org.achartengine.GraphicalView;
 
 import group8.com.application.Application.Session;
 import group8.com.application.R;
+import group8.com.application.UI.Graphs.DriverDistractionGraph;
+import group8.com.application.UI.Graphs.FuelConsumptionGraph;
 import group8.com.application.UI.Login.LoginView;
 
 
@@ -36,7 +38,7 @@ public class MainView extends Activity {
         graphBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ResultsView.class);
+                Intent intent = new Intent(v.getContext(), FuelConsumptionGraph.class);
                 startActivityForResult(intent, 0);
             }
         });
