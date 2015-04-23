@@ -61,6 +61,26 @@
             android:name=".UI.TestGrading"
             android:label="Test"></activity>
 
+
+        <activity
+            android:name=".BrakesActivity"
+            android:label="@string/title_activity_brakes" >
+        </activity>
+        <activity
+            android:name=".FuelActivity"
+            android:label="@string/title_activity_fuel" >
+        </activity>
+        <activity
+            android:name=".SpeedActivity"
+            android:label="@string/title_activity_speed" >
+        </activity>
+        <activity
+            android:name=".DistractionActivity"
+            android:label="@string/title_activity_distraction" >
+        </activity>
+
+
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
