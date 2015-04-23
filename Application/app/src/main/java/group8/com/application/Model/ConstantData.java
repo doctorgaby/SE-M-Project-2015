@@ -4,7 +4,16 @@ package group8.com.application.Model;
  * Created by enriquecordero on 30/03/15.
  */
 public abstract class ConstantData {
+
+    /* GRADING SYSTEM*/
     public static final int initialPoints = 50;
+    public static final double goodFuelConsumption = 60.0;
+    public static final double extremeSpeed = 120;
+    public static final double extremeFuelConsumption = 100;
+    public static final int extremeBrake = 0;
+    public static final int extremeDriverDistractionLevel = 2000;
+    /* END - GRADING SYSTEM*/
+
     public static final String TAG_SUCCESS = "success";
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_ACTION_LOGIN = "login";
