@@ -22,19 +22,35 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Graph"
-        android:id="@+id/graphBtn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Test Measurements"
         android:id="@+id/testMeasurementsBtn"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MainGraph"
+        android:id="@+id/mainGraphBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/graphBtn" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Graph"
+        android:id="@+id/graphBtn"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/chart"
+        android:layout_above="@+id/graphBtn"
+        android:layout_below="@+id/username" />
 
 </RelativeLayout>
