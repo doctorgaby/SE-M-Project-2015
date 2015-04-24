@@ -38,7 +38,7 @@ public class FuelConsumptionGraph extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildFcGraph(weekFill());
+        buildFcGraph(Controller.eventGetMeasurements());
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);
@@ -80,8 +80,6 @@ public class FuelConsumptionGraph extends Activity {
         plot.getRangeLabelWidget().setText("Fuel Consumption");
         plot.getTitleWidget().setText("Liters per Measurement");
 
-
-
         //Plotting Variables
         xMin = 0;
         xMax = data.getMaxTime();
@@ -118,7 +116,9 @@ public class FuelConsumptionGraph extends Activity {
         plot.addSeries(fuelConsumptionSeries, fuelConsumptionFormat);
 
     }
-    //test for filter
+
+/* test for filter
+
     private DataList weekFill(){
 
         DataList data = new DataList("w");
@@ -132,8 +132,10 @@ public class FuelConsumptionGraph extends Activity {
 
         return data;
     }
+*/
 
-    //test for filter
+/* test for filter
+
     private DataList monthFill() {
 
         DataList data = new DataList("w");
@@ -147,6 +149,7 @@ public class FuelConsumptionGraph extends Activity {
 
         return data;
     }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

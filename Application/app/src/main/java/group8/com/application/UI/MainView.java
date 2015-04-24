@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.facebook.login.LoginManager;
 import org.achartengine.GraphicalView;
 
 import group8.com.application.Application.Session;
+import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
 import group8.com.application.UI.Graphs.DriverDistractionGraph;
 import group8.com.application.UI.Graphs.FuelConsumptionGraph;
@@ -31,6 +33,12 @@ public class MainView extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_display);
 
+        //checks if it's a new day
+        dailyMessage();
+
+        //test code
+//      NotificationSystem.toastShow(this);
+
         Button graphBtn = (Button) findViewById(R.id.graphBtn);
         Button testMeasurementBtn = (Button) findViewById(R.id.testMeasurementsBtn);
         TextView userTxt = (TextView) findViewById(R.id.username);
@@ -38,7 +46,7 @@ public class MainView extends Activity {
         graphBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), FuelConsumptionGraph.class);
+                Intent intent = new Intent(v.getContext(), ResultsView.class);
                 startActivityForResult(intent, 0);
             }
         });
@@ -90,6 +98,36 @@ public class MainView extends Activity {
                 return super.onOptionsItemSelected(item);
         }
 
+    }
+
+    /**
+     * Method for checking if
+     * it's a new day, if it is
+     * a new day, it saves the current
+     * date and executes the
+     * daily message
+     */
+
+
+    private void dailyMessage(){
+
+        //get SharedPreference
+        SharedPreferences prefs = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0);
+        long getNewDay = prefs.getLong(ConstantData.TAG_SAVEDAY, 0);
+
+        //check if it's a new day
+        if ((getNewDay + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
+
+            // Save current timestamp for next Check
+            getNewDay = System.currentTimeMillis();
+            SharedPreferences.Editor editor = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0).edit();
+            editor.putLong(ConstantData.TAG_SAVEDAY, getNewDay);
+            editor.commit();
+
+            //execute daily message
+            NotificationSystem.toastShow(this);
+            Log.d("MyApp",getNewDay + "");
+        }
     }
 }
 
