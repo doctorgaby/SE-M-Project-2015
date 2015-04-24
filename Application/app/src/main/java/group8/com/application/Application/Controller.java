@@ -58,14 +58,10 @@ public abstract class Controller {
  /*
  *
  * The following 4 methods are used to call an alerting activity defined in the alert package
- * 
  *
  */
 
     Context context = MainView.getContext();
-
-
-
 
 
     public void speedAlert() {
