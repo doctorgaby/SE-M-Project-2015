@@ -45,13 +45,13 @@ public class NotificationSystem{
      */
     private static String evaluateList(){
 
-
+/*
         data = Controller.eventGetPoints();
         speedScore = data.getMaxSpeed();
         brakeScore = data.getMaxBrake();
         DDLScore = data.getMaxDriverDistractionLevel();
         fuelScore = data.getMaxFuelConsumption();
-
+*/
 /*  Session test code
 
         int speedScore = Session.getSpeedScore();
@@ -60,12 +60,12 @@ public class NotificationSystem{
         int fuelScore = Session.getFuelConsumptionScore();
 */
 
-/*  Hardcoded testing values
+//  Hardcoded testing values
         int speedScore = 20;
         int brakeScore = 40;
         int DDLScore = 50;
         int fuelScore = 60;
-*/
+//
 
         if (speedScore < brakeScore && speedScore < DDLScore && speedScore < fuelScore){
             return ConstantData.TAG_SPEED;
@@ -96,19 +96,19 @@ public class NotificationSystem{
      */
 
     private static int getDifference(){
-
+/*
         data = Controller.eventGetPoints();
         speedScore =  data.getMaxSpeed();
         brakeScore = data.getMaxBrake();
         DDLScore = data.getMaxDriverDistractionLevel();
         fuelScore = data.getMaxFuelConsumption();
-
-/*  Hardcoded test values
+*/
+//  Hardcoded test values
         speedScore = 20;
         brakeScore = 40;
         DDLScore = 50;
         fuelScore = 60;
-*/
+
 
         int looper = 4;
         int pos = 4;
@@ -147,6 +147,9 @@ public class NotificationSystem{
         if (i == 3){
             set = 30;
         }
+        if (i == 4){
+            set = 40;
+        }
 
         return set;
     }
@@ -164,6 +167,9 @@ public class NotificationSystem{
         }
         if (i == 3){
             set = 40;
+        }
+        if (i ==4){
+            set = 50;
         }
 
 
@@ -188,7 +194,7 @@ public class NotificationSystem{
         String[] fuel = {"Fuel consumption score is under average","Your fuel upkeep is worsening", "Your results regarding fuel consumption are worrying",
                          "You should pay more attention to fuel consumption", "You are sufficient to burn the fuel of the entire planet"};
         String[] brake = {"Braking score is under average","It appears you brake too much", "Your brake score is getting worse",
-                          "Your results in regarding brakes are getting increasingly worse", "How about you lift your foot from the pedal every now and then"};
+                          "Your results regarding brakes are getting increasingly worse", "How about you lift your foot from the pedal every now and then"};
         String[] ddl = {"distraction level score is under average", "Keep focus on the road", "Your level of distraction is increasing",
                         "Your levels of distraction are worrying","Eyes on the road because i got my eyes on you ლ(ಠ_ಠლ)"};
 
