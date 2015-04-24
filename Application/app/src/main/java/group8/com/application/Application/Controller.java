@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
+import group8.com.application.UI.MainView;
 import group8.com.application.alert.BrakesActivity;
 import group8.com.application.alert.DistractionActivity;
 import group8.com.application.alert.FuelActivity;
@@ -57,48 +58,41 @@ public abstract class Controller {
  /*
  *
  * The following 4 methods are used to call an alerting activity defined in the alert package
- * 
- * Since controller class doesn't extend activity calling these methods on a context object 
- * thus we need to define a custom constructor
+ *
  */
 
-    public Controller (Context context) {  
-        mContext = context;
-    }
-
-
-    private Context mContext;
+    Context context = MainView.getContext();
 
 
     public void speedAlert() {
 
-        Intent intent = new Intent(mContext, SpeedActivity.class);
+        Intent intent = new Intent(context, SpeedActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        mContext.startActivity(intent);
+        context.startActivity(intent);
 
     }
     public void brakesAlert() {
 
         
-        Intent intent = new Intent(mContext, BrakesActivity.class);
+        Intent intent = new Intent(context, BrakesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        mContext.startActivity(intent);
+        context.startActivity(intent);
     }
     public void fuelAlert() {
 
-        Intent intent = new Intent(mContext, FuelActivity.class);
+        Intent intent = new Intent(context, FuelActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        mContext.startActivity(intent);
+        context.startActivity(intent);
     }
     public void DistractionAlert() {
 
-        Intent intent = new Intent(mContext, DistractionActivity.class);
+        Intent intent = new Intent(context, DistractionActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        mContext.startActivity(intent);
+        context.startActivity(intent);
  }
 
 }

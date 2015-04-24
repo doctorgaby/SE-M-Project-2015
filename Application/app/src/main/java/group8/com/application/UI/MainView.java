@@ -1,6 +1,7 @@
 package group8.com.application.UI;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,8 +29,20 @@ import group8.com.application.UI.Login.LoginView;
 
 public class MainView extends Activity {
 
+
+    // I added this block of code here since we need it here for alert methods in controller class to work
+    public static Context mContext;
+    public static Context getContext() {
+        return mContext;
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        mContext= getBaseContext(); //  I also added a base context here....needed for methods to work
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_display);
 
