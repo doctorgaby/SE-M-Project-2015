@@ -6,6 +6,7 @@ import android.content.Intent;
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
 import group8.com.application.UI.MainView;
+import group8.com.application.alert.AlternativeChart.VisualizationActivity;
 import group8.com.application.alert.BrakesActivity;
 import group8.com.application.alert.DistractionActivity;
 import group8.com.application.alert.FuelActivity;
@@ -95,4 +96,17 @@ public abstract class Controller {
         context.startActivity(intent);
  }
 
+ /*
+ * The following method are is used to call an alternative visualActivity
+ */
+
+    public void visualData() {
+
+
+        Intent intent = new Intent(context, VisualizationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+
+
+    }
 }

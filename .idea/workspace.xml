@@ -6,13 +6,9 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5de78458-8ed2-469d-91ff-7ba9af59605d" name="Default" comment="An alternative Chart:&#10;Added an alternative visualization library and created a new activity for it -&#10;that can be called from the controller by method- public void visualData()">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/mpandroidchartlibrary_2_0_9__1_.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/app/src/main/res/layout/visualization.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/Application/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/DistractionActivity.java" afterPath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/DistractionActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/main.iml" afterPath="$PROJECT_DIR$/Application/app/src/main/main.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" id="5de78458-8ed2-469d-91ff-7ba9af59605d" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/AlternativeChart/VisualizationActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/Application/Controller.java" afterPath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/Application/Controller.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SE-M-Project-2015.iws" />
@@ -49,8 +45,8 @@
       <file leaf-file-name="Controller.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/Application/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5951087" vertical-offset="1447" max-vertical-offset="2006">
-              <caret line="98" column="3" selection-start-line="98" selection-start-column="3" selection-end-line="98" selection-end-column="3" />
+            <state vertical-scroll-proportion="0.30053666" vertical-offset="1447" max-vertical-offset="2006">
+              <caret line="95" column="19" selection-start-line="95" selection-start-column="18" selection-end-line="95" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -726,10 +722,6 @@
               <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mpandroidchartlibrary-2-0-9 (1).jar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1163,7 +1155,11 @@
       <created>1429850240504</created>
       <updated>1429850240504</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="An alternative Chart:&#10;Added an alternative visualization library and created a new activity for it -&#10;that can be called from the controller by method- public void visualData()">
+      <created>1430028878240</created>
+      <updated>1430028878240</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1192,7 +1188,7 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32814237" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3253833" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3253833" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1206,7 +1202,7 @@
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23676248" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23676248" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1638,8 +1634,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/Application/Controller.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5951087" vertical-offset="1447" max-vertical-offset="2006">
-          <caret line="98" column="3" selection-start-line="98" selection-start-column="3" selection-end-line="98" selection-end-column="3" />
+        <state vertical-scroll-proportion="0.30053666" vertical-offset="1447" max-vertical-offset="2006">
+          <caret line="95" column="19" selection-start-line="95" selection-start-column="18" selection-end-line="95" selection-end-column="19" />
           <folding />
         </state>
       </provider>
