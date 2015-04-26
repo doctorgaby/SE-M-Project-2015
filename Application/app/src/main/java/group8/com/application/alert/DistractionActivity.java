@@ -51,7 +51,6 @@ public class DistractionActivity extends Activity {
         cdt.start();
 
         // Warning sound
-        // Warning sound
         MediaPlayer mpAlert = MediaPlayer.create(this,R.raw.audio4);
         MediaPlayer mpAlert2 = MediaPlayer.create(this,R.raw.sounds1);
 

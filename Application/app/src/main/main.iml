@@ -15,6 +15,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="libs" level="project" />
     <orderEntry type="module" module-name="androidTest" />
+    <orderEntry type="library" name="mpandroidchartlibrary-2-0-9 (1)" level="project" />
   </component>
 </module>
 
