@@ -23,6 +23,14 @@ import group8.com.application.UI.Login.LoginView;
 
 
 public class MainView extends Activity {
+        int sp = 0;
+        int dd = 0;
+        int fc = 0;
+        int bk = 0;
+        static int max;
+
+        private GraphicalView bView;
+        private LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,7 @@ public class MainView extends Activity {
 
         Button graphBtn = (Button) findViewById(R.id.graphBtn);
         Button testMeasurementBtn = (Button) findViewById(R.id.testMeasurementsBtn);
+        Button updateBtn = (Button) findViewById(R.id.updateBtn);
         TextView userTxt = (TextView) findViewById(R.id.username);
 
         graphBtn.setOnClickListener(new View.OnClickListener() {
@@ -48,14 +57,28 @@ public class MainView extends Activity {
                 startActivityForResult(intent, 0);
             }
         });
-        // creates the new activity in the same view
-        BarChart bar = new BarChart();
-        GraphicalView bView = bar.getView(this);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
-        layout.addView(bView);
 
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+ //               repaintGraph();
+                layout.removeView(bView);
+                sp = 50+10;
+                dd = 50+10;
+                fc = 50+10;
+                bk = 50+10;
+                max = (sp + bk + dd + fc) / 2;
+                doGraph(sp, dd,fc, bk);
+                bView.repaint();
+                bView.refreshDrawableState();
+            }
+        });
+        // creates the new activity in the same view
+        doGraph(sp, dd, fc, bk);
         userTxt.setText(Session.getUserName());
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,6 +110,29 @@ public class MainView extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+    }
+
+    public void doGraph(int speed, int fuelconsumption, int driverdistraction, int brake) {
+
+        BarChart bar = new BarChart();
+        bView = bar.getView(this, speed, fuelconsumption, driverdistraction, brake);
+            layout = (LinearLayout) findViewById(R.id.chart);
+            layout.addView(bView);
+
+    }
+
+    public void repaintGraph(){
+
+        layout.removeView(bView);
+        sp = Session.getSpeedScore();
+        dd = Session.getDriverDistractionLevelScore();
+        fc = Session.getFuelConsumptionScore();
+        bk = Session.getBrakeScore();
+        doGraph(sp, dd,fc, bk);
+        max = (sp + bk + dd + fc) / 2;
+        bView.repaint();
+        bView.refreshDrawableState();
 
     }
 }

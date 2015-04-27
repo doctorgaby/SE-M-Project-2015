@@ -17,7 +17,6 @@ import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
 import group8.com.application.Application.Controller;
-import group8.com.application.Application.Session;
 import group8.com.application.Model.DataList;
 import group8.com.application.R;
 import group8.com.application.UI.ResultsView;
