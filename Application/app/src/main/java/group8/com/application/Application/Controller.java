@@ -36,6 +36,16 @@ public abstract class Controller {
     }
     /* END - Methods for MeasurementsFactory */
 
+    /* Methods for login and register*/
+    public static int attemptLogin(String tag, String username, String password) {
+        return DBHandler.attemptLogin(tag, username, password);
+    }
+
+    public static int registerUser(String username, String password) {
+        return DBHandler.registerUser(username, password);
+    }
+    /* END - Methods for login and register*/
+
     public static DataList eventGetMeasurements() {
         return DBHandler.getMeasurements(Session.getUserName());
     }

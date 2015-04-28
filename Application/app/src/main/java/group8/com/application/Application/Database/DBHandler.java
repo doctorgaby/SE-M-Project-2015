@@ -11,11 +11,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import group8.com.application.Foundation.JSONParser;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Model.DataList;
 
 public abstract class DBHandler {
     //private static JSONParser jsonParser = new JSONParser();
+
+    //                              **************************
+    //                              *****                *****
+    //                              ***** Getter Methods *****
+    //                              *****                *****
+    //                              **************************
 
     /**
      * @param
@@ -103,36 +110,99 @@ public abstract class DBHandler {
         return list;
     }
 
+    //                              **************************
+    //                              *****                *****
+    //                              ***** User Methods   *****
+    //                              *****                *****
+    //                              **************************
+
     /**
-     * @param
-     */
-    public static void setMeasurements(String user) {
-        /*List<NameValuePair> params = new ArrayList<>();
-        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETMEASUREMENTS));
-        params.add(new BasicNameValuePair("username", user));
-        Log.d("getMeasurements!", "starting");
-        // getting measurement details by making HTTP request
+     * Verifies the username and password.
+     *
+     * @return 0, if the login was unsuccessful.
+     *         1, if the login was successful.
+     * */
+    public static int attemptLogin(String tag, String username, String password) {
+
+        // Variables
+        JSONParser jsonParser = new JSONParser();
         JSONObject json = new JSONObject();
+        int success;
+
+        // Attempting to register user
         try {
-            json = new doExecuteValues(params).execute().get();
-        } catch (Exception e) {
-            Log.e("DBHandler Error: ", "Problem with get Measurements.");
+
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("action", tag));
+            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("password", password));
+            Log.d("request!", "starting");
+
+            json = jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params); // getting product details by making HTTP request
+            Log.d("Login attempt", json.toString());                                   // check your log for json response
+            success = json.getInt(ConstantData.TAG_SUCCESS);                           // json success tag
+
+        } catch (JSONException e) {
+            success = 0;
         }
 
-        DataList list = new DataList("m");
-        jsonToList(list, json);*/
+        // Log the results to the console
+        if(success == 1)
+            Log.d("Login Successful!", json.toString());
+        else try {
+            Log.d("Login Failure!", json.getString(ConstantData.TAG_MESSAGE));
+        } catch(JSONException ex) {
+            // Can't get json String
+        }
 
-        List<NameValuePair> params = new ArrayList<>();
-
-        List<NameValuePair> speedList = new ArrayList<>();
-        List<NameValuePair> fuelConsumptionList = new ArrayList<>();
-        List<NameValuePair> brakeList = new ArrayList<>();
-        List<NameValuePair> driverDistractionLevelList = new ArrayList<>();
-
-
+        return success;
 
     }
 
+    /**
+     * Verifies the username and password.
+     *
+     * @return 0, if the login was unsuccessful.
+     *         1, if the login was successful.
+     * */
+    public static int registerUser(String username, String password) {
+
+        // Variables
+        JSONParser jsonParser = new JSONParser();
+        JSONObject json = new JSONObject();
+        int success;
+
+        // Attempting to register user
+        try {
+
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<>();
+            params.add(new BasicNameValuePair("action", ConstantData.TAG_ACTION_REGISTER));
+            params.add(new BasicNameValuePair("username", username));
+            params.add(new BasicNameValuePair("password", password));
+            Log.d("request!", "starting");
+
+            json = jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params); //Posting user data to script
+            Log.d("Registering attempt", json.toString());                             // full json response
+            success = json.getInt(ConstantData.TAG_SUCCESS);                           // json success element
+
+        } catch (JSONException e) {
+            success = 0;
+        }
+
+        // Log the results to the console
+        if(success == 1)
+            Log.d("Login Successful!", json.toString());
+        else try {
+            Log.d("Login Failure!", json.getString(ConstantData.TAG_MESSAGE));
+        } catch(JSONException ex) {
+            // Can't get json String
+        }
+
+        return success;
+
+    }
 
     //                              **************************
     //                              *****                *****
