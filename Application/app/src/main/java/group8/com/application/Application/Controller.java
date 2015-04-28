@@ -14,9 +14,6 @@ import group8.com.application.alert.SpeedActivity;
 
 public abstract class Controller {
 
-
-
-
     /* Methods for MeasurementsFactory */
     protected static void eventSpeedChanged(double speed) {
         Session.setSpeed(speed);

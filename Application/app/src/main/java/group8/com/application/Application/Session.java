@@ -71,7 +71,7 @@ public abstract class Session {
      */
     public static int getSpeedScore() {
 
-        return currentPoints.getLastSpeed().getValue();
+        return currentPoints.getSpeed(currentPoints.getSpeedSize() - 1).getValue();
 
     }
 
@@ -82,7 +82,7 @@ public abstract class Session {
      */
     public static int getFuelConsumptionScore() {
 
-        return currentPoints.getLastFuelConsumption().getValue();
+        return currentPoints.getFuelConsumption(currentPoints.getFuelConsumptionSize() - 1).getValue();
 
     }
 
@@ -93,7 +93,7 @@ public abstract class Session {
      */
     public static int getBrakeScore() {
 
-        return currentPoints.getLastBrake().getValue();
+        return currentPoints.getBrake(currentPoints.getBrakeSize() - 1).getValue();
 
     }
 
@@ -104,7 +104,7 @@ public abstract class Session {
      */
     public static int getDriverDistractionLevelScore() {
 
-        return currentPoints.getLastDriverDistractionLevel().getValue();
+        return currentPoints.getDriverDistractionLevel(currentPoints.getDriverDistractionLevelSize() - 1).getValue();
 
     }
     /* END - GRADING AND POINTS RELATED GETTERS */
@@ -144,27 +144,28 @@ public abstract class Session {
     /* MEASUREMENT RELATED GETTERS */
     public static int getLastSpeed() {
 
-        return currentMeasurements.getLastSpeed().getValue();
+        return currentMeasurements.getSpeed(currentMeasurements.getSpeedSize() - 1).getValue();
 
     }
 
     public static int getLastFuelConsumption() {
 
-        return currentMeasurements.getLastFuelConsumption().getValue();
+        return currentMeasurements.getFuelConsumption(currentMeasurements.getFuelConsumptionSize() - 1).getValue();
 
     }
 
     public static int getLastBrake() {
 
-        return currentMeasurements.getLastBrake().getValue();
+        return currentMeasurements.getBrake(currentMeasurements.getBrakeSize() - 1).getValue();
 
     }
 
     public static int getLastDriverDistractionLevel() {
 
-        return currentMeasurements.getLastDriverDistractionLevel().getValue();
+        return currentMeasurements.getDriverDistractionLevel(currentMeasurements.getDriverDistractionLevelSize() - 1).getValue();
 
     }
+
     /* MEASUREMENT RELATED GETTERS */
 
 }

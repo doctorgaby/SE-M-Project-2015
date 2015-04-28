@@ -9,6 +9,7 @@ import group8.com.application.Foundation.TimeComparator;
 import group8.com.application.Foundation.ValueComparator;
 
 public class DataList {
+
     private List<DataObject> speed;
     private List<DataObject> fuelConsumption;
     private List<DataObject> brake;
@@ -67,29 +68,39 @@ public class DataList {
         this.brake.add(new DataObject(time, brake));
     }
 
+
 //Place GETTERS -- These getters get the object from the defined list from a specific position.
-    public DataObject getLastSpeed() {
 
-        return speed.get(speed.size() - 1);
-
+    public DataObject getSpeed(int index) {
+        return speed.get(index);
     }
 
-    public DataObject getLastFuelConsumption() {
-
-        return fuelConsumption.get(fuelConsumption.size() - 1);
-
+    public DataObject getFuelConsumption(int index) {
+        return fuelConsumption.get(index);
     }
 
-    public DataObject getLastBrake() {
-
-        return brake.get(brake.size() - 1);
-
+    public DataObject getBrake(int index) {
+        return brake.get(index);
     }
 
-    public DataObject getLastDriverDistractionLevel() {
+    public DataObject getDriverDistractionLevel(int index) {
+        return driverDistractionLevel.get(index);
+    }
 
-        return driverDistractionLevel.get(driverDistractionLevel.size() - 1);
+    public int getSpeedSize() {
+        return speed.size();
+    }
 
+    public int getFuelConsumptionSize() {
+        return fuelConsumption.size();
+    }
+
+    public int getBrakeSize() {
+        return brake.size();
+    }
+
+    public int getDriverDistractionLevelSize() {
+        return driverDistractionLevel.size();
     }
 
 //GETMAX -- These getters get the maxValue of each list depending on what the user wants. The user can also get the
