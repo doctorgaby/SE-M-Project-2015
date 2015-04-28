@@ -57,7 +57,7 @@ public class DriverDistractionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildDdlGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis(), (int) System.currentTimeMillis() - 60480000));
+                buildDdlGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 60480));
                 plot.redraw();
             }
         });
@@ -67,7 +67,7 @@ public class DriverDistractionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildDdlGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis(), (int) System.currentTimeMillis() - 262800000));
+                buildDdlGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 262800));
                 plot.redraw();
             }
         });
