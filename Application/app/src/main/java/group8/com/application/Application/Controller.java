@@ -94,7 +94,7 @@ public abstract class Controller {
  }
 
  /*
- * The following method are is used to call an alternative visualActivity
+ * The following method are is used to call the alternative visualActivity
  */
 
     public void visualData() {

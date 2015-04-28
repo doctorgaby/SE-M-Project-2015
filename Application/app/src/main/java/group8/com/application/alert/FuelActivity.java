@@ -1,4 +1,3 @@
-
 package group8.com.application.alert;
 import android.app.Activity;
 import android.content.Intent;
