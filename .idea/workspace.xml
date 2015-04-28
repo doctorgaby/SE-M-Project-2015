@@ -6,16 +6,7 @@
     </shared>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5de78458-8ed2-469d-91ff-7ba9af59605d" name="Default" comment="Fixed some activity errors in the manifest">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/Application/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/BrakesActivity.java" afterPath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/BrakesActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/Application/Controller.java" afterPath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/Application/Controller.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/DistractionActivity.java" afterPath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/DistractionActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/FuelActivity.java" afterPath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/FuelActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/SpeedActivity.java" afterPath="$PROJECT_DIR$/Application/app/src/main/java/group8/com/application/alert/SpeedActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/res/layout/activity_brakes.xml" afterPath="$PROJECT_DIR$/Application/app/src/main/res/layout/activity_brakes.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/res/layout/activity_distraction.xml" afterPath="$PROJECT_DIR$/Application/app/src/main/res/layout/activity_distraction.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Application/app/src/main/res/layout/activity_fuel.xml" afterPath="$PROJECT_DIR$/Application/app/src/main/res/layout/activity_fuel.xml" />
+    <list default="true" id="5de78458-8ed2-469d-91ff-7ba9af59605d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SE-M-Project-2015.iws" />
@@ -1205,7 +1196,11 @@
       <created>1430028878240</created>
       <updated>1430028878240</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fixed some activity errors in the manifest">
+      <created>1430226701271</created>
+      <updated>1430226701271</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
