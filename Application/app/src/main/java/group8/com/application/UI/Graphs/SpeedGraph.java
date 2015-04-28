@@ -28,8 +28,13 @@ import group8.com.application.UI.ResultsView;
 public class SpeedGraph extends Activity {
 
     private XYPlot plot;
-    private DataList data = Controller.eventGetMeasurements();
+    protected DataList data;
     int xMin, xMax, xRange, yMin, yMax, yRange;
+
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,7 @@ public class SpeedGraph extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildSpeedGraph(data);
+        buildSpeedGraph(data = Controller.eventGetMeasurements());
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);
@@ -45,7 +50,7 @@ public class SpeedGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildSpeedGraph(data);
+                buildSpeedGraph(data = Controller.eventGetMeasurements());
                 plot.redraw();
             }
         });
@@ -55,7 +60,7 @@ public class SpeedGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildSpeedGraph(weekFill());
+                buildSpeedGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 60480));
                 plot.redraw();
             }
         });
@@ -65,7 +70,7 @@ public class SpeedGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildSpeedGraph(monthFill());
+                buildSpeedGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 262800));
                 plot.redraw();
             }
         });
@@ -146,7 +151,7 @@ public class SpeedGraph extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu; this adds items to the action bar if it is prD esent.
         getMenuInflater().inflate(R.menu.action_bar, menu);
         return true;
     }

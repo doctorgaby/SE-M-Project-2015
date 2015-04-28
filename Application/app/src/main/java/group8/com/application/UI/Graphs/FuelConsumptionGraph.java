@@ -20,6 +20,7 @@ import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.DataList;
 import group8.com.application.R;
+import group8.com.application.UI.NotificationSystem;
 import group8.com.application.UI.ResultsView;
 
 /**
@@ -28,7 +29,7 @@ import group8.com.application.UI.ResultsView;
 public class FuelConsumptionGraph extends Activity {
 
     private XYPlot plot;
-    private DataList data = Controller.eventGetMeasurements(); // Temporary
+    protected DataList data;
     int xMin, xMax, xRange, yMin, yMax, yRange;
 
     @Override
@@ -37,7 +38,7 @@ public class FuelConsumptionGraph extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildFcGraph(data);
+        buildFcGraph(Controller.eventGetMeasurements());
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);
@@ -45,7 +46,7 @@ public class FuelConsumptionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildFcGraph(data);
+                buildFcGraph(data = Controller.eventGetMeasurements());
                 plot.redraw();
             }
         });
@@ -55,7 +56,7 @@ public class FuelConsumptionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildFcGraph(weekFill());
+                buildFcGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 60480));
                 plot.redraw();
             }
         });
@@ -65,7 +66,7 @@ public class FuelConsumptionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildFcGraph(monthFill());
+                buildFcGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 262800));
                 plot.redraw();
             }
         });
@@ -115,7 +116,9 @@ public class FuelConsumptionGraph extends Activity {
         plot.addSeries(fuelConsumptionSeries, fuelConsumptionFormat);
 
     }
-    //test for filter
+
+/* test for filter
+
     private DataList weekFill(){
 
         DataList data = new DataList("w");
@@ -129,8 +132,10 @@ public class FuelConsumptionGraph extends Activity {
 
         return data;
     }
+*/
 
-    //test for filter
+/* test for filter
+
     private DataList monthFill() {
 
         DataList data = new DataList("w");
@@ -144,6 +149,7 @@ public class FuelConsumptionGraph extends Activity {
 
         return data;
     }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

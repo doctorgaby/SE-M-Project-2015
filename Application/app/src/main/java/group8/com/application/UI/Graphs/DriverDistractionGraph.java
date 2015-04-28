@@ -28,7 +28,7 @@ public class DriverDistractionGraph extends Activity {
 
 
     private XYPlot plot;
-    private DataList data = Controller.eventGetMeasurements(); //Temporary;
+    protected DataList data;
     int xMin, xMax, xRange, yMin, yMax, yRange;
 
     @Override
@@ -38,7 +38,7 @@ public class DriverDistractionGraph extends Activity {
 
 
         //build a default graph from session
-        buildDdlGraph(data);
+        buildDdlGraph(data = Controller.eventGetMeasurements());
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);
@@ -46,7 +46,7 @@ public class DriverDistractionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildDdlGraph(data);
+                buildDdlGraph(data = Controller.eventGetMeasurements());
                 plot.redraw();
             }
         });
@@ -56,7 +56,7 @@ public class DriverDistractionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildDdlGraph(weekFill());
+                buildDdlGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 60480));
                 plot.redraw();
             }
         });
@@ -66,7 +66,7 @@ public class DriverDistractionGraph extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildDdlGraph(monthFill());
+                buildDdlGraph(data = Controller.eventGetFilteredMeasurements( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 262800));
                 plot.redraw();
             }
         });

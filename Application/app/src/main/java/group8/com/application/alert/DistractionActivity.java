@@ -1,11 +1,11 @@
-
 package group8.com.application.alert;
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import group8.com.application.R;
 
@@ -13,14 +13,23 @@ import group8.com.application.R;
 public class DistractionActivity extends Activity {
 
 
-    CountDownTimer cdt;  // Countdown timer that specifies how long the activity is visible
+    // Assigning variables
+    CountDownTimer cdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Remove title bar
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_distraction);
 
-        cdt = new CountDownTimer(3000, 1000) {  //The 3000 is 3 seconds
+        // Countdown timer
+        cdt = new CountDownTimer(4000, 1000) {  //4 seconds
 
             @Override
             public void onTick(long millisUntilFinished) {
@@ -30,46 +39,21 @@ public class DistractionActivity extends Activity {
             @Override
             public void onFinish() {
 
-                 // Defines a new activity to change to- it is supposed to chane to the main view when program
-                // but for now for demonstration purposes it will change to another activity untill main view is implemente
+                //Intent nextScreen = new Intent(getApplicationContext(), mainView.class);
 
-                Intent nextScreen = new Intent(getApplicationContext(), BrakesActivity.class); // Change to main activity
+                finish ();
 
-                // starting new activity
-                startActivity(nextScreen);
             }
         };
 
         //Start the timer
         cdt.start();
 
+        // Warning sound
+        MediaPlayer mpAlert = MediaPlayer.create(this,R.raw.audio4);
+        MediaPlayer mpAlert2 = MediaPlayer.create(this,R.raw.sounds1);
 
-
-
-
-
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_distraction, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        mpAlert.start();
+        mpAlert2.start();
     }
 }

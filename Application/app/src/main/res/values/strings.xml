@@ -13,7 +13,12 @@
     <string name="current">Current</string>
     <string name="one_week">One Week</string>
     <string name="one_month">One Month</string>
-
     <string name="facebook_app_id">1569479389989613</string>
+    <string name="title_activity_brakes">BrakesActivity</string>
+    <string name="title_activity_fuel">FuelActivity</string>
+    <string name="title_activity_speed">SpeedActivity</string>
+    <string name="title_activity_distraction">DistractionActivity</string>
+    <string name="title_activity_visualization">VisualizationActivity</string>
+
 
 </resources>
