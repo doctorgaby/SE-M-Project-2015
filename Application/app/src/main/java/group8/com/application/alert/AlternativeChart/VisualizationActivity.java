@@ -1,3 +1,4 @@
+/*
 package group8.com.application.alert.AlternativeChart;
 
 import android.app.Activity;
@@ -99,4 +100,4 @@ public class VisualizationActivity extends Activity {
         cdt.start();
     }
 
-}
+}*/

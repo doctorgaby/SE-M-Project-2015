@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,14 +19,19 @@ import com.facebook.login.LoginManager;
 import org.achartengine.GraphicalView;
 
 import group8.com.application.Application.Session;
-import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
-import group8.com.application.UI.Graphs.DriverDistractionGraph;
-import group8.com.application.UI.Graphs.FuelConsumptionGraph;
 import group8.com.application.UI.Login.LoginView;
 
 
+
 public class MainView extends Activity {
+
+    public static Context mContext;
+    public static Context getContext(){
+
+        return mContext;
+    }
+
         int sp = 0;
         int dd = 0;
         int fc = 0;
@@ -37,28 +41,11 @@ public class MainView extends Activity {
         private GraphicalView bView;
         private LinearLayout layout;
 
-
-    // I added this block of code here since we need it here for alert methods in controller class to work
-    public static Context mContext;
-    public static Context getContext() {
-        return mContext;
-    }
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        mContext= getBaseContext(); //  I also added a base context here....needed for methods to work
-
         super.onCreate(savedInstanceState);
+        mContext = getBaseContext();
         setContentView(R.layout.main_display);
-
-        //checks if it's a new day
-        dailyMessage();
-
-        //test code
-//      NotificationSystem.toastShow(this);
 
         Button graphBtn = (Button) findViewById(R.id.graphBtn);
         Button testMeasurementBtn = (Button) findViewById(R.id.testMeasurementsBtn);
@@ -80,11 +67,6 @@ public class MainView extends Activity {
                 startActivityForResult(intent, 0);
             }
         });
-        // creates the new activity in the same view
-        BarChart bar = new BarChart();
-        GraphicalView bView = bar.getView(this);
-        LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
-        layout.addView(bView);
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,36 +144,6 @@ public class MainView extends Activity {
         bView.repaint();
         bView.refreshDrawableState();
 
-    }
-
-    /**
-     * Method for checking if
-     * it's a new day, if it is
-     * a new day, it saves the current
-     * date and executes the
-     * daily message
-     */
-
-
-    private void dailyMessage(){
-
-        //get SharedPreference
-        SharedPreferences prefs = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0);
-        long getNewDay = prefs.getLong(ConstantData.TAG_SAVEDAY, 0);
-
-        //check if it's a new day
-        if ((getNewDay + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
-
-            // Save current timestamp for next Check
-            getNewDay = System.currentTimeMillis();
-            SharedPreferences.Editor editor = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0).edit();
-            editor.putLong(ConstantData.TAG_SAVEDAY, getNewDay);
-            editor.commit();
-
-            //execute daily message
-            NotificationSystem.toastShow(this);
-            Log.d("MyApp",getNewDay + "");
-        }
     }
 }
 

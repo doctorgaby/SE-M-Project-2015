@@ -30,7 +30,7 @@ public class BarChart extends Activity {
         bk.add(2.5, brake);
         dd.add(3.5, driverdistraction);
 
-
+        //add the XY series to the dataset
         dataset.addSeries(sp);
         dataset.addSeries(fc);
         dataset.addSeries(bk);
@@ -103,6 +103,7 @@ public class BarChart extends Activity {
         renderer4.setDisplayChartValues(true);
         renderer4.setChartValuesTextSize(70);
 
+          //add the single renderers to the multiple renderer
         mRenderer.addSeriesRenderer(renderer);
         mRenderer.addSeriesRenderer(renderer2);
         mRenderer.addSeriesRenderer(renderer3);
