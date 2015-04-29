@@ -101,6 +101,7 @@ public abstract class Controller {
 
         context.startActivity(intent);
  }
+    //
     public void setMainView() {
 
         Intent intent = new Intent(context, MainView.class);
