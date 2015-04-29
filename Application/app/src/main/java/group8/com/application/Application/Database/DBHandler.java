@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import group8.com.application.Application.Session;
 import group8.com.application.Foundation.JSONParser;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Model.DataList;
@@ -108,6 +109,41 @@ public abstract class DBHandler {
         DataList list = new DataList("p");
         jsonToList(list, json);
         return list;
+    }
+
+    //                              **************************
+    //                              *****                *****
+    //                              ***** Setter Methods *****
+    //                              *****                *****
+    //                              **************************
+
+    /**
+     * @param
+     */
+    public static void setMeasurements(String user) {
+
+        JSONObject json = new JSONObject();
+        JSONObject list = Session.getMeasurementsJson();
+        List<NameValuePair> params = new ArrayList<>();
+
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_SETMEASUREMENTS));
+        params.add(new BasicNameValuePair("username", user));
+        params.add(new BasicNameValuePair("list", list.toString()));
+
+        Log.d("list", list.toString());
+        Log.d("params", params.toString());
+        String success = "error";
+
+        try {
+            json = new doExecuteValues(params).execute().get(); // jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params);
+            success = "" + json.getInt(ConstantData.TAG_SUCCESS);
+        } catch(Exception ex) {
+            // Could not execute request
+            Log.d("DBHandler.java", "Exception in setMeasurements(): " + ex.getMessage());
+        }
+
+        Log.d("success", success);
+
     }
 
     //                              **************************
