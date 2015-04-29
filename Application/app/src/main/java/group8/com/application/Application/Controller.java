@@ -101,7 +101,13 @@ public abstract class Controller {
 
         context.startActivity(intent);
  }
+    public void setMainView() {
 
+        Intent intent = new Intent(context, MainView.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        context.startActivity(intent);
+    }
  /*
  * The following method are is used to call the alternative visualActivity
  */
