@@ -1,4 +1,3 @@
-
 package group8.com.application.alert;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,8 +12,8 @@ import group8.com.application.R;
 
 public class BrakesActivity extends Activity {
 
-
-    CountDownTimer cdt;  // Countdown timer that specifies how long the activity is visible
+    // Assigning variables
+    CountDownTimer cdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +26,9 @@ public class BrakesActivity extends Activity {
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
         setContentView(R.layout.activity_brakes);
 
+        // Countdown timer
         cdt = new CountDownTimer(4000, 1000) {  //4 seconds
 
             @Override
@@ -52,13 +51,11 @@ public class BrakesActivity extends Activity {
 
         // Warning sound
         MediaPlayer mpAlert = MediaPlayer.create(this,R.raw.audio3);
+        MediaPlayer mpAlert2 = MediaPlayer.create(this,R.raw.sounds1);
 
         mpAlert.start();
-
+        mpAlert2.start();
 
 
     }
-
-
-
 }

@@ -13,16 +13,10 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import group8.com.application.Application.Session;
-
 public class BarChart extends Activity {
 
-    int speed = Session.getSpeedScore();
-    int fuelconsumption = Session.getFuelConsumptionScore();
-    int driverdistraction = Session.getDriverDistractionLevelScore();
-    int brake = Session.getBrakeScore();
-
-    public GraphicalView getView(Context context) {
+    private GraphicalView mChartView;
+    public GraphicalView getView(Context context, int speed, int fuelconsumption, int driverdistraction, int brake) {
 
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
         XYSeries sp = new XYSeries("Speed");
@@ -30,76 +24,92 @@ public class BarChart extends Activity {
         XYSeries dd = new XYSeries("Driver Distraction");
         XYSeries bk = new XYSeries("Brake");
 
-        sp.add(0, speed);
-        fc.add(1, fuelconsumption);
-        dd.add(2, driverdistraction);
-        bk.add(3, brake);
 
+        sp.add(0.5, speed);
+        fc.add(1.5, fuelconsumption);
+        bk.add(2.5, brake);
+        dd.add(3.5, driverdistraction);
+
+        //add the XY series to the dataset
         dataset.addSeries(sp);
         dataset.addSeries(fc);
-        dataset.addSeries(dd);
         dataset.addSeries(bk);
+        dataset.addSeries(dd);
+
 
         XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-        mRenderer.setChartTitle("Your Points");
-        // mRenderer.setXTitle("");
-        // mRenderer.setYTitle("");
-        mRenderer.setAxesColor(Color.BLACK);
-        mRenderer.setLabelsColor(Color.BLACK);
+        mRenderer.setChartTitle("Your Total Points");
+        mRenderer.setChartTitleTextSize(70);
+        //mRenderer.setXTitle("Measurements");
+        //mRenderer.setYTitle("Points");
+        // mRenderer.setAxisTitleTextSize(80);
+        //mRenderer.setAxesColor(Color.BLACK);
+        mRenderer.setXAxisColor(Color.TRANSPARENT);
+        mRenderer.setYAxisColor(Color.WHITE);
         mRenderer.setApplyBackgroundColor(true);
-        mRenderer.setBackgroundColor(Color.LTGRAY);
-        mRenderer.setMarginsColor(Color.WHITE);
-        mRenderer.setZoomEnabled(true);
-        mRenderer.setZoomButtonsVisible(true);
-        mRenderer.setBarSpacing(0.0f);
-//      mRenderer.setMargins(new int[] {20, 30, 15, 0});
-        mRenderer.setAxisTitleTextSize(16);
-        mRenderer.setChartTitleTextSize(20);
-        mRenderer.setLabelsTextSize(15);
-        mRenderer.setLegendTextSize(15);
-        mRenderer.addXTextLabel(1, "Speed");
-        mRenderer.addXTextLabel(2, "Fuel Consumption");
-        mRenderer.addXTextLabel(3, "Driver Distraction");
-        mRenderer.addXTextLabel(4, "Brake");
-        mRenderer.setBarWidth(200);
-//      mRenderer.setXAxisMax(9);
-        mRenderer.setXAxisMin(0);
+        mRenderer.setBackgroundColor(Color.TRANSPARENT);
+        mRenderer.setMargins(new int[]{60, 60, 60, 60});
+        mRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
+        //mRenderer.setMarginsColor(Color.WHITE);
+
+        mRenderer.setZoomEnabled(true, true);
+        mRenderer.setExternalZoomEnabled(true);
+        mRenderer.setPanEnabled(false, true);
+        //mRenderer.setZoomButtonsVisible(true);
+        mRenderer.setBarWidth(150);
+        mRenderer.setBarSpacing(0.5);
+
+        mRenderer.setLabelsTextSize(30);
+        mRenderer.setLabelsColor(Color.WHITE);
+        //mRenderer.setLegendTextSize(30);
+        mRenderer.setShowLegend(false);
+        mRenderer.addXTextLabel(0.5, "Speed");
+        mRenderer.addXTextLabel(1.5, "Fuel Consumption");
+        mRenderer.addXTextLabel(2.5, "Brake");
+        mRenderer.addXTextLabel(3.5, "Driver Distraction");
+
+        mRenderer.setXAxisMax(ResultsView.BIND_AUTO_CREATE);
+        mRenderer.setShowGridY(true);
+        mRenderer.setShowGridX(true);
+        mRenderer.setShowAxes(true);
+
         mRenderer.setYAxisMin(0);
+        mRenderer.setYAxisMax(MainView.max);
+        mRenderer.setXAxisMin(0);
+        mRenderer.setXAxisMax(4);
+       // mRenderer.setXLabelsAlign(Paint.Align.LEFT);
+        mRenderer.setXLabelsColor(Color.WHITE);
         mRenderer.setYLabelsAlign(Paint.Align.RIGHT);
-        mRenderer.setXLabelsColor(Color.BLACK);
-        mRenderer.setYLabelsColor(0, Color.BLACK);
         mRenderer.setXLabels(0);
+        mRenderer.setYLabelsColor(0, Color.WHITE);
 
         XYSeriesRenderer renderer = new XYSeriesRenderer();
-        renderer.setColor(Color.parseColor("#00AA00"));
+        renderer.setColor(Color.parseColor("#a300ff"));
         renderer.setDisplayChartValues(true);
-        renderer.setChartValuesTextSize(150);
+        renderer.setChartValuesTextSize(70);
 
         XYSeriesRenderer renderer2 = new XYSeriesRenderer();
-        renderer2.setColor(Color.parseColor("#666600"));
+        renderer2.setColor(Color.parseColor("#0033ff"));
         renderer2.setDisplayChartValues(true);
         renderer2.setChartValuesTextSize(70);
 
         XYSeriesRenderer renderer3 = new XYSeriesRenderer();
-        renderer3.setColor(Color.parseColor("#FF0000"));
+        renderer3.setColor(Color.parseColor("#ff4d01"));
         renderer3.setDisplayChartValues(true);
-        renderer3.setChartValuesTextSize(100);
+        renderer3.setChartValuesTextSize(70);
 
         XYSeriesRenderer renderer4 = new XYSeriesRenderer();
-        renderer4.setColor(Color.parseColor("#0033ff"));
+        renderer4.setColor(Color.parseColor("#ffff00"));
         renderer4.setDisplayChartValues(true);
-        renderer4.setChartValuesTextSize(50);
+        renderer4.setChartValuesTextSize(70);
 
+          //add the single renderers to the multiple renderer
         mRenderer.addSeriesRenderer(renderer);
         mRenderer.addSeriesRenderer(renderer2);
         mRenderer.addSeriesRenderer(renderer3);
         mRenderer.addSeriesRenderer(renderer4);
 
-        return ChartFactory.getBarChartView(context, dataset, mRenderer, Type.STACKED);
-       /* layout =(LinearLayout)findViewById(R.id.BarChart);
-        mChartView=ChartFactory.getBarChartView(getApplicationContext(), dataset, mRenderer, org.achartengine.chart.BarChart.Type.DEFAULT);
-        layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
-*/
-
+        mChartView = ChartFactory.getBarChartView(context, dataset, mRenderer, Type.STACKED);
+        return mChartView;
     }
 }

@@ -25,16 +25,11 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
-import group8.com.application.Foundation.JSONParser;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
 import group8.com.application.UI.MainView;
@@ -43,8 +38,6 @@ public class LoginView extends Activity implements OnClickListener {
     private EditText username, pass;
     // Progress Dialog
     private ProgressDialog pDialog;
-    // JSON parser class
-    JSONParser jsonParser = new JSONParser();
 
     //Facebook part
     CallbackManager callbackManager;
@@ -156,51 +149,38 @@ public class LoginView extends Activity implements OnClickListener {
 
         @Override
         protected String doInBackground(String... args) {
+
             // Check for success tag
             int success;
             String tag = args[0];
             String user = "";
+
             if (tag.equals(ConstantData.TAG_ACTION_FBLOGIN))
                 user = args[1];
             else if (tag.equals(ConstantData.TAG_ACTION_LOGIN))
                 user = username.getText().toString();
+
             String password = pass.getText().toString();
-            try {
-                // Building Parameters
-                List<NameValuePair> params = new ArrayList<>();
-                params.add(new BasicNameValuePair("action", tag));
-                params.add(new BasicNameValuePair("username", user));
-                params.add(new BasicNameValuePair("password", password));
-                Log.d("request!", "starting");
-                // getting product details by making HTTP request
-                JSONObject json = jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params);
-                // check your log for json response
-                Log.d("Login attempt", json.toString());
-                // json success tag
-                success = json.getInt(ConstantData.TAG_SUCCESS);
-                if (success == 1) {
-                    Log.d("Login Successful!", json.toString());
-                    // save user data (only saves it on normal logins.
+            success = Controller.attemptLogin(tag, user, password); // Actual call to database
 
-                    SharedPreferences sp = PreferenceManager
-                            .getDefaultSharedPreferences(LoginView.this);
-                    Editor edit = sp.edit();
-                    edit.putString("username", user);
-                    edit.apply();
+            if (success == 1) {
 
-                    Session.restart(user);
-                    Intent i = new Intent(LoginView.this, MainView.class);
-                    finish();
-                    startActivity(i);
-                    return json.getString(ConstantData.TAG_MESSAGE);
-                } else {
-                    Log.d("Login Failure!", json.getString(ConstantData.TAG_MESSAGE));
-                    return json.getString(ConstantData.TAG_MESSAGE);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                // save user data (only saves it on normal logins.
+                SharedPreferences sp = PreferenceManager
+                        .getDefaultSharedPreferences(LoginView.this);
+                Editor edit = sp.edit();
+                edit.putString("username", user);
+                edit.apply();
+
+                Session.restart(user);
+                Intent i = new Intent(LoginView.this, MainView.class);
+                finish();
+                startActivity(i);
+
             }
+
             return null;
+
         }
 
         protected void onPostExecute(String file_url) {
@@ -225,46 +205,33 @@ public class LoginView extends Activity implements OnClickListener {
 
         @Override
         protected String doInBackground(String... args) {
+
             // Check for success tag
             int success;
             String user = username.getText().toString();
             String password = pass.getText().toString();
-            try {
-                // Building Parameters
-                List<NameValuePair> params = new ArrayList<>();
-                params.add(new BasicNameValuePair("action", ConstantData.TAG_ACTION_REGISTER));
-                params.add(new BasicNameValuePair("username", user));
-                params.add(new BasicNameValuePair("password", password));
-                Log.d("request!", "starting");
-                //Posting user data to script
-                JSONObject json = jsonParser.makeHttpRequest(
-                        ConstantData.INDEX_URL, "POST", params);
-                // full json response
-                Log.d("Registering attempt", json.toString());
-                // json success element
-                success = json.getInt(ConstantData.TAG_SUCCESS);
-                if (success == 1) {
-                    Log.d("User Created!", json.toString());
-                    // save user data
-                    SharedPreferences sp = PreferenceManager
-                            .getDefaultSharedPreferences(LoginView.this);
-                    SharedPreferences.Editor edit = sp.edit();
-                    edit.putString("username", user);
-                    edit.apply();
-                    Session.restart(user);
-                    //finish();
-                    Intent i = new Intent(LoginView.this, MainView.class);
-                    finish();
-                    startActivity(i);
-                    return json.getString(ConstantData.TAG_MESSAGE);
-                } else {
-                    Log.d("Registering Failure!", json.getString(ConstantData.TAG_MESSAGE));
-                    return json.getString(ConstantData.TAG_MESSAGE);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+
+            success = Controller.registerUser(user, password); // Actual call to database
+
+            if (success == 1) {
+
+                // save user data
+                SharedPreferences sp = PreferenceManager
+                        .getDefaultSharedPreferences(LoginView.this);
+                SharedPreferences.Editor edit = sp.edit();
+                edit.putString("username", user);
+                edit.apply();
+
+                Session.restart(user);
+                //finish();
+                Intent i = new Intent(LoginView.this, MainView.class);
+                finish();
+                startActivity(i);
+
             }
+
             return null;
+
         }
 
         protected void onPostExecute(String file_url) {

@@ -1,4 +1,3 @@
-
 package group8.com.application.alert;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,13 +7,14 @@ import android.os.CountDownTimer;
 import android.view.Window;
 import android.view.WindowManager;
 
+
 import group8.com.application.R;
 
 
 public class FuelActivity extends Activity {
 
-
-    CountDownTimer cdt;  // Countdown timer that specifies how long the activity is visible
+    // Assigning variables
+    CountDownTimer cdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,7 @@ public class FuelActivity extends Activity {
 
         setContentView(R.layout.activity_fuel);
 
+        // Countdown timer
         cdt = new CountDownTimer(4000, 1000) {  //4 seconds
 
             @Override
@@ -40,7 +41,7 @@ public class FuelActivity extends Activity {
 
                 //Intent nextScreen = new Intent(getApplicationContext(), mainView.class);
 
-                finish();
+                finish ();
 
             }
         };
@@ -50,11 +51,11 @@ public class FuelActivity extends Activity {
 
         // Warning sound
         MediaPlayer mpAlert = MediaPlayer.create(this,R.raw.audio2);
+        MediaPlayer mpAlert2 = MediaPlayer.create(this,R.raw.sounds1);
 
         mpAlert.start();
+        mpAlert2.start();
+
 
     }
-
-
-
 }
