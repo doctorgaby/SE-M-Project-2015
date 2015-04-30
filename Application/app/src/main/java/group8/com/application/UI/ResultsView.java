@@ -37,7 +37,7 @@ public class ResultsView extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildPointsPlot(data = Controller.eventGetPoints());
+        buildPointsPlot(weekFill());
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);

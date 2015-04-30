@@ -86,7 +86,7 @@ public class BarChart extends Activity {
         renderer3.setChartValuesTextSize(100);
 
         XYSeriesRenderer renderer4 = new XYSeriesRenderer();
-        renderer4.setColor(Color.parseColor("#0000FF"));
+        renderer4.setColor(Color.parseColor("#0033ff"));
         renderer4.setDisplayChartValues(true);
         renderer4.setChartValuesTextSize(50);
 

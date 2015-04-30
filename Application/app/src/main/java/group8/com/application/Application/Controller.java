@@ -2,10 +2,13 @@ package group8.com.application.Application;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
 
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
 import group8.com.application.UI.MainView;
+import group8.com.application.UI.NotificationSystem;
 import group8.com.application.alert.BrakesActivity;
 import group8.com.application.alert.DistractionActivity;
 import group8.com.application.alert.FuelActivity;
@@ -52,6 +55,12 @@ public abstract class Controller {
 
     public static DataList eventGetFilteredPoints(int start, int stop) {
         return DBHandler.getFilteredPoints(Session.getUserName(), start, stop);
+    }
+
+    /*Daily message Method */
+
+    public static Toast eventGetCustomToast(Context context, View view){
+        return NotificationSystem.customToast(context, view);
     }
 
 

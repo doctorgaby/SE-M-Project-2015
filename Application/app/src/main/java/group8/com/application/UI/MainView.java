@@ -7,10 +7,14 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AnalogClock;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +23,7 @@ import com.facebook.login.LoginManager;
 
 import org.achartengine.GraphicalView;
 
+import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
@@ -47,10 +52,10 @@ public class MainView extends Activity {
         setContentView(R.layout.main_display);
 
         //checks if it's a new day
-        dailyMessage();
+//        dailyMessage();
 
         //test code
-//      NotificationSystem.toastShow(this);
+        Controller.eventGetCustomToast(this, customLayout());
 
         Button graphBtn = (Button) findViewById(R.id.graphBtn);
         Button testMeasurementBtn = (Button) findViewById(R.id.testMeasurementsBtn);
@@ -138,9 +143,19 @@ public class MainView extends Activity {
             editor.commit();
 
             //execute daily message
-            NotificationSystem.toastShow(this);
+            Controller.eventGetCustomToast(this, customLayout());
             Log.d("MyApp",getNewDay + "");
         }
     }
+
+    private View customLayout(){
+
+        LayoutInflater myInflator = getLayoutInflater();
+        View myLayout = myInflator.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_layout_root));
+
+        return myLayout;
+
+    }
+
 }
 
