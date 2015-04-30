@@ -3,10 +3,14 @@ package group8.com.application.UI;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import group8.com.application.Application.Controller;
 import group8.com.application.Application.GradingSystem;
 import group8.com.application.Application.MeasurementFactory;
 import group8.com.application.Application.Session;
@@ -101,6 +105,11 @@ public class TestGrading extends Activity {
             @Override
             public void onClick(View v) {
                 GradingSystem.stopGradingSystem();
+                JSONObject list = Session.getMeasurementsJson();
+                Log.d("JSON List: ", list.toString());
+
+                Log.d("Regular List: ", Session.currentMeasurements.toString());
+                Controller.eventSetMeasuremtents();
             }
         });
 
