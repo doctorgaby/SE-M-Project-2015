@@ -25,9 +25,7 @@ public abstract class MeasurementFactory {
     /**
      * Start measuring.
      * */
-    public static void startMeasurements() {
-
-        running = true;
+    public static void initMeasurements() {
 
         if(measurementTask == null) {
 
@@ -96,15 +94,23 @@ public abstract class MeasurementFactory {
 
     }
 
+    protected static void startMeasurements() {
+
+        running = true;
+
+    }
+
+
     /**
      * Stop measuring.
      * */
-    public static void stopMeasurements() {
+    public static void pauseMeasurements() {
 
         running = false;
         GradingSystem.stopGradingSystem();
 
     }
+
 
     /**
      * Check if the MeasurementFactory is measuring.

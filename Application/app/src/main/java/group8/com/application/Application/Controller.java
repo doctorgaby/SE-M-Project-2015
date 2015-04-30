@@ -11,7 +11,18 @@ import group8.com.application.alert.DistractionActivity;
 import group8.com.application.alert.FuelActivity;
 import group8.com.application.alert.SpeedActivity;
 
-public abstract class Controller {
+public class Controller {
+
+    private static Controller instance = null;
+
+    public static Controller getInstance() {
+
+        if(instance == null)
+            instance = new Controller();
+
+        return instance;
+
+    }
 
     /* Methods for MeasurementsFactory */
     protected static void eventSpeedChanged(double speed) {
@@ -33,7 +44,42 @@ public abstract class Controller {
         //Session.setDriverDistractionLevel(driverDistractionLevel);
         GradingSystem.updateDriverDistractionLevelScore(driverDistractionLevel);
     }
+
+    public static void initMeasurements() {
+
+        MeasurementFactory.initMeasurements();
+
+    }
+
+    public static boolean isMeasuring() {
+        return MeasurementFactory.isMeasuring();
+    }
+
+    public static boolean isReceivingSignal() {
+        return true;
+    }
+
     /* END - Methods for MeasurementsFactory */
+
+    /* Methods for GradingSystem */
+    public static void startGrading() {
+
+        MeasurementFactory.startMeasurements();
+        GradingSystem.startGradingSystem();
+
+    }
+
+    public static void stopGrading() {
+
+        MeasurementFactory.pauseMeasurements();
+        GradingSystem.stopGradingSystem();
+
+    }
+
+    public static boolean isGrading() {
+        return GradingSystem.isGrading();
+    }
+    /* Methods for GradingSystem */
 
     /* Methods for login and register*/
     public static int attemptLogin(String tag, String username, String password) {
@@ -106,13 +152,8 @@ public abstract class Controller {
         context.startActivity(intent);
  }
     //
-    public void setMainView() {
 
-        Intent intent = new Intent(context, MainView.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        context.startActivity(intent);
-    }
  /*
  * The following method are is used to call the alternative visualActivity
  */

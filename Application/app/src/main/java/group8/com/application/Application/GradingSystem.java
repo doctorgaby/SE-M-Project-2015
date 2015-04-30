@@ -16,6 +16,7 @@ import group8.com.application.Model.ConstantData;
 public abstract class GradingSystem {
 
     /* Private variables */
+    private static Controller controller = null;
     private static int lastDistractionLevel;                // Stores the current distraction level(updates when the distraction level is changed)
     private static boolean shouldDecreaseBrakeScore = true; // Is set to true when the brake is released
     private static boolean running = false;                  // Flag used in the threads loop
@@ -28,11 +29,12 @@ public abstract class GradingSystem {
     /**
      * Start the grading system.
      * */
-    public static void startGradingSystem() {
+    protected static void startGradingSystem() {
 
         if(MeasurementFactory.isMeasuring()) {
+
             running = true;
-            MeasurementFactory.startMeasurements();
+            controller = Controller.getInstance();
 
             if(brakeTimer == null) {
                 brakeTimer = new CountDownTimer(10000, 1000) { // Create a new countdown. When the countdown has finished, the braking score increases by 1.
@@ -40,6 +42,8 @@ public abstract class GradingSystem {
                     public void onTick(long millisUntilFinished) {}
 
                     public void onFinish() {
+
+                        // Updates the score and restarts the timer
                         updateBrakeScore(0, true);
                     }
 
@@ -52,6 +56,7 @@ public abstract class GradingSystem {
                     public void onTick(long millisUntilFinished) {}
 
                     public void onFinish() {
+
                         // Extreme event
                         Log.d("distractionTimer", "EXTREME DISTRACTION");
                     }
@@ -110,7 +115,7 @@ public abstract class GradingSystem {
     /**
      * Pause the grading system.
      * */
-    public static void stopGradingSystem() {
+    protected static void stopGradingSystem() {
 
         running = false;
         brakeTimer.cancel();
@@ -123,7 +128,7 @@ public abstract class GradingSystem {
      *
      * @return true if the GradingSystem is grading, and false if it is not.
      * */
-    public static boolean isGrading() {
+    protected static boolean isGrading() {
 
         return running;
 

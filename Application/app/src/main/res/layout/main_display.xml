@@ -24,15 +24,6 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Test Measurements"
-        android:id="@+id/testMeasurementsBtn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Graph"
         android:id="@+id/graphBtn"
         android:layout_alignParentBottom="true"
@@ -45,7 +36,19 @@
         android:id="@+id/chart"
         android:layout_above="@+id/graphBtn"
         android:layout_below="@+id/username"
-        />
+        android:weightSum="1">
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Start"
+        android:id="@+id/startButton"
+        android:textSize="50dp"
+        android:textColor="#ff000000"
+        android:background="#ffa4a4a4"
+        android:layout_above="@+id/graphBtn" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -55,5 +58,13 @@
         android:id="@+id/updateBtn"
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@+id/graphBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop"
+        android:id="@+id/stopButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
