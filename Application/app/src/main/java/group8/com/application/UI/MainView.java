@@ -90,7 +90,7 @@ public class MainView extends Activity {
                     updateBtn.setVisibility(View.INVISIBLE);
 
                     // creates the new activity in the same view
-                    doGraph(sp, dd, fc, bk);
+                    doGraph(sp, fc, dd, bk);
                     userTxt.setText(Session.getUserName());
 
                     Controller.startGrading();
