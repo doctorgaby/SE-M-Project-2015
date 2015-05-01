@@ -1,5 +1,9 @@
 package group8.com.application.Model;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -202,4 +206,101 @@ public class DataList {
         }
         return temp;
     }
+
+// Get the JSON representation of the lists
+    public JSONObject getJson() {
+
+        JSONArray speedList = new JSONArray();
+        JSONArray fuelConsumptionList = new JSONArray();
+        JSONArray brakeList = new JSONArray();
+        JSONArray driverDistractionLevelList = new JSONArray();
+
+
+        for(int i = 0; i < speed.size(); i++) {
+
+            JSONObject list = new JSONObject();
+            String value = getSpeed(i).getValue().toString();
+            String time = getSpeed(i).getTime().toString();
+
+            try {
+
+                list.put(ConstantData.TAG_SPEED, value);
+                list.put(ConstantData.TAG_MEASUREDAT, time);
+                speedList.put(list);
+
+            } catch(JSONException ex) {
+                // Could not add to speed list
+            }
+
+        }
+
+        for(int i = 0; i < fuelConsumption.size(); i++) {
+
+            JSONObject list = new JSONObject();
+            String value = getFuelConsumption(i).getValue().toString();
+            String time = getFuelConsumption(i).getTime().toString();
+
+            try {
+
+                list.put(ConstantData.TAG_FUEL, value);
+                list.put(ConstantData.TAG_MEASUREDAT, time);
+                fuelConsumptionList.put(list);
+
+            } catch(JSONException ex) {
+                // Could not add to fuel list
+            }
+
+        }
+
+        for(int i = 0; i < brake.size(); i++) {
+
+            JSONObject list = new JSONObject();
+            String value = getBrake(i).getValue().toString();
+            String time = getBrake(i).getTime().toString();
+
+            try {
+
+                list.put(ConstantData.TAG_BRAKE, value);
+                list.put(ConstantData.TAG_MEASUREDAT, time);
+                brakeList.put(list);
+
+            } catch(JSONException ex) {
+                // Could not add to brake list
+            }
+
+        }
+
+        for(int i = 0; i < driverDistractionLevel.size(); i++) {
+
+            JSONObject list = new JSONObject();
+            String value = getDriverDistractionLevel(i).getValue().toString();
+            String time = getDriverDistractionLevel(i).getTime().toString();
+
+            try {
+
+                list.put(ConstantData.TAG_DISTRACTION, value);
+                list.put(ConstantData.TAG_MEASUREDAT, time);
+                driverDistractionLevelList.put(list);
+
+            } catch(JSONException ex) {
+                // Could not add to distraction list
+            }
+
+        }
+
+        JSONObject outerList = new JSONObject();
+
+        try {
+            outerList.put(ConstantData.TAG_SPEED, speedList);
+            outerList.put(ConstantData.TAG_FUEL, fuelConsumptionList);
+            outerList.put(ConstantData.TAG_BRAKE, brakeList);
+            outerList.put(ConstantData.TAG_DISTRACTION, driverDistractionLevelList);
+        } catch(JSONException ex) {
+            // Could not add to outer list
+        }
+
+        return outerList;
+
+    }
+
 }
