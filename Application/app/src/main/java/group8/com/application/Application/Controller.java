@@ -1,15 +1,7 @@
 package group8.com.application.Application;
 
-import android.content.Context;
-import android.content.Intent;
-
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
-import group8.com.application.UI.MainView;
-import group8.com.application.alert.BrakesActivity;
-import group8.com.application.alert.DistractionActivity;
-import group8.com.application.alert.FuelActivity;
-import group8.com.application.alert.SpeedActivity;
 
 public class Controller {
 
@@ -107,9 +99,43 @@ public class Controller {
         return DBHandler.getFilteredPoints(Session.getUserName(), start, stop);
     }
 
+    public static double getCurrentSpeed() {
+        return MeasurementFactory.getSpeed();
+    }
+
+    public static double getCurrentFuelConsumption() {
+        return MeasurementFactory.getFuelConsumption();
+    }
+
+    public static int getCurrentBrake() {
+        return MeasurementFactory.getBrake();
+    }
+
+    public static int getCurrentDistractionLevel() {
+        return MeasurementFactory.getDistractionLevel();
+    }
+
     public static void eventSetMeasuremtents () {
         DBHandler.setMeasurements(Session.getUserName());
     }
+
+    /* Methods for AlertSystem */
+    public static boolean evaluateSpeedAlert() {
+        return AlertSystem.evaluateSpeed();
+    }
+
+    public static boolean evaluateFuelConsumptionAlert() {
+        return AlertSystem.evaluateFuelConsumption();
+    }
+
+    public static boolean evaluateBrakeAlert() {
+        return AlertSystem.evaluateBrake();
+    }
+
+    public static boolean evaluateDriverDistractionLevelAlert() {
+        return AlertSystem.evaluateDriverDistractionLevel();
+    }
+    /* END - Methods for AlertSystem */
 
 
  /*
@@ -117,7 +143,7 @@ public class Controller {
  * The following 4 methods are used to call an alerting activity defined in the alert package
  *
  */
-
+/*
     Context context = MainView.getContext();
 
 
@@ -150,7 +176,7 @@ public class Controller {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         context.startActivity(intent);
- }
+ }*/
     //
 
 

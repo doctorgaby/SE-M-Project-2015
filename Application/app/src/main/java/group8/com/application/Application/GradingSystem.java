@@ -21,7 +21,6 @@ public abstract class GradingSystem {
     private static boolean shouldDecreaseBrakeScore = true; // Is set to true when the brake is released
     private static boolean running = false;                  // Flag used in the threads loop
     private static CountDownTimer brakeTimer;               // Timer used for grading the braking
-    private static CountDownTimer driverDistractionLevelTimer;
     private static CountDownTimer speedTimer;
     private static CountDownTimer fuelTimer;
     private static ArrayList<Double> tempSpeedList;
@@ -45,20 +44,6 @@ public abstract class GradingSystem {
 
                         // Updates the score and restarts the timer
                         updateBrakeScore(0, true);
-                    }
-
-                };
-            }
-
-            if(driverDistractionLevelTimer == null) {
-                driverDistractionLevelTimer = new CountDownTimer(ConstantData.extremeDriverDistractionLevel, 100) { // Create a new countdown. When the countdown has finished, the braking score increases by 1.
-
-                    public void onTick(long millisUntilFinished) {}
-
-                    public void onFinish() {
-
-                        // Extreme event
-                        Log.d("distractionTimer", "EXTREME DISTRACTION");
                     }
 
                 };
@@ -252,14 +237,10 @@ public abstract class GradingSystem {
             int newScore = currentScore;
 
             // Evaluate the measurements
-
-            driverDistractionLevelTimer.cancel();
-
             if (distractionLevel == 3 && lastDistractionLevel < 3)
                 newScore = currentScore - 1;
 
             if (distractionLevel == 4 && lastDistractionLevel < 4) {
-                driverDistractionLevelTimer.start();
                 newScore = currentScore - 2;
             }
 

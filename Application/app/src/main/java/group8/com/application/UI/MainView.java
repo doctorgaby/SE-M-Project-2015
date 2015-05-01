@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,7 +24,10 @@ import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.R;
 import group8.com.application.UI.Login.LoginView;
-
+import group8.com.application.alert.BrakesActivity;
+import group8.com.application.alert.DistractionActivity;
+import group8.com.application.alert.FuelActivity;
+import group8.com.application.alert.SpeedActivity;
 
 
 public class MainView extends Activity {
@@ -50,6 +53,7 @@ public class MainView extends Activity {
     /*Hampus*/
     private MainView mainView = this;
     private boolean shouldUpdateGraphs;
+    private CountDownTimer pointsTimer, alertTimer;
 
     private Button startButton;
     private Button stopButton;
@@ -90,7 +94,7 @@ public class MainView extends Activity {
                     userTxt.setText(Session.getUserName());
 
                     Controller.startGrading();
-                    startTask();
+                    startTimer();
 
                 } else {
                     startButton.setClickable(false);
@@ -109,7 +113,7 @@ public class MainView extends Activity {
                 graphBtn.setVisibility(View.VISIBLE);
                 updateBtn.setVisibility(View.VISIBLE);
 
-                stopTask();
+                stopTimer();
                 Controller.stopGrading();
 
             }
@@ -203,33 +207,69 @@ public class MainView extends Activity {
 
     }
 
-    private void startTask() {
+    private void startTimer() {
 
-        shouldUpdateGraphs = true;
+        // shouldUpdateGraphs = true;
 
-         new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] params) {
+        pointsTimer = new CountDownTimer(1000, 1000) {
 
-                while(shouldUpdateGraphs) {
-
-                    layout.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            repaintGraph();
-                        }
-                    });
-
-                }
-                return null;
+            public void onTick(long millisUntilFinished) {
             }
-        }.execute();
+
+            public void onFinish() {
+
+                /*layout.post(new Runnable() {
+
+                    @Override
+                    public void run() {*/
+                        repaintGraph();
+                    /*}
+                });
+                */
+
+                Context context = MainView.getContext();
+
+                if(Controller.evaluateSpeedAlert()) {
+                    Intent intent = new Intent(context, SpeedActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    context.startActivity(intent);
+                }
+
+                if(Controller.evaluateFuelConsumptionAlert()) {
+                    Intent intent = new Intent(context, FuelActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    context.startActivity(intent);
+                }
+
+                if(Controller.evaluateBrakeAlert()) {
+                    Intent intent = new Intent(context, BrakesActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    context.startActivity(intent);
+                }
+
+                if(Controller.evaluateDriverDistractionLevelAlert()) {
+                    Intent intent = new Intent(context, DistractionActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    context.startActivity(intent);
+                }
+
+                pointsTimer.start();
+            }
+
+        }.start();
+
+
 
     }
 
-    private void stopTask() {
+    private void stopTimer() {
 
-        shouldUpdateGraphs = false;
+        pointsTimer.cancel();
+        // shouldUpdateGraphs = false;
 
     }
 

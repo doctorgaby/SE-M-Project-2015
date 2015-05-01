@@ -21,6 +21,8 @@ public abstract class MeasurementFactory {
 
     private static boolean running = false;
     private static AsyncTask measurementTask;
+    private static double speed, fuelConsumption;
+    private static int brake, distractionLevel;
 
     /**
      * Start measuring.
@@ -41,17 +43,19 @@ public abstract class MeasurementFactory {
                                     int choice = automotiveSignal.getSignalId();
                                     switch (choice) {
                                         case 320: //Speed has signalID 320.
-                                            double speed = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
+                                            speed = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
                                             if(running)
                                                 Controller.eventSpeedChanged(speed);
+
                                             break;
                                         case 323: //Instantaneous fuel economy has signalID 323.
-                                            double fuelConsumption = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
+                                            fuelConsumption = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
                                             if(running)
                                                 Controller.eventFuelConsumptionChanged(fuelConsumption);
+
                                             break;
                                         case 317: //Brake has signalID 317.
-                                            int brake = ((Uint8) automotiveSignal.getData()).getIntValue();
+                                            brake = ((Uint8) automotiveSignal.getData()).getIntValue();
                                             if(running)
                                                 Controller.eventBrakeChanged(brake);
                                             break;
@@ -71,8 +75,9 @@ public abstract class MeasurementFactory {
                             new DriverDistractionListener() { // Observe driver distraction level
                                 @Override
                                 public void levelChanged(final DriverDistractionLevel driverDistractionLevel) {
+                                    distractionLevel = driverDistractionLevel.getLevel();
                                     if(running)
-                                        Controller.eventDriverDistractionLevelChanged(driverDistractionLevel.getLevel());
+                                        Controller.eventDriverDistractionLevelChanged(distractionLevel);
                                 }
 
                                 @Override
@@ -104,10 +109,9 @@ public abstract class MeasurementFactory {
     /**
      * Stop measuring.
      * */
-    public static void pauseMeasurements() {
+    protected static void pauseMeasurements() {
 
         running = false;
-        GradingSystem.stopGradingSystem();
 
     }
 
@@ -117,10 +121,25 @@ public abstract class MeasurementFactory {
      *
      * @return true if the MeasurementFactory is measuring, and false if it is not.
      * */
-    public static boolean isMeasuring() {
+    protected static boolean isMeasuring() {
 
         return running;
 
     }
 
+    protected static double getSpeed() {
+        return speed;
+    }
+
+    protected static double getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    protected static int getBrake() {
+        return brake;
+    }
+
+    protected static int getDistractionLevel() {
+        return distractionLevel;
+    }
 }
