@@ -7,8 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import group8.com.application.Application.GradingSystem;
-import group8.com.application.Application.MeasurementFactory;
+import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.R;
 
@@ -20,6 +19,8 @@ public class TestGrading extends Activity {
     TextView distraction;
     Button startGrading;
     Button stopGrading;
+
+    Controller controller = Controller.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class TestGrading extends Activity {
         startGrading = (Button) findViewById(R.id.startGrading);
         stopGrading = (Button) findViewById(R.id.stopGrading);
 
-        MeasurementFactory.startMeasurements();
+        Controller.startGrading();
 
         new AsyncTask() {
 
@@ -43,7 +44,7 @@ public class TestGrading extends Activity {
 
                 while (!Thread.interrupted()) {
 
-                    if (GradingSystem.isGrading()) {
+                    if (controller.isGrading()) {
 
                         speed.post(
                                 new Runnable() {
@@ -93,14 +94,14 @@ public class TestGrading extends Activity {
         startGrading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GradingSystem.startGradingSystem();
+                controller.startGrading();
             }
         });
 
         stopGrading.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GradingSystem.stopGradingSystem();
+                controller.stopGrading();
             }
         });
 

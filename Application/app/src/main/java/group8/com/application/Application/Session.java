@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import group8.com.application.Model.DataList;
 
 public abstract class Session {
+
+    private static Controller controller = Controller.getInstance();
     private static String userName = "";
     public static DataList currentPoints = new DataList("p");
     public static DataList currentMeasurements = new DataList("m");
