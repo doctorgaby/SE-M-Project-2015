@@ -48,16 +48,10 @@ public class MainView extends Activity {
     private GraphicalView bView;
     private LinearLayout layout;
     private Button graphBtn;
-    private Button updateBtn;
-
-    /*Hampus*/
-    private MainView mainView = this;
-    private boolean shouldUpdateGraphs;
-    private CountDownTimer pointsTimer, alertTimer;
-
     private Button startButton;
     private Button stopButton;
-    /*END Hampus*/
+
+    private CountDownTimer pointsTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,15 +60,11 @@ public class MainView extends Activity {
         setContentView(R.layout.main_display);
 
         graphBtn = (Button) findViewById(R.id.graphBtn);
-        updateBtn = (Button) findViewById(R.id.updateBtn);
-
-        /*Hampus*/
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
 
         stopButton.setVisibility(View.INVISIBLE);
         userTxt = (TextView) findViewById(R.id.username);
-
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,10 +77,9 @@ public class MainView extends Activity {
                     startButton.setVisibility(View.INVISIBLE);
                     stopButton.setVisibility(View.VISIBLE);
                     graphBtn.setVisibility(View.INVISIBLE);
-                    updateBtn.setVisibility(View.INVISIBLE);
 
                     // creates the new activity in the same view
-                    doGraph(sp, dd, fc, bk);
+                    doGraph(sp, fc, dd, bk);
                     userTxt.setText(Session.getUserName());
 
                     Controller.startGrading();
@@ -111,40 +100,18 @@ public class MainView extends Activity {
                 stopButton.setVisibility(View.INVISIBLE);
                 startButton.setVisibility(View.VISIBLE);
                 graphBtn.setVisibility(View.VISIBLE);
-                updateBtn.setVisibility(View.VISIBLE);
 
                 stopTimer();
                 Controller.stopGrading();
 
             }
         });
-        /*END Hampus*/
-
-
-;
 
         graphBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ResultsView.class);
                 startActivityForResult(intent, 0);
-            }
-        });
-
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
- //               repaintGraph();
-                layout.removeView(bView);
-                sp = 50+10;
-                dd = 50+10;
-                fc = 50+10;
-                bk = 50+10;
-                max = (sp + bk + dd + fc) / 2;
-                doGraph(sp, dd,fc, bk);
-                bView.repaint();
-                bView.refreshDrawableState();
             }
         });
 
@@ -209,8 +176,6 @@ public class MainView extends Activity {
 
     private void startTimer() {
 
-        // shouldUpdateGraphs = true;
-
         pointsTimer = new CountDownTimer(1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -218,14 +183,7 @@ public class MainView extends Activity {
 
             public void onFinish() {
 
-                /*layout.post(new Runnable() {
-
-                    @Override
-                    public void run() {*/
-                        repaintGraph();
-                    /*}
-                });
-                */
+                repaintGraph();
 
                 Context context = MainView.getContext();
 
@@ -262,14 +220,11 @@ public class MainView extends Activity {
 
         }.start();
 
-
-
     }
 
     private void stopTimer() {
 
         pointsTimer.cancel();
-        // shouldUpdateGraphs = false;
 
     }
 

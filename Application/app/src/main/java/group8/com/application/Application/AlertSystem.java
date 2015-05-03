@@ -1,6 +1,7 @@
 package group8.com.application.Application;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import group8.com.application.Model.ConstantData;
 
@@ -12,6 +13,7 @@ public class AlertSystem {
                            fuelAlert = true,
                            shouldAlert = true;
     private static int brakeCount = 0, distractionCount = 0;
+    private static CountDownTimer brakeCountDown = null;
 
     private static CountDownTimer coolDown = new CountDownTimer(10000, 10000) {
         @Override
@@ -44,6 +46,7 @@ public class AlertSystem {
 
         if(shouldAlert && fuelAlert && Controller.getCurrentFuelConsumption() >= ConstantData.extremeFuelConsumption) {
             shouldAlert = false;
+            fuelAlert = false;
             coolDown.start();
             return true;
         } else if(Controller.getCurrentFuelConsumption() < ConstantData.extremeFuelConsumption) {
@@ -60,17 +63,12 @@ public class AlertSystem {
 
             brakeIsCounting = true;
 
-            new CountDownTimer(5000, 100) {
+            brakeCountDown = new CountDownTimer(5000, 100) {
+
                 @Override
                 public void onTick(long millisUntilFinished) {
 
-                    if(Session.getLastBrake() == 0) {
-
-                        brakeIsCounting = false;
-                        this.cancel();
-
-                    }
-
+                    Log.d("Brake countDown", "Counting");
 
                 }
 
@@ -79,21 +77,35 @@ public class AlertSystem {
 
                     brakeAlert = true;
                     brakeIsCounting = false;
+                    Log.d("Brake countDown", "Finish");
 
                 }
+
             }.start();
 
             brakeCount++;
 
-        } else if(Controller.getCurrentBrake() == 0)
-            brakeCount = 0;
+        } else if(Controller.getCurrentBrake() == 0) {
 
+            if(brakeCountDown != null) {
+
+                brakeCountDown.cancel();
+                Log.d("Brake countDown", "Cancelled");
+
+            }
+
+            brakeCount = 0;
+            brakeIsCounting = false;
+            brakeCountDown = null;
+
+        }
 
         if(shouldAlert && brakeAlert) {
 
             shouldAlert = false;
-            coolDown.start();
             brakeAlert = false;
+            coolDown.start();
+
             return true;
 
         }
@@ -118,7 +130,6 @@ public class AlertSystem {
                         this.cancel();
 
                     }
-
 
                 }
 

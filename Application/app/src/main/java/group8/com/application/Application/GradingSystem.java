@@ -25,6 +25,7 @@ public abstract class GradingSystem {
     private static CountDownTimer fuelTimer;
     private static ArrayList<Double> tempSpeedList;
     private static ArrayList<Double> tempFuelList;
+    private static ArrayList<Integer> tempBrakeList;
     /**
      * Start the grading system.
      * */
@@ -36,17 +37,22 @@ public abstract class GradingSystem {
             controller = Controller.getInstance();
 
             if(brakeTimer == null) {
-                brakeTimer = new CountDownTimer(10000, 1000) { // Create a new countdown. When the countdown has finished, the braking score increases by 1.
+                tempBrakeList =  new ArrayList<>();
+                brakeTimer = new CountDownTimer(5000, 5000) { // Create a new countdown. When the countdown has finished, the braking score increases by 1.
 
                     public void onTick(long millisUntilFinished) {}
-
                     public void onFinish() {
-
+                        int currentScore = Session.getBrakeScore();
+                        if (tempBrakeList.size()!=0)
+                            Session.setBrake(brakingAverage());
+                        Session.setBrakeScore(currentScore + evaluateBrake());
+                        tempBrakeList =  new ArrayList<>();
+                        brakeTimer.start();
                         // Updates the score and restarts the timer
-                        updateBrakeScore(0, true);
+                        //updateBrakeScore(0, true);
                     }
 
-                };
+                }.start();
             }
 
             if (speedTimer == null) {
@@ -135,12 +141,12 @@ public abstract class GradingSystem {
 
             // Update the lists of measurements and scores
             //if(newScore != currentScore) {
-              //  Session.setSpeed(speed);
-              //  Session.setSpeedScore(newScore); // update view here
+            //  Session.setSpeed(speed);
+            //  Session.setSpeedScore(newScore); // update view here
             //}
 
             //if(speed > ConstantData.extremeSpeed) {
-                // Extreme event
+            // Extreme event
             //}
 
         }
@@ -189,9 +195,9 @@ public abstract class GradingSystem {
     protected static void updateBrakeScore(int brake, boolean timerFinished) {
 
         if(running) {
-
+            tempBrakeList.add(brake);
             // Store the current score and the new score
-            int currentScore = Session.getBrakeScore();
+            /*int currentScore = Session.getBrakeScore();
             int newScore = currentScore;
 
             // Evaluate the measurements
@@ -217,8 +223,7 @@ public abstract class GradingSystem {
             if(newScore != currentScore) {
                 Session.setBrake(brake);
                 Session.setBrakeScore(newScore);
-            }
-
+            }*/
         }
 
     }
@@ -296,11 +301,32 @@ public abstract class GradingSystem {
      * @return +1/-1 depending if the values during 5 seconds go over the "good" fuel consumption.
      */
     private static int evaluateFuel() {
-        for (int i =0; i<tempFuelList.size();i++)
-        {
+        for (int i =0; i<tempFuelList.size();i++) {
             if (tempFuelList.get(i)>ConstantData.goodFuelConsumption)
                 return -1;
         }
         return 1;
+    }
+
+    private static int brakingAverage () {
+        int total = 0;
+        for (int i=0; i<tempBrakeList.size();i++) {
+            total = total+tempBrakeList.get(i);
+        }
+        if (total >= tempBrakeList.size()/2)
+            return 1;
+        else
+            return 0;
+    }
+
+    private static int evaluateBrake () {
+        int total = 0;
+        for (int i=0; i<tempBrakeList.size();i++) {
+            total = total+tempBrakeList.get(i);
+        }
+        if (total >= 25)
+            return -1;
+        else
+            return 1;
     }
 }
