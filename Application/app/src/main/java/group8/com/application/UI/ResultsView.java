@@ -37,7 +37,7 @@ public class ResultsView extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildPointsPlot(weekFill());
+        buildPointsPlot(Session.currentPoints);
 
         //Listeners for filter buttons
         Button currBtn = (Button) findViewById(R.id.currBtn);
@@ -83,6 +83,31 @@ public class ResultsView extends Activity {
         //Log.d("ResultsView", "DataList loaded!");
         //DataList data = Controller.eventGetFilteredPoints(0,5);                   !!!NOT WORKING YET
         //DataList data = Controller.eventGetFilteredPoints(0,5);
+
+        data.setSpeed(1,10);
+        data.setSpeed(2,30);
+        data.setSpeed(3,80);
+        data.setSpeed(4,70);
+        data.setSpeed(5,75);
+        data.setSpeed(6,90);
+        data.setFuelConsumption(1,5);
+        data.setFuelConsumption(2,10);
+        data.setFuelConsumption(3,30);
+        data.setFuelConsumption(4,0);
+        data.setFuelConsumption(5,10);
+        data.setFuelConsumption(6,25);
+        data.setBrake(1,50);
+        data.setBrake(2,45);
+        data.setBrake(3,35);
+        data.setBrake(4,45);
+        data.setBrake(5,65);
+        data.setBrake(6,75);
+        data.setDriverDistractionLevel(1,50);
+        data.setDriverDistractionLevel(2,55);
+        data.setDriverDistractionLevel(3,45);
+        data.setDriverDistractionLevel(4,35);
+        data.setDriverDistractionLevel(5,60);
+        data.setDriverDistractionLevel(6,90);
 
         //Android Plot
         plot = (XYPlot) findViewById(R.id.Graph);
