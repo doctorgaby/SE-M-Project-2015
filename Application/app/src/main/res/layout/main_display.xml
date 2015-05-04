@@ -51,15 +51,6 @@
         android:layout_above="@+id/graphBtn" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Update"
-        android:id="@+id/updateBtn"
-        android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/graphBtn" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Stop"
