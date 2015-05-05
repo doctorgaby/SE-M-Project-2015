@@ -55,6 +55,9 @@ public class MainView extends Activity {
     private Button startButton;
     private Button stopButton;
 
+    //TEST
+    private Button dbButton;
+
     private CountDownTimer pointsTimer;
 
     @Override
@@ -72,6 +75,10 @@ public class MainView extends Activity {
         graphBtn = (Button) findViewById(R.id.graphBtn);
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
+
+
+        //TEST
+        dbButton = (Button) findViewById(R.id.dbButton);
 
         stopButton.setVisibility(View.INVISIBLE);
         userTxt = (TextView) findViewById(R.id.username);
@@ -125,6 +132,16 @@ public class MainView extends Activity {
             }
         });
 
+
+        //TEST
+        dbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Controller.eventSetMeasuremtents();
+                Controller.eventSetPoints();
+            }
+        });
     }
 
 

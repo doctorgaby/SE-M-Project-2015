@@ -73,10 +73,8 @@ public class Controller {
     }
 
     public static void stopGrading() {
-
-        MeasurementFactory.pauseMeasurements();
         GradingSystem.stopGradingSystem();
-
+        MeasurementFactory.pauseMeasurements();
     }
 
     public static boolean isGrading() {
@@ -135,6 +133,10 @@ public class Controller {
 
     public static void eventSetMeasuremtents () {
         DBHandler.setMeasurements(Session.getUserName());
+    }
+
+    public static void eventSetPoints () {
+        DBHandler.setPoints(Session.getUserName());
     }
 
     /* Methods for AlertSystem */

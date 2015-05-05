@@ -36,7 +36,7 @@ public abstract class GradingSystem {
             running = true;
             controller = Controller.getInstance();
 
-            if(brakeTimer == null) {
+            //if(brakeTimer == null) {
                 tempBrakeList =  new ArrayList<>();
                 brakeTimer = new CountDownTimer(5000, 5000) { // Create a new countdown. When the countdown has finished, the braking score increases by 1.
 
@@ -45,15 +45,18 @@ public abstract class GradingSystem {
                         int currentScore = Session.getBrakeScore();
                         if (tempBrakeList.size()!=0)
                             Session.setBrake(brakingAverage());
-                        Session.setBrakeScore(currentScore + evaluateBrake());
+                        int newScore = currentScore + evaluateBrake();
+                        if (newScore <= 100 && newScore >= 0) {
+                            Session.setBrakeScore(newScore);
+                        }
                         tempBrakeList =  new ArrayList<>();
-                        brakeTimer.start();
+                        //brakeTimer.start();
                         // Updates the score and restarts the timer
                         //updateBrakeScore(0, true);
                     }
 
                 }.start();
-            }
+            //}
 
             if (speedTimer == null) {
                 tempSpeedList =  new ArrayList<>();
@@ -64,20 +67,23 @@ public abstract class GradingSystem {
                         if (tempSpeedList.size()!=0)
                             Session.setSpeed(tempSpeedList.get(tempSpeedList.size()-1)); //Sets the speed measurement every 5 seconds.
                         tempSpeedList =  new ArrayList<>();
-                        if (tempSpeedList.size()!=0)
-                            Log.d("Speed into Session.",""+ tempSpeedList.get(tempSpeedList.size()-1));
+                        //if (tempSpeedList.size()!=0)
+                        //    Log.d("Speed into Session.",""+ tempSpeedList.get(tempSpeedList.size()-1));
                     }
 
                     public void onFinish() {
 
                         int currentScore = Session.getSpeedScore();
-                        Session.setSpeedScore(currentScore + points); //Sets the speed points every 10 seconds.
-                        Log.d("Speedscore into Session",""+ currentScore + points);
+                        int newScore = currentScore + points;
+                        if (newScore>=0&&newScore<=100) {
+                            Session.setSpeedScore(newScore); //Sets the speed points every 10 seconds.
+                        }
+                        //Log.d("Speedscore into Session",""+ currentScore + points);
                         //Restarts the timer
                         points = 0;
                         speedTimer.start();
 
-                        Log.d("speedTimer", "Timer Finished");
+                        //Log.d("speedTimer", "Timer Finished");
                     }
 
                 }.start();
@@ -92,7 +98,9 @@ public abstract class GradingSystem {
                         int currentScore = Session.getFuelConsumptionScore();
                         if (tempFuelList.size()!=0)
                             Session.setFuelConsumption(tempFuelList.get(tempFuelList.size()-1));
-                        Session.setFuelConsumptionScore(currentScore + evaluateFuel());
+                        int newScore = currentScore + evaluateFuel();
+                        if (newScore<=100&&newScore>=0)
+                        Session.setFuelConsumptionScore(newScore);
                         tempFuelList =  new ArrayList<>();
                         fuelTimer.start();
                     }
@@ -256,8 +264,10 @@ public abstract class GradingSystem {
 
             // Update the lists of measurements and scores
             if(newScore != currentScore) {
-                Session.setDriverDistractionLevel(distractionLevel);
-                Session.setDriverDistractionLevelScore(newScore);
+                if (newScore>=0&&newScore<=100) {
+                    Session.setDriverDistractionLevel(distractionLevel);
+                    Session.setDriverDistractionLevelScore(newScore);
+                }
             }
 
         }
@@ -267,7 +277,7 @@ public abstract class GradingSystem {
     /**
      * Function to evaluate if the speed has too many numbers out of range. A number is considered out of range if it has 5km/h
      * out either way from the average of the list.
-     * The function will return +2 if less than 5 out of 50 possible numbers are out of range, +1 if 5-10 are out of range and -1 otherwise.
+     * The function will return +2 if less than 2 out of 50 possible numbers are out of range, +1 if 2-4 are out of range and -1 otherwise.
      * @return +2/-1 depending on the amount of numbers out of range (<5/>5 respectively).
      */
     private static int evaluateSpeedAverage ()
@@ -290,7 +300,7 @@ public abstract class GradingSystem {
 
         if (outOfRange<=ConstantData.outOfRangeLowerMargin)
             return 2;
-        else if (outOfRange > ConstantData.outOfRangeLowerMargin && outOfRange <=ConstantData.outOfRangeMiddleMargin )
+        else if (outOfRange <=ConstantData.outOfRangeMiddleMargin )
             return 1;
         else
             return -1;
