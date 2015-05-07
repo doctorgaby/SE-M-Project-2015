@@ -48,7 +48,7 @@ public abstract class MeasurementFactory {
                                                 Controller.eventSpeedChanged(speed);
 
                                             break;
-                                        case 323: //Instantaneous fuel economy has signalID 323.
+                                        case 322: //Fuel Rate has signalID 322.
                                             fuelConsumption = (double) (((SCSFloat) automotiveSignal.getData()).getFloatValue());
                                             if(running)
                                                 Controller.eventFuelConsumptionChanged(fuelConsumption);
@@ -88,7 +88,7 @@ public abstract class MeasurementFactory {
                                 public void stealthModeChanged(StealthMode stealthMode) {
                                 }
                             }
-                    ).register(AutomotiveSignalId.FMS_INSTANTANEOUS_FUEL_ECONOMY, AutomotiveSignalId.FMS_WHEEL_BASED_SPEED, AutomotiveSignalId.FMS_BRAKE_SWITCH); // Register for the speed signal
+                    ).register(AutomotiveSignalId.FMS_FUEL_RATE, AutomotiveSignalId.FMS_WHEEL_BASED_SPEED, AutomotiveSignalId.FMS_BRAKE_SWITCH); // Register for the speed signal
 
                     return null;
                 }

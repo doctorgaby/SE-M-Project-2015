@@ -1,7 +1,6 @@
 package group8.com.application.Application;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -26,6 +25,7 @@ public abstract class GradingSystem {
     private static ArrayList<Double> tempSpeedList;
     private static ArrayList<Double> tempFuelList;
     private static ArrayList<Integer> tempBrakeList;
+
     /**
      * Start the grading system.
      * */
@@ -36,77 +36,65 @@ public abstract class GradingSystem {
             running = true;
             controller = Controller.getInstance();
 
-            //if(brakeTimer == null) {
-                tempBrakeList =  new ArrayList<>();
-                brakeTimer = new CountDownTimer(5000, 5000) { // Create a new countdown. When the countdown has finished, the braking score increases by 1.
+            // Create a new countdown. When the countdown has finished, the braking score increases by 1.
+            tempBrakeList =  new ArrayList<>();
+            brakeTimer = new CountDownTimer(5000, 5000) {
 
-                    public void onTick(long millisUntilFinished) {}
-                    public void onFinish() {
-                        int currentScore = Session.getBrakeScore();
-                        if (tempBrakeList.size()!=0)
-                            Session.setBrake(brakingAverage());
-                        int newScore = currentScore + evaluateBrake();
-                        if (newScore <= 100 && newScore >= 0) {
-                            Session.setBrakeScore(newScore);
-                        }
-                        tempBrakeList =  new ArrayList<>();
-                        //brakeTimer.start();
-                        // Updates the score and restarts the timer
-                        //updateBrakeScore(0, true);
+                public void onTick(long millisUntilFinished) {}
+                public void onFinish() {
+                    int currentScore = Session.getBrakeScore();
+                    if (tempBrakeList.size()!=0)
+                        Session.setBrake(brakingAverage());
+                    int newScore = currentScore + evaluateBrake();
+                    if (newScore <= 100 && newScore >= 0) {
+                        Session.setBrakeScore(newScore);
                     }
+                    tempBrakeList =  new ArrayList<>();
+                    brakeTimer.start();
+                }
+            }.start();
 
-                }.start();
-            //}
+            // Create a new countdown. When the countdown has finished, the speed score increases by 1 if the speed changes are reasonable.
+            tempSpeedList =  new ArrayList<>();
+            speedTimer = new CountDownTimer(10000, 5000) {
+                int points = 0;
+                public void onTick(long millisUntilFinished) {
+                    points = points + evaluateSpeedAverage();
+                    if (tempSpeedList.size()!=0)
+                        Session.setSpeed(tempSpeedList.get(tempSpeedList.size()-1)); //Sets the speed measurement every 5 seconds.
+                    tempSpeedList =  new ArrayList<>();
+                }
 
-            if (speedTimer == null) {
-                tempSpeedList =  new ArrayList<>();
-                speedTimer = new CountDownTimer(10000, 5000) { // Create a new countdown. When the countdown has finished, the speed score increases by 1 if the speed changes are reasonable.
-                    int points = 0;
-                    public void onTick(long millisUntilFinished) {
-                        points = points + evaluateSpeedAverage();
-                        if (tempSpeedList.size()!=0)
-                            Session.setSpeed(tempSpeedList.get(tempSpeedList.size()-1)); //Sets the speed measurement every 5 seconds.
-                        tempSpeedList =  new ArrayList<>();
-                        //if (tempSpeedList.size()!=0)
-                        //    Log.d("Speed into Session.",""+ tempSpeedList.get(tempSpeedList.size()-1));
+                public void onFinish() {
+                    int currentScore = Session.getSpeedScore();
+                    int newScore = currentScore + points;
+                    if (newScore>=0&&newScore<=100) {
+                        Session.setSpeedScore(newScore); //Sets the speed points every 10 seconds.
                     }
+                    points = 0;
+                    speedTimer.start();
+                }
+            }.start();
 
-                    public void onFinish() {
+            // Create a new countdown. When the countdown has finished, the fuel score increases by 1
+            // if the fuel changes are reasonable.
+            tempFuelList =  new ArrayList<>();
+            fuelTimer = new CountDownTimer(5000, 5000) {
+                public void onTick(long millisUntilFinished) {
+                }
 
-                        int currentScore = Session.getSpeedScore();
-                        int newScore = currentScore + points;
-                        if (newScore>=0&&newScore<=100) {
-                            Session.setSpeedScore(newScore); //Sets the speed points every 10 seconds.
-                        }
-                        //Log.d("Speedscore into Session",""+ currentScore + points);
-                        //Restarts the timer
-                        points = 0;
-                        speedTimer.start();
+                public void onFinish() {
+                    int currentScore = Session.getFuelConsumptionScore();
+                    if (tempFuelList.size()!=0)
+                        Session.setFuelConsumption(tempFuelList.get(tempFuelList.size()-1));
+                    int newScore = currentScore + evaluateFuel();
+                    if (newScore<=100&&newScore>=0)
+                    Session.setFuelConsumptionScore(newScore);
+                    tempFuelList =  new ArrayList<>();
+                    fuelTimer.start();
+                }
+            }.start();
 
-                        //Log.d("speedTimer", "Timer Finished");
-                    }
-
-                }.start();
-            }
-            if (fuelTimer == null) {
-                tempFuelList =  new ArrayList<>();
-                fuelTimer = new CountDownTimer(5000, 5000) { // Create a new countdown. When the countdown has finished, the fuel score increases by 1 if the fuel changes are reasonable.
-                    public void onTick(long millisUntilFinished) {
-                    }
-
-                    public void onFinish() {
-                        int currentScore = Session.getFuelConsumptionScore();
-                        if (tempFuelList.size()!=0)
-                            Session.setFuelConsumption(tempFuelList.get(tempFuelList.size()-1));
-                        int newScore = currentScore + evaluateFuel();
-                        if (newScore<=100&&newScore>=0)
-                        Session.setFuelConsumptionScore(newScore);
-                        tempFuelList =  new ArrayList<>();
-                        fuelTimer.start();
-                    }
-
-                }.start();
-            }
         }
 
     }
@@ -140,23 +128,6 @@ public abstract class GradingSystem {
 
         if(running) {
             tempSpeedList.add(speed);
-            //Log.d("Speed added: ", "value: " + speed);
-            // Store the current score and the new score
-            //int currentScore = Session.getSpeedScore();
-            //int newScore = currentScore;
-
-            // Evaluate the measurements
-
-            // Update the lists of measurements and scores
-            //if(newScore != currentScore) {
-            //  Session.setSpeed(speed);
-            //  Session.setSpeedScore(newScore); // update view here
-            //}
-
-            //if(speed > ConstantData.extremeSpeed) {
-            // Extreme event
-            //}
-
         }
 
     }
@@ -170,28 +141,6 @@ public abstract class GradingSystem {
 
         if(running) {
             tempFuelList.add(fuelConsumption);
-/*
-            // Store the current score and the new score
-            int currentScore = Session.getFuelConsumptionScore();
-            int newScore = currentScore;
-
-            // Evaluate the measurements
-            if (fuelConsumption > ConstantData.goodFuelConsumption) { // If the fuel consumption is "good".
-                newScore = currentScore + 1;
-
-            } else                        // If the fuel consumption is "bad" and it has been good before(it should not count the same fuel count several times)
-                newScore = currentScore - 1;
-
-            // Update the lists of measurements and scores
-            if(newScore != currentScore) {
-                Session.setFuelConsumption(fuelConsumption);
-                Session.setFuelConsumptionScore(newScore);
-            }
-
-            if(fuelConsumption >= ConstantData.extremeFuelConsumption) {
-                // Extreme event
-            }
-*/
         }
 
     }
@@ -204,34 +153,6 @@ public abstract class GradingSystem {
 
         if(running) {
             tempBrakeList.add(brake);
-            // Store the current score and the new score
-            /*int currentScore = Session.getBrakeScore();
-            int newScore = currentScore;
-
-            // Evaluate the measurements
-            if (brake == 0) {                    // If the brake is in a "Released" state.
-
-                shouldDecreaseBrakeScore = true; // The car has released the brake before it brakes again
-                brakeTimer.start();              // Start the timer
-
-            } else {                             // If the brake is in "Pressed state"
-
-                if (brakeTimer != null)
-                    brakeTimer.cancel();
-
-                if (shouldDecreaseBrakeScore)    // If the brake is active and it has been released between brakes(it should not count the same brake several times)
-                    newScore = currentScore - 1;
-
-            }
-
-            if(timerFinished)
-                newScore = currentScore + 1;
-
-            // Update the lists of measurements and scores
-            if(newScore != currentScore) {
-                Session.setBrake(brake);
-                Session.setBrakeScore(newScore);
-            }*/
         }
 
     }
@@ -278,7 +199,7 @@ public abstract class GradingSystem {
      * Function to evaluate if the speed has too many numbers out of range. A number is considered out of range if it has 5km/h
      * out either way from the average of the list.
      * The function will return +2 if less than 2 out of 50 possible numbers are out of range, +1 if 2-4 are out of range and -1 otherwise.
-     * @return +2/-1 depending on the amount of numbers out of range (<5/>5 respectively).
+     * @return +2/+1/-1/-2 depending on the amount of numbers out of range (<5/>5 respectively) or if the user exceeded the speed limit.
      */
     private static int evaluateSpeedAverage ()
     {
@@ -287,6 +208,9 @@ public abstract class GradingSystem {
         for (int i=0; i < tempSpeedList.size(); i++)
         {
             total = total + tempSpeedList.get(i);
+            if (tempSpeedList.get(i) >120){
+                return -2;
+            }
         }
         double average = total /tempSpeedList.size();
 
@@ -298,9 +222,9 @@ public abstract class GradingSystem {
                 outOfRange= outOfRange+1;
         }
 
-        if (outOfRange<=ConstantData.outOfRangeLowerMargin)
+        if (outOfRange<=ConstantData.outOfRangeSpeedLowerMargin)
             return 2;
-        else if (outOfRange <=ConstantData.outOfRangeMiddleMargin )
+        else if (outOfRange <=ConstantData.outOfRangeSpeedMiddleMargin)
             return 1;
         else
             return -1;
@@ -318,6 +242,10 @@ public abstract class GradingSystem {
         return 1;
     }
 
+    /**
+     * Function to find the average amongst the breaking measurements in the tempBrakeList
+     * @return
+     */
     private static int brakingAverage () {
         int total = 0;
         for (int i=0; i<tempBrakeList.size();i++) {
@@ -329,6 +257,11 @@ public abstract class GradingSystem {
             return 0;
     }
 
+    /**
+     * Function to evaluate the braking. If the total measurement are greater or equal to 25 it returns -1
+     * if they are lower than 25 it returns a 1.
+     * @return
+     */
     private static int evaluateBrake () {
         int total = 0;
         for (int i=0; i<tempBrakeList.size();i++) {

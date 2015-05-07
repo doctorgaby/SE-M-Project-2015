@@ -7,14 +7,14 @@ public abstract class ConstantData {
 
     /* GRADING SYSTEM*/
     public static final int initialPoints = 50;
-    public static final double goodFuelConsumption = 60.0;
+    public static final double goodFuelConsumption = 600.0;
     public static final double extremeSpeed = 120;
-    public static final double extremeFuelConsumption = 100;
+    public static final double extremeFuelConsumption = 1200;
     public static final int extremeBrake = 0;
     public static final int extremeDriverDistractionLevel = 2000;
     public static final int outOfRangeSpeed = 20;
-    public static final int outOfRangeLowerMargin = 2;
-    public static final int outOfRangeMiddleMargin = 4;
+    public static final int outOfRangeSpeedLowerMargin = 2;
+    public static final int outOfRangeSpeedMiddleMargin = 4;
     /* END - GRADING SYSTEM*/
 
     public static final String TAG_SUCCESS = "success";

@@ -113,7 +113,7 @@ public class MainView extends Activity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                layout.removeView(bView);
                 stopButton.setVisibility(View.INVISIBLE);
                 startButton.setVisibility(View.VISIBLE);
                 graphBtn.setVisibility(View.VISIBLE);
@@ -239,7 +239,7 @@ public class MainView extends Activity {
             }
 
             public void onFinish() {
-
+                Log.d("Testing the timer MV", "Goes into the testing.");
                 repaintGraph();
 
                 Context context = MainView.getContext();
