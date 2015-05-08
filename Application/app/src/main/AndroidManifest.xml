@@ -60,8 +60,9 @@
             android:name=".UI.TestGrading"
             android:label="Test"></activity>
 
-
+<!--
         <activity android:name=".alert.AlternativeChart.VisualizationActivity" />
+         -->
         <activity android:name=".alert.BrakesActivity" />
         <activity android:name=".alert.DistractionActivity" />
         <activity android:name=".alert.FuelActivity" />
