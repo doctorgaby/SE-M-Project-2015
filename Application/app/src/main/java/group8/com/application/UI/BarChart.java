@@ -111,5 +111,6 @@ public class BarChart extends Activity {
 
         mChartView = ChartFactory.getBarChartView(context, dataset, mRenderer, Type.STACKED);
         return mChartView;
+        //check
     }
 }
