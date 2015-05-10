@@ -1,7 +1,18 @@
 package group8.com.application.Application;
 
+import android.content.Context;
+import android.content.Intent;
+import android.view.View;
+import android.widget.Toast;
+
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
+import group8.com.application.UI.MainView;
+import group8.com.application.UI.NotificationSystem;
+import group8.com.application.alert.BrakesActivity;
+import group8.com.application.alert.DistractionActivity;
+import group8.com.application.alert.FuelActivity;
+import group8.com.application.alert.SpeedActivity;
 
 /**
  * Main controller for the application. Acts as a mediator between different classes.
@@ -90,10 +101,8 @@ public class Controller {
     }
 
     public static void stopGrading() {
-
-        MeasurementFactory.pauseMeasurements();
         GradingSystem.stopGradingSystem();
-
+        MeasurementFactory.pauseMeasurements();
     }
 
     public static boolean isGrading() {
@@ -125,15 +134,26 @@ public class Controller {
     }
 
     public static DataList eventGetPoints() {
-        return DBHandler.getPoints(Session.getUserName());
+//        return DBHandler.getPoints(Session.getUserName());
+        return Session.currentPoints;
     }
 
     public static DataList eventGetFilteredPoints(int start, int stop) {
         return DBHandler.getFilteredPoints(Session.getUserName(), start, stop);
     }
 
+    /*Daily message Method */
+
+    public static Toast eventGetCustomToast(Context context, View view){
+        return NotificationSystem.customToast(context, view);
+    }
+
     public static void eventSetMeasuremtents () {
         DBHandler.setMeasurements(Session.getUserName());
+    }
+
+    public static void eventSetPoints () {
+        DBHandler.setPoints(Session.getUserName());
     }
 /* END - Methods for the DBHandler */
 
@@ -171,4 +191,5 @@ public class Controller {
         context.startActivity(intent);
 */
 
-}
+    }
+

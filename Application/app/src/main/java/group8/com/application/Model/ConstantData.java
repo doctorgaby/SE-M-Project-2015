@@ -12,9 +12,9 @@ public abstract class ConstantData {
     public static final double extremeFuelConsumption = 100;
     public static final int extremeBrake = 0;
     public static final int extremeDriverDistractionLevel = 2000;
-    public static final int outOfRangeSpeed = 5;
-    public static final int outOfRangeLowerMargin = 5;
-    public static final int outOfRangeMiddleMargin = 10;
+    public static final int outOfRangeSpeed = 20;
+    public static final int outOfRangeLowerMargin = 2;
+    public static final int outOfRangeMiddleMargin = 4;
     /* END - GRADING SYSTEM*/
 
     public static final String TAG_SUCCESS = "success";
@@ -34,5 +34,6 @@ public abstract class ConstantData {
     public static final String TAG_GETPOINTS = "getPoints";
     public static final String TAG_GETFILTEREDPOINTS = "getFilteredPoints";
     public static final String TAG_SETMEASUREMENTS = "setMeasurements";
+    public static final String TAG_SETPOINTS = "setPoints";
     public static final String TAG_SAVEDAY = "SaveDay";
 }

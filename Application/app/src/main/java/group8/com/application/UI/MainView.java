@@ -7,9 +7,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,7 +22,7 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 
 import org.achartengine.GraphicalView;
-
+import group8.com.application.Model.ConstantData;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.R;
@@ -28,6 +31,7 @@ import group8.com.application.alert.BrakesActivity;
 import group8.com.application.alert.DistractionActivity;
 import group8.com.application.alert.FuelActivity;
 import group8.com.application.alert.SpeedActivity;
+
 
 
 public class MainView extends Activity {
@@ -51,6 +55,9 @@ public class MainView extends Activity {
     private Button startButton;
     private Button stopButton;
 
+    //TEST
+    private Button dbButton;
+
     private CountDownTimer pointsTimer;
 
     @Override
@@ -59,9 +66,19 @@ public class MainView extends Activity {
         mContext = getBaseContext();
         setContentView(R.layout.main_display);
 
+        //checks if it's a new day
+//        dailyMessage();
+
+        //test code
+        Controller.eventGetCustomToast(this, customLayout());
+
         graphBtn = (Button) findViewById(R.id.graphBtn);
         startButton = (Button) findViewById(R.id.startButton);
         stopButton = (Button) findViewById(R.id.stopButton);
+
+
+        //TEST
+        dbButton = (Button) findViewById(R.id.dbButton);
 
         stopButton.setVisibility(View.INVISIBLE);
         userTxt = (TextView) findViewById(R.id.username);
@@ -115,6 +132,16 @@ public class MainView extends Activity {
             }
         });
 
+
+        //TEST
+        dbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Controller.eventSetMeasuremtents();
+                Controller.eventSetPoints();
+            }
+        });
     }
 
 
@@ -171,6 +198,36 @@ public class MainView extends Activity {
         max = (sp + bk + dd + fc) / 2;
         bView.repaint();
         bView.refreshDrawableState();
+    }
+
+    private void dailyMessage(){
+
+        //get SharedPreference
+        SharedPreferences prefs = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0);
+        long getNewDay = prefs.getLong(ConstantData.TAG_SAVEDAY, 0);
+
+        //check if it's a new day
+        if ((getNewDay + (24 * 60 * 60 * 1000)) < System.currentTimeMillis()) {
+
+
+            // Save current timestamp for next Check
+            getNewDay = System.currentTimeMillis();
+            SharedPreferences.Editor editor = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0).edit();
+            editor.putLong(ConstantData.TAG_SAVEDAY, getNewDay);
+            editor.commit();
+
+            //execute daily message
+            Controller.eventGetCustomToast(this, customLayout());
+            Log.d("MyApp", getNewDay + "");
+        }
+    }
+
+    private View customLayout(){
+
+        LayoutInflater myInflator = getLayoutInflater();
+        View myLayout = myInflator.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_layout_root));
+
+        return myLayout;
 
     }
 
