@@ -15,10 +15,11 @@ import com.swedspot.vil.distraction.StealthMode;
 import com.swedspot.vil.policy.AutomotiveCertificate;
 
 /**
- * Created by enriquecordero on 30/03/15.
+ * Class that retrieves the signals from AGA, and sends them to the controller.
  */
 public abstract class MeasurementFactory {
 
+    /* Local variables */
     private static boolean running = false;
     private static AsyncTask measurementTask;
     private static double speed, fuelConsumption;
@@ -142,4 +143,5 @@ public abstract class MeasurementFactory {
     protected static int getDistractionLevel() {
         return distractionLevel;
     }
+
 }

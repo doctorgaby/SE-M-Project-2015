@@ -26,6 +26,7 @@ public abstract class GradingSystem {
     private static ArrayList<Double> tempSpeedList;
     private static ArrayList<Double> tempFuelList;
     private static ArrayList<Integer> tempBrakeList;
+
     /**
      * Start the grading system.
      * */
