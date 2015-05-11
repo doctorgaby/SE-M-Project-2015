@@ -33,7 +33,7 @@ import group8.com.application.alert.FuelActivity;
 import group8.com.application.alert.SpeedActivity;
 
 
-
+// New branch comment
 public class MainView extends Activity {
 
     public static Context mContext;
