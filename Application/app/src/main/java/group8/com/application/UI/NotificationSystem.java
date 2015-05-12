@@ -1,12 +1,19 @@
 package group8.com.application.UI;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Model.DataList;
+import group8.com.application.R;
 
 /**
  * Created by Kristiyan on 4/22/2015.
@@ -20,12 +27,20 @@ public class NotificationSystem{
     private static int fuelScore;
 
 
-    public static Toast toastShow(Context context) {
 
-        CharSequence msg = message(evaluateList(), getDifference());
+    public static Toast customToast(Context context, View view) {
+
         int duration = Toast.LENGTH_LONG;
 
-        Toast toast = Toast.makeText(context, msg, duration);
+        Toast toast = new Toast(context);
+        toast.setDuration(duration);
+        toast.setView(view);
+
+        TextView myMessage = (TextView)view.findViewById(R.id.text);
+        myMessage.setText(setMessage());
+
+        ImageView myImage = (ImageView)view.findViewById(R.id.img);
+        setImage(myImage);
 
         if (evaluateList() != "terminate") {
             toast.show();
@@ -33,6 +48,12 @@ public class NotificationSystem{
 
         return toast;
 
+    }
+
+    private static CharSequence setMessage(){
+
+        CharSequence msg = message(evaluateList(), getPosition());
+        return msg;
     }
 
     /**Utility Method for message(String, int)
@@ -54,17 +75,17 @@ public class NotificationSystem{
 */
 /*  Session test code
 
-        int speedScore = Session.getSpeedScore();
-        int brakeScore = Session.getBrakeScore();
-        int DDLScore = Session.getDriverDistractionLevelScore();
-        int fuelScore = Session.getFuelConsumptionScore();
+        speedScore = Session.getSpeedScore();
+        brakeScore = Session.getBrakeScore();
+        DDLScore = Session.getDriverDistractionLevelScore();
+        fuelScore = Session.getFuelConsumptionScore();
 */
 
 //  Hardcoded testing values
-        int speedScore = 20;
-        int brakeScore = 40;
-        int DDLScore = 50;
-        int fuelScore = 60;
+        speedScore = 20;
+        brakeScore = 40;
+        DDLScore = 50;
+        fuelScore = 60;
 //
 
         if (speedScore < brakeScore && speedScore < DDLScore && speedScore < fuelScore){
@@ -95,7 +116,7 @@ public class NotificationSystem{
      * @return the approximate position
      */
 
-    private static int getDifference(){
+    private static int getPosition(){
 /*
         data = Controller.eventGetPoints();
         speedScore =  data.getMaxSpeed();
@@ -205,6 +226,24 @@ public class NotificationSystem{
         if (eval == ConstantData.TAG_DISTRACTION) { return ddl[pos]; }
 
         return "terminate";
+    }
+
+    public static void setImage(ImageView view){
+
+
+        if (evaluateList() == ConstantData.TAG_SPEED) {
+            view.setImageResource(R.drawable.speed_icon);
+        }
+        if (evaluateList() == ConstantData.TAG_BRAKE) {
+            view.setImageResource(R.drawable.brakes_icon);
+        }
+        if (evaluateList() == ConstantData.TAG_FUEL) {
+            view.setImageResource(R.drawable.gas_icon);
+        }
+        if (evaluateList() == ConstantData.TAG_DISTRACTION) {
+            view.setImageResource(R.drawable.driver_icon);
+        }
+
     }
 
 }

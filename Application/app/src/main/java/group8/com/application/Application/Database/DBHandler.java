@@ -146,6 +146,35 @@ public abstract class DBHandler {
 
     }
 
+    /**
+     * @param
+     */
+    public static void setPoints(String user) {
+
+        JSONObject json = new JSONObject();
+        JSONObject list = Session.getPointsJson();
+        List<NameValuePair> params = new ArrayList<>();
+
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_SETPOINTS));
+        params.add(new BasicNameValuePair("username", user));
+        params.add(new BasicNameValuePair("list", list.toString()));
+
+        Log.d("list", list.toString());
+        Log.d("params", params.toString());
+        String success = "error";
+
+        try {
+            json = new doExecuteValues(params).execute().get(); // jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params);
+            success = "" + json.getInt(ConstantData.TAG_SUCCESS);
+        } catch(Exception ex) {
+            // Could not execute request
+            Log.d("DBHandler.java", "Exception in setPoints(): " + ex.getMessage());
+        }
+
+        Log.d("success", success);
+
+    }
+
     //                              **************************
     //                              *****                *****
     //                              ***** User Methods   *****

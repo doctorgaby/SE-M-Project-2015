@@ -111,6 +111,14 @@ public abstract class Session {
         return currentPoints.getDriverDistractionLevel(currentPoints.getDriverDistractionLevelSize() - 1).getValue();
 
     }
+
+    /**
+     * Get the Json list of the points list.
+     * @return JSON list of the points.
+     */
+    public static JSONObject getPointsJson() {
+        return currentPoints.getJson();
+    }
     /* END - GRADING AND POINTS RELATED GETTERS */
 
 
