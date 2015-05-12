@@ -36,4 +36,5 @@ public abstract class ConstantData {
     public static final String TAG_SETMEASUREMENTS = "setMeasurements";
     public static final String TAG_SETPOINTS = "setPoints";
     public static final String TAG_SAVEDAY = "SaveDay";
+
 }

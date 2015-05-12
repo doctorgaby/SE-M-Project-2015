@@ -16,6 +16,9 @@ import com.androidplot.xy.XYPlot;
 import com.androidplot.xy.XYSeries;
 import com.androidplot.xy.XYStepMode;
 
+import java.util.Collections;
+import java.util.List;
+
 import group8.com.application.Application.Session;
 import group8.com.application.Application.Controller;
 import group8.com.application.Model.DataList;
@@ -27,9 +30,11 @@ import group8.com.application.R;
 
 public class ResultsView extends Activity {
 
-    int xMin, xMax, xRange, yMin, yMax, yRange;
+    private int xMin, xMax, xRange, yMin, yMax, yRange;
     protected DataList data;
     private XYPlot plot;
+    private String setPlot;
+    private Button currBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +42,15 @@ public class ResultsView extends Activity {
         setContentView(R.layout.results_display);
 
         //build a default graph from session
-        buildPointsPlot(Session.currentPoints);
+        buildPlot(data = Controller.eventGetPoints(), setPlot);
 
         //Listeners for filter buttons
-        Button currBtn = (Button) findViewById(R.id.currBtn);
+        currBtn = (Button) findViewById(R.id.currBtn);
         currBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildPointsPlot(data = Controller.eventGetPoints());
+                buildPlot(data = Controller.eventGetPoints(), setPlot);
                 plot.redraw();
 
             }
@@ -56,7 +61,7 @@ public class ResultsView extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildPointsPlot(data = Controller.eventGetFilteredPoints( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 60480));
+                buildPlot(data = Controller.eventGetFilteredPoints((int) ((System.currentTimeMillis() / 1000) - 300), (int) (System.currentTimeMillis() / 1000)) , setPlot);
                 plot.redraw();
 
             }
@@ -67,47 +72,21 @@ public class ResultsView extends Activity {
             @Override
             public void onClick(View v) {
                 plot.clear();
-                buildPointsPlot(data = Controller.eventGetFilteredPoints( (int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 262800));
+                buildPlot(data = Controller.eventGetFilteredPoints((int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 262800), setPlot);
                 plot.redraw();
 
             }
         });
+
     }
 
-    private void buildPointsPlot(DataList data){
+    /**
+     * Builds the actual graph
+     *
+     * @param data
+     */
 
-        //Test for the DBHandler
-        //DataList data = Controller.eventGetMeasurements();
-        //DataList data = Controller.eventGetFilteredMeasurements(7,10);
-        //DataList data = Controller.eventGetPoints();                              !!!NOT WORKING YET
-        //Log.d("ResultsView", "DataList loaded!");
-        //DataList data = Controller.eventGetFilteredPoints(0,5);                   !!!NOT WORKING YET
-        //DataList data = Controller.eventGetFilteredPoints(0,5);
-
-        data.setSpeed(1,10);
-        data.setSpeed(2,30);
-        data.setSpeed(3,80);
-        data.setSpeed(4,70);
-        data.setSpeed(5,75);
-        data.setSpeed(6,90);
-        data.setFuelConsumption(1,5);
-        data.setFuelConsumption(2,10);
-        data.setFuelConsumption(3,30);
-        data.setFuelConsumption(4,0);
-        data.setFuelConsumption(5,10);
-        data.setFuelConsumption(6,25);
-        data.setBrake(1,50);
-        data.setBrake(2,45);
-        data.setBrake(3,35);
-        data.setBrake(4,45);
-        data.setBrake(5,65);
-        data.setBrake(6,75);
-        data.setDriverDistractionLevel(1,50);
-        data.setDriverDistractionLevel(2,55);
-        data.setDriverDistractionLevel(3,45);
-        data.setDriverDistractionLevel(4,35);
-        data.setDriverDistractionLevel(5,60);
-        data.setDriverDistractionLevel(6,90);
+    private void buildPlot(DataList data, String s){
 
         //Android Plot
         plot = (XYPlot) findViewById(R.id.Graph);
@@ -116,9 +95,9 @@ public class ResultsView extends Activity {
         xMin = 0;
         xMax = data.getMaxTime();
         xRange = xMax / 5;
-        yMin = 0;//This should be done according to the values depending whether or not to allow negative points.
-        yMax = data.getMaxPoints();
-        yRange = (yMax - yMin) / 5;
+        yMin = 0;
+        yMax = 100;
+        yRange = yMax / 5;
 
         //Domain: X-Axis
         plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, xRange);
@@ -128,6 +107,130 @@ public class ResultsView extends Activity {
         plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, yRange);
         plot.setRangeBoundaries(yMin, yMax + yRange, BoundaryMode.FIXED);
 
+        if (s == "speed"){
+            buildSpeedPlot(data);
+
+        }
+        else if (s == "fuel"){
+            buildFuelPlot(data);
+
+        }
+        else if (s == "distraction"){
+            buildDistractionPlot(data);
+
+        } else {
+            buildFullPlot(data);
+
+       }
+
+    }
+
+    /**
+     * builds a graph for the
+     * speed score
+     *
+     * @param data sets values
+     */
+
+    private void buildSpeedPlot(DataList data){
+
+        //set plot UI description
+        plot.getRangeLabelWidget().setText("Speed (km/h)");
+        plot.getTitleWidget().setText("Speed per Measurement");
+
+        //Initiate Series to Draw
+        XYSeries speedSeries = new SimpleXYSeries(
+                (data.getPlottableSpeed()),
+                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
+                "Speed");
+
+        //Initiate the formatters for the lines.
+        // Create a formatter to use for drawing a series using LineAndPointRenderer
+        // and configure it from xml:
+        LineAndPointFormatter speedFormat = new LineAndPointFormatter();
+        speedFormat.setPointLabelFormatter(new PointLabelFormatter());
+        speedFormat.configure(getApplicationContext(),
+                R.xml.lpf_speed);
+
+        //Add series to the plot with the correct formats.
+        plot.clear();
+        plot.addSeries(speedSeries, speedFormat);
+
+    }
+
+    /**
+     * builds a graph for the
+     * fuel consumption score
+     *
+     * @param data sets values
+     */
+
+    private void buildFuelPlot(DataList data){
+
+        //set Plot UI description
+        plot.getRangeLabelWidget().setText("Fuel Consumption");
+        plot.getTitleWidget().setText("Liters per Measurement");
+
+        //Initiate Series to Draw
+        XYSeries fuelConsumptionSeries = new SimpleXYSeries(
+                data.getPlottableFuelConsumption(),
+                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
+                "Fuel Consumption");
+
+        //Initiate the formatters for the lines.
+        // Create a formatter to use for drawing a series using LineAndPointRenderer
+        // and configure it from xml:
+        LineAndPointFormatter fuelConsumptionFormat = new LineAndPointFormatter();
+        fuelConsumptionFormat.setPointLabelFormatter(new PointLabelFormatter());
+        fuelConsumptionFormat.configure(getApplicationContext(),
+                R.xml.lfp_fuelconsumption);
+
+        //Add series to the plot with the correct formats.
+        plot.clear();
+        plot.addSeries(fuelConsumptionSeries, fuelConsumptionFormat);
+
+    }
+
+    /**
+     * builds a graph for the
+     * driver distraction score
+     *
+     * @param data sets values
+     */
+
+    private void buildDistractionPlot(DataList data){
+
+        //set plot UI description
+        plot.getRangeLabelWidget().setText("Driver Distraction");
+        plot.getTitleWidget().setText("Distraction per Measurement");
+
+        //Initiate Series to Draw
+        XYSeries driverDistractionSeries = new SimpleXYSeries(
+                data.getPlottableDriverDistraction(),
+                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
+                "DDL");
+
+        //Initiate the formatters for the lines.
+        // Create a formatter to use for drawing a series using LineAndPointRenderer
+        // and configure it from xml:
+        LineAndPointFormatter driverDistractionFormat = new LineAndPointFormatter();
+        driverDistractionFormat.setPointLabelFormatter(new PointLabelFormatter());
+        driverDistractionFormat.configure(getApplicationContext(),
+                R.xml.lpf_driverdistractionlevel);
+
+        //Add series to the plot with the correct formats.
+        plot.clear();
+        plot.addSeries(driverDistractionSeries, driverDistractionFormat);
+
+    }
+
+    /**
+     * builds a graph with points from all
+     * measurement
+     *
+     * @param data sets values
+     */
+    private void buildFullPlot(DataList data) {
 
         //Initiate Series to Draw
         XYSeries speedSeries = new SimpleXYSeries(
@@ -182,73 +285,6 @@ public class ResultsView extends Activity {
 
     }
 
-    //Test code for filters
-    public DataList weekFill(){
-
-        DataList data = new DataList("w");
-        data.setSpeed(1,10);
-        data.setSpeed(2,30);
-        data.setSpeed(3,80);
-        data.setSpeed(4,70);
-        data.setSpeed(5,75);
-        data.setSpeed(6,90);
-        data.setFuelConsumption(1,5);
-        data.setFuelConsumption(2,10);
-        data.setFuelConsumption(3,30);
-        data.setFuelConsumption(4,0);
-        data.setFuelConsumption(5,10);
-        data.setFuelConsumption(6,25);
-        data.setBrake(1,50);
-        data.setBrake(2,45);
-        data.setBrake(3,35);
-        data.setBrake(4,45);
-        data.setBrake(5,65);
-        data.setBrake(6,75);
-        data.setDriverDistractionLevel(1,50);
-        data.setDriverDistractionLevel(2,55);
-        data.setDriverDistractionLevel(3,45);
-        data.setDriverDistractionLevel(4,35);
-        data.setDriverDistractionLevel(5,60);
-        data.setDriverDistractionLevel(6,90);
-
-        return data;
-    }
-
-    //Test code for filters
-    public DataList monthFill(){
-
-        DataList data = new DataList("m");
-        data.setSpeed(1,60);
-        data.setSpeed(2,80);
-        data.setSpeed(3,120);
-        data.setSpeed(4,70);
-        data.setSpeed(5,20);
-        data.setSpeed(6,50);
-        data.setFuelConsumption(1,10);
-        data.setFuelConsumption(2,20);
-        data.setFuelConsumption(3,30);
-        data.setFuelConsumption(4,10);
-        data.setFuelConsumption(5,25);
-        data.setFuelConsumption(6,8);
-        data.setBrake(1,50);
-        data.setBrake(2,60);
-        data.setBrake(3,70);
-        data.setBrake(4,10);
-        data.setBrake(5,20);
-        data.setBrake(6,40);
-        data.setDriverDistractionLevel(1,10);
-        data.setDriverDistractionLevel(2,13);
-        data.setDriverDistractionLevel(3,25);
-        data.setDriverDistractionLevel(4,18);
-        data.setDriverDistractionLevel(5,40);
-        data.setDriverDistractionLevel(6,50);
-
-        return data;
-    }
-
-
-    //Integration done by Kristiyan
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -256,34 +292,70 @@ public class ResultsView extends Activity {
         return true;
     }
 
-
+    /**
+     * updates the menu with new values
+     * in this case it sets the visibility
+     *
+     * @param menu
+     * @return true
+     */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem item= menu.findItem(R.id.menuPointsOption);
-        //depending on your conditions, either enable/disable
-        item.setEnabled(false);
+
+        if (setPlot == "speed") {
+            menu.findItem(R.id.menuSpeedOption).setVisible(false);
+            menu.findItem(R.id.menuFuel_consumptionOption).setVisible(true);
+            menu.findItem(R.id.menuDriverDistractionOption).setVisible(true);
+            menu.findItem(R.id.menuPointsOption).setVisible(true);
+        }
+        else if(setPlot == "fuel"){
+            menu.findItem(R.id.menuSpeedOption).setVisible(true);
+            menu.findItem(R.id.menuFuel_consumptionOption).setVisible(false);
+            menu.findItem(R.id.menuDriverDistractionOption).setVisible(true);
+            menu.findItem(R.id.menuPointsOption).setVisible(true);
+        }
+        else if (setPlot == "distraction") {
+            menu.findItem(R.id.menuSpeedOption).setVisible(true);
+            menu.findItem(R.id.menuFuel_consumptionOption).setVisible(true);
+            menu.findItem(R.id.menuDriverDistractionOption).setVisible(false);
+            menu.findItem(R.id.menuPointsOption).setVisible(true);
+        } else {
+            menu.findItem(R.id.menuSpeedOption).setVisible(true);
+            menu.findItem(R.id.menuFuel_consumptionOption).setVisible(true);
+            menu.findItem(R.id.menuDriverDistractionOption).setVisible(true);
+            menu.findItem(R.id.menuPointsOption).setVisible(false);
+        }
+
         super.onPrepareOptionsMenu(menu);
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
+        //clears and repaints before every change
         switch (item.getItemId()) {
-            case R.id.menuSpeedOption:
-                Intent intentS = new Intent(this, SpeedGraph.class);
-                this.startActivity(intentS);
-                return true;
-            case R.id.menuFuel_consumptionOption:
-                Intent intentFC = new Intent(this, FuelConsumptionGraph.class);
-                this.startActivity(intentFC);
-                return true;
-            case R.id.menuDriverDistractionOption:
-                Intent intentDDL = new Intent(this, DriverDistractionGraph.class);
-                this.startActivity(intentDDL);
 
+            case R.id.menuSpeedOption:
+                setPlot = "speed";
+                currBtn.callOnClick();
                 return true;
+
+            case R.id.menuFuel_consumptionOption:
+                setPlot = "fuel";
+                currBtn.callOnClick();
+                return true;
+
+            case R.id.menuDriverDistractionOption:
+                setPlot = "distraction";
+                currBtn.callOnClick();
+                return true;
+
+            case R.id.menuPointsOption:
+                setPlot = "";
+                currBtn.callOnClick();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

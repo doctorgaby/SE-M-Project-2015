@@ -22,6 +22,8 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 
 import org.achartengine.GraphicalView;
+
+import group8.com.application.Application.StopWatch;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;

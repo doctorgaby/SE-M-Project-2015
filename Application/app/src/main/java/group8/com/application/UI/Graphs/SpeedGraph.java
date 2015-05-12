@@ -32,10 +32,6 @@ public class SpeedGraph extends Activity {
     int xMin, xMax, xRange, yMin, yMax, yRange;
 
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

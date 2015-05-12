@@ -101,8 +101,8 @@ public class Controller {
     }
 
     public static DataList eventGetPoints() {
-//        return DBHandler.getPoints(Session.getUserName());
-        return Session.currentPoints;
+        return DBHandler.getPoints(Session.getUserName());
+//        return Session.currentPoints;
     }
 
     public static DataList eventGetFilteredPoints(int start, int stop) {
