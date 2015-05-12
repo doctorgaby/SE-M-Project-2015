@@ -10,5 +10,10 @@
         android:icon="@drawable/ic_launcher"
         android:title="Logout"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/medal_view"
+        android:icon="@drawable/ic_launcher"
+        android:title="Medals"
+        app:showAsAction="ifRoom" />
 
 </menu>

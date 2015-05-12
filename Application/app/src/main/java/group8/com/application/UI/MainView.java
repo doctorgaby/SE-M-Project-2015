@@ -174,6 +174,12 @@ public class MainView extends Activity {
                 this.startActivity(intent);
                 finish();
                 return true;
+
+            case R.id.medal_view:
+                Intent intentMedals = new Intent(getContext(), MedalsView.class);
+                startActivityForResult(intentMedals, 0);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

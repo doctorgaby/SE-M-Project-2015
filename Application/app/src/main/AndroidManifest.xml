@@ -60,6 +60,10 @@
             android:name=".UI.TestGrading"
             android:label="Test"></activity>
 
+        <activity
+            android:name=".UI.MedalsView"
+            android:label="Medals"></activity>
+
 
         <activity android:name=".alert.BrakesActivity" />
         <activity android:name=".alert.DistractionActivity" />
