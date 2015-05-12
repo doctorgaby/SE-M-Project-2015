@@ -36,4 +36,14 @@ public abstract class ConstantData {
     public static final String TAG_SETMEASUREMENTS = "setMeasurements";
     public static final String TAG_SETPOINTS = "setPoints";
     public static final String TAG_SAVEDAY = "SaveDay";
+
+
+    public static final String TAG_RANKING = "posts";
+    public static final String TAG_USERNAME = "username";
+
+    public static final String TAG_GETALLSCORES = "getAllScores";
+    public static final String TAG_GETFRIENDSSCORES = "getFriendsScores";
+    public static final String TAG_SETFRIEND = "setFriend";
+    public static final String TAG_REMOVEFRIEND = "removeFriend";
+    public static final String TAG_GETALLFRIENDS = "getAllFriends";
 }

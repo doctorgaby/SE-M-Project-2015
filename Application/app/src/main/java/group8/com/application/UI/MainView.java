@@ -137,7 +137,6 @@ public class MainView extends Activity {
         dbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Controller.eventSetMeasuremtents();
                 Controller.eventSetPoints();
             }
@@ -171,6 +170,10 @@ public class MainView extends Activity {
                 Intent intent = new Intent(this, LoginView.class);
                 this.startActivity(intent);
                 finish();
+                return true;
+            case R.id.mainviewmenu_ranking:
+                Intent rankingInt = new Intent(this, RankingView.class);
+                startActivityForResult(rankingInt, 0);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

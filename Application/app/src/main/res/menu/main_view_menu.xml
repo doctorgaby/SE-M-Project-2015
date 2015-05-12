@@ -6,9 +6,15 @@
 
 
     <item
+        android:id="@+id/mainviewmenu_ranking"
+        android:icon="@drawable/ic_launcher"
+        android:title="Ranking"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/mainviewmenu_logout"
         android:icon="@drawable/ic_launcher"
         android:title="Logout"
         app:showAsAction="ifRoom" />
+
 
 </menu>

@@ -5,6 +5,12 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
 import group8.com.application.UI.MainView;
@@ -211,6 +217,25 @@ public class Controller {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
 */
-
+    public static List<String> eventGetAllFriends () {
+        return DBHandler.getAllFriends(Session.getUserName());
     }
+
+    public static ArrayList<HashMap<String, String>> getAllRankings () {
+        return DBHandler.getAllRankings();
+    }
+
+    public static ArrayList<HashMap<String, String>> getFriendsRankings() {
+        return DBHandler.getFriendsRankings(Session.getUserName());
+    }
+
+    public static JSONObject addFriend (String friend) {
+        return DBHandler.addFriend(friend);
+    }
+
+    public static JSONObject removeFriend (String friend) {
+        return DBHandler.removeFriend(friend);
+    }
+
+}
 
