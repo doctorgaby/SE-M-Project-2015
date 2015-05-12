@@ -1,4 +1,4 @@
-package group8.com.application.UI.MainView.Fragments;
+package group8.com.application.UI.DrivingView.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import group8.com.application.R;
 /**
  * Created by Hampus on 2015-05-11.
  */
-public class FuelFragment extends Fragment {
+public class BrakeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class FuelFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_fuel, container, false);
+        return inflater.inflate(R.layout.fragment_brake, container, false);
     }
 
     @Override

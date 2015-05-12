@@ -32,7 +32,7 @@ import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
-import group8.com.application.UI.MainView.MainView;
+import group8.com.application.UI.MainView;
 
 public class LoginView extends Activity implements OnClickListener {
     private EditText username, pass;

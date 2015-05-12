@@ -25,7 +25,7 @@ import java.util.List;
 import group8.com.application.Application.Session;
 import group8.com.application.Foundation.JSONParser;
 import group8.com.application.R;
-import group8.com.application.UI.MainView.MainView;
+import group8.com.application.UI.MainView;
 
 public class RegisterView extends Activity implements OnClickListener {
 

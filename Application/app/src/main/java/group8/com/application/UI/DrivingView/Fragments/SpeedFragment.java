@@ -1,4 +1,4 @@
-package group8.com.application.UI.MainView.Fragments;
+package group8.com.application.UI.DrivingView.Fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
