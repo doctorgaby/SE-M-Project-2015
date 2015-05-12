@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@drawable/fragment_background_yellow"
+    android:id="@+id/fuel_fragment_background">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="80"
-        android:gravity="center"
-        android:textSize="40dp"
-        android:background="@drawable/fragment_border" />
-
-
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/fuel_icon"/>
 
 </LinearLayout>

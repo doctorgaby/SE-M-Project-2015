@@ -19,6 +19,7 @@
     <string name="title_activity_speed">SpeedActivity</string>
     <string name="title_activity_distraction">DistractionActivity</string>
     <string name="title_activity_visualization">VisualizationActivity</string>
+    <string name="initial_points">50</string>
 
 
 </resources>

@@ -102,6 +102,22 @@ public class Controller {
     public static boolean isGrading() {
         return GradingSystem.isGrading();
     }
+
+    public static int getSpeedScore() {
+        return Session.getSpeedScore();
+    }
+
+    public static int getFuelConsumptionScore() {
+        return Session.getFuelConsumptionScore();
+    }
+
+    public static int getBrakeScore() {
+        return Session.getBrakeScore();
+    }
+
+    public static int getDriverDistractionLevelScore() {
+        return Session.getDriverDistractionLevelScore();
+    }
 /* END - Methods for GradingSystem */
 
 

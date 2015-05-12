@@ -88,6 +88,8 @@ public class MainView extends Activity {
             @Override
             public void onClick(View v) {
 
+                Controller.startGrading();
+
                 Intent intent = new Intent(v.getContext(), DrivingView.class);
                 startActivityForResult(intent, 0);
 
