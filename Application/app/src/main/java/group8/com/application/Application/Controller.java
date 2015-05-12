@@ -1,18 +1,12 @@
 package group8.com.application.Application;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
-import group8.com.application.UI.MainView;
 import group8.com.application.UI.NotificationSystem;
-import group8.com.application.alert.BrakesActivity;
-import group8.com.application.alert.DistractionActivity;
-import group8.com.application.alert.FuelActivity;
-import group8.com.application.alert.SpeedActivity;
 
 /**
  * Main controller for the application. Acts as a mediator between different classes.
