@@ -157,6 +157,12 @@ public class Controller {
     }
     /* END - Methods for AlertSystem */
 
+    public static boolean getUpdatedStatus(String s){
+        return MedalsLogic.setUpdatedMap(s);
+    }
+
+    /* Methods for Medals
+
 
  /*
  *

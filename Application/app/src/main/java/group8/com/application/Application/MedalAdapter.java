@@ -41,53 +41,38 @@ public class MedalAdapter extends ArrayAdapter<Medal> {
             LayoutInflater vi = (LayoutInflater)getContext().getSystemService(inflater);
             convertView = vi.inflate(R.layout.medal_item, parent, false);
 
-            //
             holder = new MedalViewHolder();
             holder.img = (ImageView)convertView.findViewById(R.id.medal_image);
             holder.title = (TextView)convertView.findViewById(R.id.title);
 
-            //
             convertView.setTag(holder);
         }
         else{
             holder = (MedalViewHolder) convertView.getTag();
         }
 
-        //
-
         holder.populate(medal, ((MedalsView) mContext).isLvBusy());
 
-        //
         return convertView;
     }
-
-
 
 
     static class MedalViewHolder {
         public ImageView img;
         public TextView title;
 
-        void populate(Medal m) {
-            title.setText(m.title);
-
-            //
-
-        }
-
         void populate(Medal m, boolean isBusy) {
             title.setText(m.title);
 
-            if (!isBusy){
-                // download from internet
+            if (m.isAchieved){
+                //set medal image if it's achieved
                 img.setImageResource(m.img_url);
 
             }
-            else{
+            else {
                 // set default image
-                img.setImageResource(m.img_url);
+                img.setImageResource(R.drawable.locked);
             }
         }
     }
-
 }

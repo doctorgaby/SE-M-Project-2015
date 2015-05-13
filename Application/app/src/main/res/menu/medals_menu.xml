@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="group8.com.application.UI.MedalsView"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/main_view_back"
+        android:icon="@drawable/ic_launcher"
+        android:title="Main Screen"
+        app:showAsAction="ifRoom" />
+
+</menu>
