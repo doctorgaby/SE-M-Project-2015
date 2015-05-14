@@ -1,10 +1,9 @@
-package group8.com.application.UI;
+package group8.com.application.UI.mainView.fragments;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;

@@ -117,6 +117,36 @@ public abstract class DBHandler {
     /**
      * @param
      */
+    public static void setScores(String user) {
+        JSONObject json;
+        int speed = Session.getSpeedScore();
+        int brake = Session.getBrakeScore();
+        int fuel = Session.getFuelConsumptionScore();
+        int distraction = Session.getDriverDistractionLevelScore();
+        int measuredAt =(int) System.currentTimeMillis() / 1000;
+
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_SETFINALSCORES));
+        params.add(new BasicNameValuePair("username", user));
+        params.add(new BasicNameValuePair("speed", Integer.toString(speed)));
+        params.add(new BasicNameValuePair("brake", Integer.toString(brake)));
+        params.add(new BasicNameValuePair("fuel", Integer.toString(fuel)));
+        params.add(new BasicNameValuePair("distraction", Integer.toString(distraction)));
+        params.add(new BasicNameValuePair("measuredAt", Integer.toString(measuredAt)));
+        String success = "error";
+        try {
+            json = new doExecuteValues(params).execute().get(); // jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params);
+            success = "" + json.getInt(ConstantData.TAG_SUCCESS);
+        } catch(Exception ex) {
+            Log.d("DBHandler.java", "Exception in setMeasurements(): " + ex.getMessage());
+        }
+
+        Log.d("success", success);
+    }
+
+    /**
+     * @param
+     */
     public static void setMeasurements(String user) {
         JSONObject json;
         JSONObject list = Session.getMeasurementsJson();

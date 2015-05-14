@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import group8.com.application.Application.Controller;
 import group8.com.application.R;
-import group8.com.application.UI.MainView;
+import group8.com.application.UI.mainView.menuView;
 
 public class DrivingView extends Activity {
 
@@ -27,7 +27,7 @@ public class DrivingView extends Activity {
 
                 Controller.stopGrading();
 
-                Intent intent = new Intent(v.getContext(), MainView.class);
+                Intent intent = new Intent(v.getContext(), menuView.class);
                 startActivityForResult(intent, 0);
 
             }

@@ -77,7 +77,7 @@
 
 
 
-        <activity android:name=".UI.menuView">
+        <activity android:name=".UI.mainView.menuView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

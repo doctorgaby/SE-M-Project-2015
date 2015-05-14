@@ -106,6 +106,15 @@ public class Controller {
         Session.pause();
     }
 
+    public static void finishGrading (boolean save) {
+        Session.finishDrive();
+        if (save) {
+            eventSetMeasuremtents();
+            eventSetPoints();
+            eventSetLastScores();
+        }
+    }
+
     public static boolean isGrading() {
         return GradingSystem.isGrading();
     }
@@ -173,6 +182,8 @@ public class Controller {
     public static void eventSetPoints () {
         DBHandler.setPoints(Session.getUserName());
     }
+
+    public static void eventSetLastScores () {DBHandler.setScores(Session.getUserName());}
 /* END - Methods for the DBHandler */
 
 
