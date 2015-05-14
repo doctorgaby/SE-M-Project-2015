@@ -20,6 +20,7 @@
     <string name="title_activity_distraction">DistractionActivity</string>
     <string name="title_activity_visualization">VisualizationActivity</string>
     <string name="initial_points">50</string>
+    <string name="pause_button_text">Pause</string>
 
 
 </resources>

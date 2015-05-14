@@ -1,7 +1,6 @@
 package group8.com.application.UI.DrivingView.Fragments;
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
@@ -9,17 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import group8.com.application.Application.Controller;
 import group8.com.application.R;
 
-/**
- * Created by Hampus on 2015-05-11.
- */
 public class SpeedFragment extends Fragment {
 
     private CountDownTimer pointsTimer;
     private LinearLayout background;
+    private TextView scoreTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +33,7 @@ public class SpeedFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_speed, container, false);
         background = (LinearLayout) view.findViewById(R.id.speed_fragment_background);
+        scoreTextView = (TextView) view.findViewById(R.id.speed_fragment_score);
 
         return view;
 
@@ -43,11 +42,6 @@ public class SpeedFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-    }
-
-
-    private Color evaluatePoints(int points) {
-        return null;
     }
 
     private void startTimer() {
@@ -68,7 +62,10 @@ public class SpeedFragment extends Fragment {
                 else
                     background.setBackgroundResource(R.drawable.fragment_background_red);
 
+                scoreTextView.setText("" + speedScore);
+
                 pointsTimer.start();
+
             }
 
         }.start();

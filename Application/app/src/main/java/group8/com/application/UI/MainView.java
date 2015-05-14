@@ -67,6 +67,8 @@ public class MainView extends Activity {
         mContext = getBaseContext();
         setContentView(R.layout.main_display);
 
+        Controller.initMeasurements();
+
         //checks if it's a new day
 //        dailyMessage();
 

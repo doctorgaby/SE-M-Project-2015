@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_weight="4"
-        >
+        android:baselineAligned="false">
 
         <fragment
             android:name="group8.com.application.UI.DrivingView.Fragments.SpeedFragment"
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_weight="4"
-        >
+        android:baselineAligned="false">
 
         <fragment
             android:name="group8.com.application.UI.DrivingView.Fragments.BrakeFragment"
@@ -72,14 +72,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:weightSum="3">
 
         <Button
+            android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stop"
+            android:text="@string/pause_button_text"
             android:textSize="15dp"
-            android:id="@+id/stopButton" />
+            android:textColor="@color/white"
+
+            android:id="@+id/pauseButton" />
 
     </LinearLayout>
 
