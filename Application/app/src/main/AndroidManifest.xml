@@ -45,10 +45,7 @@
         <activity
             android:name=".UI.Login.LoginView"
             android:label="Welcome">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity
@@ -71,6 +68,24 @@
         <activity android:name=".alert.DistractionActivity" />
         <activity android:name=".alert.FuelActivity" />
         <activity android:name=".alert.SpeedActivity" />
+
+
+
+
+
+        <activity android:name=".UI.menuView">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+
+
+
+
+
 
 
         <meta-data

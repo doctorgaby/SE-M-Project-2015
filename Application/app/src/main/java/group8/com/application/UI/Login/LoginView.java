@@ -130,7 +130,7 @@ public class LoginView extends Activity implements OnClickListener {
                 new AttemptLogin().execute(ConstantData.TAG_ACTION_LOGIN);
                 break;
             case R.id.register:
-                new CreateUser().execute();
+                new aaa().execute();
                 //Intent i = new Intent(this, RegisterView.class);
                 //startActivity(i);
                 break;
@@ -154,7 +154,7 @@ public class LoginView extends Activity implements OnClickListener {
         protected String doInBackground(String... args) {
 
             // Check for success tag
-            int success;
+            JSONObject success;
             String tag = args[0];
             String user = "";
 
@@ -165,24 +165,29 @@ public class LoginView extends Activity implements OnClickListener {
 
             String password = pass.getText().toString();
             success = Controller.attemptLogin(tag, user, password); // Actual call to database
+            String message = "Error";
+            try {
+                message = success.getString(ConstantData.TAG_MESSAGE);
+                if (success.getInt(ConstantData.TAG_SUCCESS) == 1) {
 
-            if (success == 1) {
+                    // save user data (only saves it on normal logins.
+                    SharedPreferences sp = PreferenceManager
+                            .getDefaultSharedPreferences(LoginView.this);
+                    Editor edit = sp.edit();
+                    edit.putString("username", user);
+                    edit.apply();
 
-                // save user data (only saves it on normal logins.
-                SharedPreferences sp = PreferenceManager
-                        .getDefaultSharedPreferences(LoginView.this);
-                Editor edit = sp.edit();
-                edit.putString("username", user);
-                edit.apply();
-
-                Session.restart(user);
-                Intent i = new Intent(LoginView.this, MainView.class);
-                finish();
-                startActivity(i);
-
+                    Session.restart(user);
+                    Intent i = new Intent(LoginView.this, MainView.class);
+                    finish();
+                    startActivity(i);
+                }
+            }
+            catch (JSONException e) {
+                Log.e("Register Error", e.toString());
             }
 
-            return null;
+            return message;
 
         }
 
@@ -195,7 +200,7 @@ public class LoginView extends Activity implements OnClickListener {
         }
     }
 
-    class CreateUser extends AsyncTask<String, String, String> {
+    class aaa extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -210,30 +215,36 @@ public class LoginView extends Activity implements OnClickListener {
         protected String doInBackground(String... args) {
 
             // Check for success tag
-            int success;
+            JSONObject success;
             String user = username.getText().toString();
             String password = pass.getText().toString();
 
             success = Controller.registerUser(user, password); // Actual call to database
+            String message = "Error";
+            try {
+                message = success.getString(ConstantData.TAG_MESSAGE);
+                if (success.getInt(ConstantData.TAG_SUCCESS) == 1) {
 
-            if (success == 1) {
+                    // save user data
+                    SharedPreferences sp = PreferenceManager
+                            .getDefaultSharedPreferences(LoginView.this);
+                    SharedPreferences.Editor edit = sp.edit();
+                    edit.putString("username", user);
+                    edit.apply();
 
-                // save user data
-                SharedPreferences sp = PreferenceManager
-                        .getDefaultSharedPreferences(LoginView.this);
-                SharedPreferences.Editor edit = sp.edit();
-                edit.putString("username", user);
-                edit.apply();
+                    Session.restart(user);
+                    //finish();
+                    Intent i = new Intent(LoginView.this, MainView.class);
+                    finish();
+                    startActivity(i);
 
-                Session.restart(user);
-                //finish();
-                Intent i = new Intent(LoginView.this, MainView.class);
-                finish();
-                startActivity(i);
-
+                }
+            }
+            catch (JSONException e) {
+                Log.e("Register Error", e.toString());
             }
 
-            return null;
+            return message;
 
         }
 

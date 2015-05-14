@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -20,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -202,10 +204,13 @@ public class RankingView extends ListActivity {
         else
             choice = "Remove";
         if (allView)
-            text = "Would you like to add " + userClicked + " to your friends?";
+            text = "Add " + userClicked + " to your friends?";
         else
-            text = "Would you like to remove " + userClicked + " from your friends?";
+            text = "Remove " + userClicked + " from your friends?";
         builder.setTitle(text);
+       /* TextView textView = new TextView(RankingView.this);
+        textView.setText(text);
+        builder.setCustomTitle(textView);*/
         builder.setIcon(R.drawable.addfriendicon);
         builder.setPositiveButton(choice, new DialogInterface.OnClickListener() {
             @Override

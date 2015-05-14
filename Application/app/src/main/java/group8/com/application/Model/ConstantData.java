@@ -46,4 +46,12 @@ public abstract class ConstantData {
     public static final String TAG_SETFRIEND = "setFriend";
     public static final String TAG_REMOVEFRIEND = "removeFriend";
     public static final String TAG_GETALLFRIENDS = "getAllFriends";
+
+
+    public static final String TAG_STARTFRAGMENT = "start_menu";
+    public static final String TAG_CONTINUEFINISHFRAGMENT = "continue_finish_menu";
+    public static final String TAG_LOGINREGISTERFRAGMENT = "login_reg_menu";
+    public static final String TAG_LOGINFRAGMENT = "login_frag";
+    public static final String TAG_REGISTERFRAGMENT = "login_frag";
+
 }

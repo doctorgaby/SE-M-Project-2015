@@ -81,6 +81,7 @@ public class Controller {
     public static void stopGrading() {
         GradingSystem.stopGradingSystem();
         MeasurementFactory.pauseMeasurements();
+        Session.pause();
     }
 
     public static boolean isGrading() {
@@ -89,11 +90,11 @@ public class Controller {
     /* Methods for GradingSystem */
 
     /* Methods for login and register*/
-    public static int attemptLogin(String tag, String username, String password) {
+    public static JSONObject attemptLogin(String tag, String username, String password) {
         return DBHandler.attemptLogin(tag, username, password);
     }
 
-    public static int registerUser(String username, String password) {
+    public static JSONObject registerUser(String username, String password) {
         return DBHandler.registerUser(username, password);
     }
     /* END - Methods for login and register*/

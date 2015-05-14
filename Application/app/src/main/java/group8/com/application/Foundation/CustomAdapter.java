@@ -21,14 +21,16 @@ import group8.com.application.R;
  * Created by kikedaddy on 11/05/15.
  */
 public class CustomAdapter extends SimpleAdapter {
-    private int color = Color.RED;
+    //private int color = Color.RED;
     int resource;
     String username;
+    Context context;
     List<String> friendList;
 
         public CustomAdapter(Context context, List<HashMap<String, String>> items, int resource, String[] from, int[] to, String username) {
             super(context, items, resource, from, to);
             this.resource = resource;
+            this.context = context;
             this.username = username;
             friendList = Controller.eventGetAllFriends();
             Log.d("FriendsList:", friendList.toString());
@@ -41,7 +43,7 @@ public class CustomAdapter extends SimpleAdapter {
             ImageView iv = (ImageView) view.findViewById(R.id.friendIcon);
             String currentUser = (String)userTxt.getText();
             if (currentUser.equals(username)) {
-                view.setBackgroundColor(color);
+                view.setBackgroundColor(context.getResources().getColor(R.color.user_color));
             } else {
                 view.setBackgroundColor(resource);
             }

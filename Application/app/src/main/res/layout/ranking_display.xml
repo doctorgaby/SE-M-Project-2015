@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="#32b5e5"
+        android:background="@color/menuViewGray"
         android:orientation="horizontal"
         android:gravity="center">
 
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_layover"
         android:layout_below="@+id/top_layover"
-        android:background="#fff"
+        android:background="@color/menuViewTitleBackground"
         android:divider="@android:color/transparent"
         android:weightSum="6"
         android:scrollbars="none" />
@@ -41,7 +41,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#32b5e5"
+        android:background="@color/menuViewGray"
         android:layout_alignParentBottom="true">
 
         <Button

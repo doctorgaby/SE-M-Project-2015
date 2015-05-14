@@ -169,7 +169,7 @@ public abstract class DBHandler {
      * @return 0, if the login was unsuccessful.
      *         1, if the login was successful.
      * */
-    public static int attemptLogin(String tag, String username, String password) {
+    public static JSONObject attemptLogin(String tag, String username, String password) {
 
         // Variables
         JSONParser jsonParser = new JSONParser();
@@ -199,7 +199,7 @@ public abstract class DBHandler {
             Log.e("DBHandler","JSON Exception");
         }
 
-        return success;
+        return json;
 
     }
 
@@ -209,7 +209,7 @@ public abstract class DBHandler {
      * @return 0, if the login was unsuccessful.
      *         1, if the login was successful.
      * */
-    public static int registerUser(String username, String password) {
+    public static JSONObject registerUser(String username, String password) {
         // Variables
         JSONParser jsonParser = new JSONParser();
         JSONObject json = new JSONObject();
@@ -237,7 +237,7 @@ public abstract class DBHandler {
             Log.e("DBHandler","JSON Exception");
         }
 
-        return success;
+        return json;
 
     }
 
