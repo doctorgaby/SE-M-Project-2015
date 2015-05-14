@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="group8.com.application.UI.MainView"
+    tools:context="group8.com.application.UI.MainView.MainView"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 

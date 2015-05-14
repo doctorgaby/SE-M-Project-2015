@@ -46,8 +46,6 @@ public class LoginView extends Activity implements OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Controller.initMeasurements();
-
         //Facebook Initialization
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();

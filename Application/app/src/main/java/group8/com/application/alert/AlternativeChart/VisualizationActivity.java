@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 import group8.com.application.Application.Session;
 import group8.com.application.R;
-import group8.com.application.UI.MainView;
+import group8.com.application.UI.MainView.MainView;
 
 
 public class VisualizationActivity extends Activity {

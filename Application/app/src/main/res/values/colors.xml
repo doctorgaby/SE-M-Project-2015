@@ -9,12 +9,7 @@
     <color name="menuViewGray">#6a6b6b</color>
     <color name="menuViewGreen">#00e8ae</color>
     <color name="menuRegButton">#5B5B5B</color>
-
-
-
-
-
-
+    <color name="darkGrey">#3D3D3D</color>
+    <color name="lightGrey">#6E6E6E</color>
+    <color name="white">#FFFFFF</color>
 </resources>
-
-<!-- #4d90fe -->
