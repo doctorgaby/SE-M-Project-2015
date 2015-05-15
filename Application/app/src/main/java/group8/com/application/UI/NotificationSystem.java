@@ -6,6 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import group8.com.application.Application.Controller;
+import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
 
@@ -19,7 +21,6 @@ public class NotificationSystem{
     private static int DDLScore;
     private static int fuelScore;
     private static int avg = 50;
-    private static int imgColour;
     private static boolean isPositive;
 
     public static Toast customToast(Context context, View view) {
@@ -41,6 +42,37 @@ public class NotificationSystem{
         }
 
         return toast;
+
+    }
+/*  >>>>>>>>>>>>> WORK IN PROGRESS <<<<<<<<<<<<<<<<<<<<<
+
+    public static Toast medalUpdateMessage(Context context, View view){
+
+        int speedScore = Session.getSpeedScore();
+        int brakeScore = Session.getBrakeScore();
+        int DDLScore = Session.getDriverDistractionLevelScore();
+        int fuelScore = Session.getFuelConsumptionScore();
+
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = new Toast(context);
+        toast.setDuration(duration);
+        toast.setView(view);
+
+        TextView myMessage = (TextView)view.findViewById(R.id.text);
+        myMessage.setText(setMessage());
+
+        ImageView myImage = (ImageView)view.findViewById(R.id.img);
+        setImage(myImage, getPosition());
+
+    }
+
+    >>>>>>>>>>>>> WORK IN PROGRESS <<<<<<<<<<<<<<<<<<<<<
+*/
+    private static CharSequence setMedalMessage(){
+
+        CharSequence msg = message(evaluateList(), getPosition());
+        return msg;
 
     }
 
@@ -130,11 +162,10 @@ public class NotificationSystem{
         fuelScore = Session.getFuelConsumptionScore();
 */
 
-//  Hardcoded testing values
-        speedScore = 100;
-        brakeScore = 50;
-        DDLScore = 50;
-        fuelScore = 50;
+        speedScore = 70;//Controller.eventGetPoints().getSpeedSize() - 1;
+        brakeScore = 80;//Controller.eventGetPoints().getBrakeSize() - 1;
+        DDLScore = 50;//Controller.eventGetPoints().getDriverDistractionLevelSize() - 1;;
+        fuelScore = 60;//Controller.eventGetPoints().getFuelConsumptionSize() - 1;;
 
         if (!checker(speedScore, brakeScore, DDLScore, fuelScore)) {
 
@@ -197,11 +228,11 @@ public class NotificationSystem{
         DDLScore = data.getMaxDriverDistractionLevel();
         fuelScore = data.getMaxFuelConsumption();
 */
-//  Hardcoded test values
-        speedScore = 100;
-        brakeScore = 50;
-        DDLScore = 50;
-        fuelScore = 50;
+
+        speedScore = 70;//Controller.eventGetPoints().getSpeedSize() - 1;
+        brakeScore = 80;//Controller.eventGetPoints().getBrakeSize() - 1;;
+        DDLScore = 50;//Controller.eventGetPoints().getDriverDistractionLevelSize() - 1;;
+        fuelScore = 60;//Controller.eventGetPoints().getFuelConsumptionSize() - 1;;
 
 
         int looper = 4;

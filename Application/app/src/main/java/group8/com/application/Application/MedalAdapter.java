@@ -56,7 +56,6 @@ public class MedalAdapter extends ArrayAdapter<Medal> {
         return convertView;
     }
 
-
     static class MedalViewHolder {
         public ImageView img;
         public TextView title;
@@ -64,7 +63,7 @@ public class MedalAdapter extends ArrayAdapter<Medal> {
         void populate(Medal m, boolean isBusy) {
             title.setText(m.title);
 
-            if (m.isAchieved){
+            if (m.isAchieved && !isBusy){
                 //set medal image if it's achieved
                 img.setImageResource(m.img_url);
 

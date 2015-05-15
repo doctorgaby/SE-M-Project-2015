@@ -8,6 +8,7 @@ import android.widget.Toast;
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
 import group8.com.application.UI.MainView;
+import group8.com.application.UI.MedalsView;
 import group8.com.application.UI.NotificationSystem;
 import group8.com.application.alert.BrakesActivity;
 import group8.com.application.alert.DistractionActivity;
@@ -157,12 +158,10 @@ public class Controller {
     }
     /* END - Methods for AlertSystem */
 
+    // Methods for Medals
     public static boolean getUpdatedStatus(String s){
         return MedalsLogic.setUpdatedMap(s);
     }
-
-    /* Methods for Medals
-
 
  /*
  *

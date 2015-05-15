@@ -23,7 +23,6 @@ import com.facebook.login.LoginManager;
 
 import org.achartengine.GraphicalView;
 
-import group8.com.application.Application.StopWatch;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
@@ -222,6 +221,7 @@ public class MainView extends Activity {
             getNewDay = System.currentTimeMillis();
             SharedPreferences.Editor editor = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0).edit();
             editor.putLong(ConstantData.TAG_SAVEDAY, getNewDay);
+
             editor.commit();
 
             //execute daily message

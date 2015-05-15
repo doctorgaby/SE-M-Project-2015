@@ -1,8 +1,11 @@
 package group8.com.application.Application;
 
+import android.content.SharedPreferences;
+
 import java.util.HashMap;
 import java.util.Map;
 
+import group8.com.application.Model.ConstantData;
 import group8.com.application.Model.Medal;
 
 /**
@@ -10,19 +13,19 @@ import group8.com.application.Model.Medal;
  */
 public class MedalsLogic {
 
-    public static Map<String, Boolean> medalMap = new HashMap<>();
+    private static Map<String, Boolean> initiateMedals(){
 
-    public static Map<String, Boolean> initiateMedals(){
+        Map<String, Boolean> medalMap = new HashMap<>();
 
-        medalMap.put("Speed Medal", false);
         medalMap.put("Brake Medal", false);
         medalMap.put("Distraction Medal", false);
+        medalMap.put("Speed Medal", false);
         medalMap.put("Fuel Medal", false);
 
         return medalMap;
     }
 
-    public static Map<String, Boolean> updateMap(Map map){
+    private static Map<String, Boolean> updateMap(Map map){
 
         int speedScore = Session.getSpeedScore();
         int brakeScore = Session.getBrakeScore();

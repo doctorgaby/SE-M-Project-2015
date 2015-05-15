@@ -17,4 +17,8 @@ public class Medal {
         isAchieved = achieved;
     }
 
+    public String getTitle(){
+        return title;
+    }
+
 }
