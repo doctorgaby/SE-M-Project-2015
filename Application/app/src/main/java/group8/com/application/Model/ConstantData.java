@@ -1,17 +1,12 @@
 package group8.com.application.Model;
 
-/**
- * Created by enriquecordero on 30/03/15.
- */
 public abstract class ConstantData {
 
     /* GRADING SYSTEM*/
     public static final int initialPoints = 50;
     public static final double goodFuelConsumption = 600.0;
-    public static final double extremeSpeed = 120;
-    public static final double extremeFuelConsumption = 1200;
-    public static final int extremeBrake = 0;
-    public static final int extremeDriverDistractionLevel = 2000;
+    public static final double extremeSpeed = 120.0;
+    public static final double extremeFuelConsumption = 1200.0;
     public static final int outOfRangeSpeed = 20;
     public static final int outOfRangeSpeedLowerMargin = 2;
     public static final int outOfRangeSpeedMiddleMargin = 4;
