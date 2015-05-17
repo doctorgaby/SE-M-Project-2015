@@ -3,6 +3,7 @@ package group8.com.application.UI.mainView;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,8 +21,19 @@ import group8.com.application.UI.mainView.fragments.start_menu_fragment;
  * Created by kikedaddy on 14/05/15.
  */
 public class menuView extends FragmentActivity {
+
+    public static Context mContext;
+    public static Context getContext(){
+
+        return mContext;
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        mContext= getBaseContext();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_view);
         Controller.initMeasurements();

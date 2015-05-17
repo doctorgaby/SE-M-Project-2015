@@ -37,11 +37,7 @@ import group8.com.application.alert.SpeedActivity;
 // New branch comment
 public class MainView extends Activity {
 
-    public static Context mContext;
-    public static Context getContext(){
 
-        return mContext;
-    }
 
     int sp = 0;
     int dd = 0;
@@ -55,6 +51,7 @@ public class MainView extends Activity {
     private Button graphBtn;
     private Button startButton;
     private Button stopButton;
+    Context context;
 
     //TEST
     private Button dbButton;
@@ -64,7 +61,7 @@ public class MainView extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getBaseContext();
+
         setContentView(R.layout.main_display);
 
         Controller.initMeasurements();
@@ -129,6 +126,8 @@ public class MainView extends Activity {
                 Controller.eventSetPoints();
             }
         });
+
+        context = this;
     }
 
 
@@ -233,7 +232,7 @@ public class MainView extends Activity {
                 Log.d("Testing the timer MV", "Goes into the testing.");
                 repaintGraph();
 
-                Context context = MainView.getContext();
+
 
                 if(Controller.evaluateSpeedAlert()) {
                     Intent intent = new Intent(context, SpeedActivity.class);
