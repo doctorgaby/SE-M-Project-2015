@@ -13,11 +13,11 @@
         android:layout_alignParentStart="true">
 
         <ImageView
-            android:layout_width="472dp"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:id="@+id/imageView3"
             android:layout_gravity="center"
-            android:src="@drawable/distraction" />
+            android:src="@drawable/distraction_alert" />
     </FrameLayout>
 </RelativeLayout>
 
