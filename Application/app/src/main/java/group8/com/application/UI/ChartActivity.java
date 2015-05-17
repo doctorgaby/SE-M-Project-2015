@@ -13,13 +13,15 @@ import java.util.ArrayList;
 
 import group8.com.application.Application.Session;
 import group8.com.application.R;
+import group8.com.application.UI.mainView.menuView;
 
 public class ChartActivity extends Activity {
 
 
 
-    Context context = MainView.getContext();
+    Context context = menuView.getContext();
     CountDownTimer cdt;
+
 
 
 

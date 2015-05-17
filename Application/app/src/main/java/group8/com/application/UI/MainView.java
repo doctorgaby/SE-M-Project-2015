@@ -37,11 +37,7 @@ import group8.com.application.alert.SpeedActivity;
 // New branch comment
 public class MainView extends Activity {
 
-    public static Context mContext;
-    public static Context getContext(){
 
-        return mContext;
-    }
 
     int sp = 0;
     int dd = 0;
@@ -64,7 +60,7 @@ public class MainView extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getBaseContext();
+
         setContentView(R.layout.main_display);
 
         Controller.initMeasurements();
