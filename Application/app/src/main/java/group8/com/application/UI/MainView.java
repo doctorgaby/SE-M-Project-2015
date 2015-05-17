@@ -51,6 +51,7 @@ public class MainView extends Activity {
     private Button graphBtn;
     private Button startButton;
     private Button stopButton;
+    Context context;
 
     //TEST
     private Button dbButton;
@@ -125,6 +126,8 @@ public class MainView extends Activity {
                 Controller.eventSetPoints();
             }
         });
+
+        context = this;
     }
 
 
@@ -229,7 +232,7 @@ public class MainView extends Activity {
                 Log.d("Testing the timer MV", "Goes into the testing.");
                 repaintGraph();
 
-                Context context = MainView.getContext();
+
 
                 if(Controller.evaluateSpeedAlert()) {
                     Intent intent = new Intent(context, SpeedActivity.class);

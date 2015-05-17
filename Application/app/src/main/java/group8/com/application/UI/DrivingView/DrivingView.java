@@ -92,5 +92,4 @@ public class DrivingView extends Activity {
 
     }
 
-
 }
