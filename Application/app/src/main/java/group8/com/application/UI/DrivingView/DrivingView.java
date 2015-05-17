@@ -55,7 +55,6 @@ public class DrivingView extends Activity {
             }
 
             public void onFinish() {
-                Log.d("Testing the timer MV", "Goes into the testing.");
 
                 if(Controller.evaluateSpeedAlert()) {
                     Intent intent = new Intent(context, SpeedActivity.class);

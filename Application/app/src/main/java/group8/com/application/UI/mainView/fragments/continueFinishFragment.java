@@ -71,15 +71,15 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.finishButton:
                 Controller.finishGrading(true);
-
+                Session.restart(Session.getUserName());
                 Controller.displayGraph(); // display graph briefly
-
                 fragment = new start_menu_fragment();
                 transaction.replace(R.id.menuViewFrame, fragment, ConstantData.TAG_STARTFRAGMENT);
                 transaction.commit();
                 break;
             case R.id.disregard:
                 Controller.finishGrading(false);
+                Session.restart(Session.getUserName());
                 fragment = new start_menu_fragment();
                 transaction.replace(R.id.menuViewFrame, fragment, ConstantData.TAG_STARTFRAGMENT);
                 transaction.commit();
