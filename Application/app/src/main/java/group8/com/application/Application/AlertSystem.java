@@ -1,7 +1,6 @@
 package group8.com.application.Application;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import group8.com.application.Model.ConstantData;
 
@@ -71,10 +70,8 @@ public class AlertSystem {
             shouldAlert = false;
             fuelAlert = false;
             coolDown.start();
-            Log.d("fuel alert true", "" + Controller.getCurrentFuelConsumption());
             return true;
         } else if(Controller.getCurrentFuelConsumption() < ConstantData.extremeFuelConsumption) {
-            Log.d("fuel alert false", "" + Controller.getCurrentFuelConsumption());
             fuelAlert = true;
         }
 

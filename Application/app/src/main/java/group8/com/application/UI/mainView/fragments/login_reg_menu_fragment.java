@@ -12,9 +12,6 @@ import android.widget.Button;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
 
-/**
- * Created by kikedaddy on 14/05/15.
- */
 public class login_reg_menu_fragment extends Fragment implements View.OnClickListener {
     Button login;
     Button register;

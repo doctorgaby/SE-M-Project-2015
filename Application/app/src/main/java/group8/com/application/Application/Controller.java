@@ -1,6 +1,8 @@
 package group8.com.application.Application;
 
 import android.content.Context;
+import android.content.Intent;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,7 +14,9 @@ import java.util.List;
 
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
+import group8.com.application.UI.ChartActivity;
 import group8.com.application.UI.NotificationSystem;
+import group8.com.application.UI.mainView.menuView;
 
 /**
  * Main controller for the application. Acts as a mediator between different classes.
@@ -20,6 +24,9 @@ import group8.com.application.UI.NotificationSystem;
 public class Controller {
 
     private static Controller instance = null;
+
+    public static Context context = menuView.getContext();
+
 
     /**
      * Private constructor for the Controller class, which prevents other classes from instantiating a new instance of the Controller class.
@@ -209,16 +216,18 @@ public class Controller {
 
 
  /*
- * The following method are is used to call the alternative visualActivity
+ * The following method is used to display the graph
  */
 
- /*   public void visualData() {
+   public static void displayGraph() {
 
 
-        Intent intent = new Intent(context, VisualizationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-*/
+       Intent intent = new Intent(context, ChartActivity.class);
+       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       context.startActivity(intent);
+   }
+
+
     public static List<String> eventGetAllFriends () {
         return DBHandler.getAllFriends(Session.getUserName());
     }

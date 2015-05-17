@@ -1,9 +1,7 @@
 package group8.com.application.Foundation;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,12 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import group8.com.application.Application.Controller;
-import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.R;
 
-/**
- * Created by kikedaddy on 11/05/15.
- */
 public class CustomAdapter extends SimpleAdapter {
     //private int color = Color.RED;
     int resource;
