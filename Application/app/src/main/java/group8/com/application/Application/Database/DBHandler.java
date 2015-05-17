@@ -9,6 +9,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import group8.com.application.Application.Session;
@@ -17,7 +20,6 @@ import group8.com.application.Model.ConstantData;
 import group8.com.application.Model.DataList;
 
 public abstract class DBHandler {
-    //private static JSONParser jsonParser = new JSONParser();
 
     //                              **************************
     //                              *****                *****
@@ -33,14 +35,12 @@ public abstract class DBHandler {
         params.add(new BasicNameValuePair("action", ConstantData.TAG_GETMEASUREMENTS));
         params.add(new BasicNameValuePair("username", user));
         Log.d("getMeasurements!", "starting");
-        // getting measurement details by making HTTP request
         JSONObject json = new JSONObject();
         try {
             json = new doExecuteValues(params).execute().get();
         } catch (Exception e) {
             Log.e("DBHandler Error: ", "Problem with get Measurements.");
         }
-
         DataList list = new DataList("m");
         jsonToList(list, json);
         return list;
@@ -56,7 +56,6 @@ public abstract class DBHandler {
         params.add(new BasicNameValuePair("start", Integer.toString(start)));
         params.add(new BasicNameValuePair("stop", Integer.toString(stop)));
         Log.d("getFilteredMeasurements", "starting");
-        // getting measurement details by making HTTP request
         JSONObject json = new JSONObject();
         try {
             json = new doExecuteValues(params).execute().get();
@@ -76,7 +75,6 @@ public abstract class DBHandler {
         params.add(new BasicNameValuePair("action", ConstantData.TAG_GETPOINTS));
         params.add(new BasicNameValuePair("username", user));
         Log.d("getPoints!", "starting");
-        // getting measurement details by making HTTP request
         JSONObject json = new JSONObject();
         try {
             json = new doExecuteValues(params).execute().get();
@@ -99,7 +97,6 @@ public abstract class DBHandler {
         params.add(new BasicNameValuePair("start", Integer.toString(start)));
         params.add(new BasicNameValuePair("stop", Integer.toString(stop)));
         Log.d("getFilteredPoints", "starting");
-        // getting measurement details by making HTTP request
         JSONObject json = new JSONObject();
         try {
             json = new doExecuteValues(params).execute().get();
@@ -120,25 +117,50 @@ public abstract class DBHandler {
     /**
      * @param
      */
-    public static void setMeasurements(String user) {
+    public static void setScores(String user) {
+        JSONObject json;
+        int speed = Session.getSpeedScore();
+        int brake = Session.getBrakeScore();
+        int fuel = Session.getFuelConsumptionScore();
+        int distraction = Session.getDriverDistractionLevelScore();
+        int measuredAt =(int) System.currentTimeMillis() / 1000;
 
-        JSONObject json = new JSONObject();
-        JSONObject list = Session.getMeasurementsJson();
         List<NameValuePair> params = new ArrayList<>();
-
-        params.add(new BasicNameValuePair("action", ConstantData.TAG_SETMEASUREMENTS));
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_SETFINALSCORES));
         params.add(new BasicNameValuePair("username", user));
-        params.add(new BasicNameValuePair("list", list.toString()));
-
-        Log.d("list", list.toString());
-        Log.d("params", params.toString());
+        params.add(new BasicNameValuePair("speed", Integer.toString(speed)));
+        params.add(new BasicNameValuePair("brake", Integer.toString(brake)));
+        params.add(new BasicNameValuePair("fuel", Integer.toString(fuel)));
+        params.add(new BasicNameValuePair("distraction", Integer.toString(distraction)));
+        params.add(new BasicNameValuePair("measuredAt", Integer.toString(measuredAt)));
         String success = "error";
-
         try {
             json = new doExecuteValues(params).execute().get(); // jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params);
             success = "" + json.getInt(ConstantData.TAG_SUCCESS);
         } catch(Exception ex) {
-            // Could not execute request
+            Log.d("DBHandler.java", "Exception in setMeasurements(): " + ex.getMessage());
+        }
+
+        Log.d("success", success);
+    }
+
+    /**
+     * @param
+     */
+    public static void setMeasurements(String user) {
+        JSONObject json;
+        JSONObject list = Session.getMeasurementsJson();
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_SETMEASUREMENTS));
+        params.add(new BasicNameValuePair("username", user));
+        params.add(new BasicNameValuePair("list", list.toString()));
+        Log.d("list", list.toString());
+        Log.d("params", params.toString());
+        String success = "error";
+        try {
+            json = new doExecuteValues(params).execute().get(); // jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params);
+            success = "" + json.getInt(ConstantData.TAG_SUCCESS);
+        } catch(Exception ex) {
             Log.d("DBHandler.java", "Exception in setMeasurements(): " + ex.getMessage());
         }
 
@@ -150,28 +172,18 @@ public abstract class DBHandler {
      * @param
      */
     public static void setPoints(String user) {
-
-        JSONObject json = new JSONObject();
+        JSONObject json;
         JSONObject list = Session.getPointsJson();
         List<NameValuePair> params = new ArrayList<>();
-
         params.add(new BasicNameValuePair("action", ConstantData.TAG_SETPOINTS));
         params.add(new BasicNameValuePair("username", user));
         params.add(new BasicNameValuePair("list", list.toString()));
-
-        Log.d("list", list.toString());
-        Log.d("params", params.toString());
-        String success = "error";
-
         try {
             json = new doExecuteValues(params).execute().get(); // jsonParser.makeHttpRequest(ConstantData.INDEX_URL, "POST", params);
-            success = "" + json.getInt(ConstantData.TAG_SUCCESS);
         } catch(Exception ex) {
             // Could not execute request
             Log.d("DBHandler.java", "Exception in setPoints(): " + ex.getMessage());
         }
-
-        Log.d("success", success);
 
     }
 
@@ -187,16 +199,14 @@ public abstract class DBHandler {
      * @return 0, if the login was unsuccessful.
      *         1, if the login was successful.
      * */
-    public static int attemptLogin(String tag, String username, String password) {
+    public static JSONObject attemptLogin(String tag, String username, String password) {
 
         // Variables
         JSONParser jsonParser = new JSONParser();
         JSONObject json = new JSONObject();
         int success;
-
-        // Attempting to register user
+        // Attempting to login user
         try {
-
             // Building Parameters
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("action", tag));
@@ -211,17 +221,15 @@ public abstract class DBHandler {
         } catch (JSONException e) {
             success = 0;
         }
-
-        // Log the results to the console
         if(success == 1)
             Log.d("Login Successful!", json.toString());
         else try {
             Log.d("Login Failure!", json.getString(ConstantData.TAG_MESSAGE));
         } catch(JSONException ex) {
-            // Can't get json String
+            Log.e("DBHandler","JSON Exception");
         }
 
-        return success;
+        return json;
 
     }
 
@@ -231,17 +239,13 @@ public abstract class DBHandler {
      * @return 0, if the login was unsuccessful.
      *         1, if the login was successful.
      * */
-    public static int registerUser(String username, String password) {
-
+    public static JSONObject registerUser(String username, String password) {
         // Variables
         JSONParser jsonParser = new JSONParser();
         JSONObject json = new JSONObject();
         int success;
-
         // Attempting to register user
         try {
-
-            // Building Parameters
             List<NameValuePair> params = new ArrayList<>();
             params.add(new BasicNameValuePair("action", ConstantData.TAG_ACTION_REGISTER));
             params.add(new BasicNameValuePair("username", username));
@@ -255,17 +259,15 @@ public abstract class DBHandler {
         } catch (JSONException e) {
             success = 0;
         }
-
-        // Log the results to the console
         if(success == 1)
             Log.d("Login Successful!", json.toString());
         else try {
             Log.d("Login Failure!", json.getString(ConstantData.TAG_MESSAGE));
         } catch(JSONException ex) {
-            // Can't get json String
+            Log.e("DBHandler","JSON Exception");
         }
 
-        return success;
+        return json;
 
     }
 
@@ -320,28 +322,126 @@ public abstract class DBHandler {
             Log.e("DBHANDLER ERROR", "ERROR WITH THE JSON PARSER. " + e.toString());
         }
     }
-/*
-    private class doExecuteValues extends AsyncTask <String, String, JSONObject> {
-        List<NameValuePair> params;
-        String url;
-        String post;
-        JSONParser jsonParser;
 
-        public doExecuteValues (String url, String post, List<NameValuePair> params, JSONParser jsonParser) {
-            //params = params2;
-            //url = url2;
-            //post = post2;
-            this.params = params;
-            this.url = url;
-            this.post = post;
-            this.jsonParser = jsonParser;
+    public static ArrayList<HashMap<String, String>> getFriendsRankings(String username) {
+        ArrayList<HashMap<String, String>> rankingList= new ArrayList<>();
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETFRIENDSSCORES));
+        params.add(new BasicNameValuePair("username", username));
+        Log.d("getFriendsScores!", "starting");
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with get friend scores.");
         }
+        jsonToRankingList (rankingList, json);
+        return rankingList;
+    }
 
-        protected JSONObject doInBackground(String... args) {
-            JSONObject json = jsonParser.makeHttpRequest(url, post, params);
-            return json;
+    public static ArrayList<HashMap<String, String>> getAllRankings() {
+        ArrayList<HashMap<String, String>> rankingList= new ArrayList<>();
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETALLSCORES));
+        Log.d("getAllScores!", "starting");
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with get all rankings.");
         }
-    }*/
+        jsonToRankingList (rankingList, json);
+        return rankingList;
+    }
+
+    private static void jsonToRankingList (ArrayList<HashMap<String, String>> rankingList, JSONObject json) {
+
+        try {
+            JSONArray rankings = json.getJSONArray(ConstantData.TAG_RANKING);
+
+            // looping through all posts according to the json object returned
+            for (int i = 0; i < rankings.length(); i++) {
+                JSONObject c = rankings.getJSONObject(i);
+                String userName = c.getString(ConstantData.TAG_USERNAME);
+                String fuel = c.getString(ConstantData.TAG_FUEL);
+                String brake = c.getString(ConstantData.TAG_BRAKE);
+                String distraction = c.getString(ConstantData.TAG_DISTRACTION);
+                String speed = c.getString(ConstantData.TAG_SPEED);
+                int total = Integer.parseInt(fuel) + Integer.parseInt(brake) + Integer.parseInt(distraction) + Integer.parseInt(speed);
+                String totalString = Integer.toString(total);
+                // creating new HashMap
+                HashMap<String, String> map = new HashMap<>();
+                map.put(ConstantData.TAG_USERNAME, userName);
+                map.put(ConstantData.TAG_FUEL, fuel);
+                map.put(ConstantData.TAG_BRAKE, brake);
+                map.put(ConstantData.TAG_DISTRACTION, distraction);
+                map.put(ConstantData.TAG_SPEED, speed);
+                map.put("totalPoints", totalString);
+                rankingList.add(map);
+            }
+            Collections.sort(rankingList, new Comparator<HashMap<String, String>>() {
+                public int compare(HashMap<String, String> result1, HashMap<String, String> result2) {
+                    return Integer.parseInt(result2.get("totalPoints")) - Integer.parseInt(result1.get("totalPoints"));
+                }
+            });
+        } catch (JSONException e) {
+            Log.d("RankingView", "Problem with the json data");
+        }
+    }
+
+    public static JSONObject addFriend (String friend) {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_SETFRIEND));
+        params.add(new BasicNameValuePair("username", Session.getUserName()));
+        params.add(new BasicNameValuePair("friend", friend));
+        Log.d("addFriend!", "starting");
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with add friend.");
+        }
+        return json;
+    }
+
+    public static JSONObject removeFriend (String friend) {
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_REMOVEFRIEND));
+        params.add(new BasicNameValuePair("username", Session.getUserName()));
+        params.add(new BasicNameValuePair("friend", friend));
+        Log.d("removeFriend!", "starting");
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with removefriend.");
+        }
+        return json;
+    }
+
+    public static List<String> getAllFriends (String user) {
+        List<String> response = new ArrayList<>();
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETALLFRIENDS));
+        params.add(new BasicNameValuePair("username", user));
+        Log.d("getAllFriends!", "starting");
+        JSONObject json = new JSONObject();
+        try {
+            json = new doExecuteValues(params).execute().get();
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with getAllFriends.");
+        }
+        try {
+            JSONArray friends = json.getJSONArray(ConstantData.TAG_POSTS);
+            for (int i = 0; i < friends.length(); i++) {
+                JSONObject c = friends.getJSONObject(i);
+                response.add(c.getString("friend"));
+            }
+        } catch (JSONException e) {
+            Log.d("RankingView", "Problem with the json data");
+        }
+        return response;
+    }
 }
 
 

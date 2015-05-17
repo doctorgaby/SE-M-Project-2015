@@ -2,7 +2,6 @@ package group8.com.application.UI;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import com.github.mikephil.charting.charts.BarChart;
@@ -14,8 +13,6 @@ import java.util.ArrayList;
 
 import group8.com.application.Application.Session;
 import group8.com.application.R;
-
-
 
 public class ChartActivity extends Activity {
 

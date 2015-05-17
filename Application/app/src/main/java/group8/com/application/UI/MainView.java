@@ -16,16 +16,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 
 import org.achartengine.GraphicalView;
-import group8.com.application.Model.ConstantData;
+
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
+import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
+import group8.com.application.UI.DrivingView.DrivingView;
 import group8.com.application.UI.Login.LoginView;
 import group8.com.application.alert.BrakesActivity;
 import group8.com.application.alert.DistractionActivity;
@@ -33,7 +34,7 @@ import group8.com.application.alert.FuelActivity;
 import group8.com.application.alert.SpeedActivity;
 
 
-
+// New branch comment
 public class MainView extends Activity {
 
     public static Context mContext;
@@ -66,6 +67,8 @@ public class MainView extends Activity {
         mContext = getBaseContext();
         setContentView(R.layout.main_display);
 
+        Controller.initMeasurements();
+
         //checks if it's a new day
 //        dailyMessage();
 
@@ -87,25 +90,10 @@ public class MainView extends Activity {
             @Override
             public void onClick(View v) {
 
-                if(Controller.isReceivingSignal()) {
+                Controller.startGrading();
 
-                    startButton.setClickable(true);
-
-                    startButton.setVisibility(View.INVISIBLE);
-                    stopButton.setVisibility(View.VISIBLE);
-                    graphBtn.setVisibility(View.INVISIBLE);
-
-                    // creates the new activity in the same view
-                    doGraph(sp, fc, dd, bk);
-                    userTxt.setText(Session.getUserName());
-
-                    Controller.startGrading();
-                    startTimer();
-
-                } else {
-                    startButton.setClickable(false);
-                    Toast.makeText(MainView.this, "Can't ", Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(v.getContext(), DrivingView.class);
+                startActivityForResult(intent, 0);
 
             }
         });
@@ -113,7 +101,7 @@ public class MainView extends Activity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                layout.removeView(bView);
                 stopButton.setVisibility(View.INVISIBLE);
                 startButton.setVisibility(View.VISIBLE);
                 graphBtn.setVisibility(View.VISIBLE);
@@ -137,7 +125,6 @@ public class MainView extends Activity {
         dbButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Controller.eventSetMeasuremtents();
                 Controller.eventSetPoints();
             }
@@ -172,6 +159,10 @@ public class MainView extends Activity {
                 this.startActivity(intent);
                 finish();
                 return true;
+            case R.id.mainviewmenu_ranking:
+                Intent rankingInt = new Intent(this, RankingView.class);
+                startActivityForResult(rankingInt, 0);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -182,8 +173,8 @@ public class MainView extends Activity {
 
         BarChart bar = new BarChart();
         bView = bar.getView(this, speed, fuelconsumption, driverdistraction, brake);
-            layout = (LinearLayout) findViewById(R.id.chart);
-            layout.addView(bView);
+        layout = (LinearLayout) findViewById(R.id.chart);
+        layout.addView(bView);
 
     }
 
@@ -239,7 +230,7 @@ public class MainView extends Activity {
             }
 
             public void onFinish() {
-
+                Log.d("Testing the timer MV", "Goes into the testing.");
                 repaintGraph();
 
                 Context context = MainView.getContext();

@@ -18,6 +18,11 @@
             android:label="@string/points_grapher"></activity>
 
         <activity
+
+            android:name=".UI.RankingView"
+            android:label="@string/ranking"></activity>
+
+        <activity
             android:name=".UI.Graphs.SpeedGraph"
             android:label="Speed Graph"></activity>
 
@@ -40,10 +45,7 @@
         <activity
             android:name=".UI.Login.LoginView"
             android:label="Welcome">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity
@@ -60,6 +62,10 @@
             android:name=".UI.TestGrading"
             android:label="Test"></activity>
 
+        <activity
+            android:name=".UI.DrivingView.DrivingView"
+            android:label="Test"></activity>
+
 
 
         <activity android:name=".alert.BrakesActivity" />
@@ -67,6 +73,15 @@
         <activity android:name=".alert.FuelActivity" />
         <activity android:name=".alert.SpeedActivity" />
         <activity android:name=".UI.ChartActivity" />
+
+
+
+        <activity android:name=".UI.mainView.menuView">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
 
 

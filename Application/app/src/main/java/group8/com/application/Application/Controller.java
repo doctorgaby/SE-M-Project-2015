@@ -1,18 +1,18 @@
 package group8.com.application.Application;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
-import group8.com.application.UI.MainView;
 import group8.com.application.UI.NotificationSystem;
-import group8.com.application.alert.BrakesActivity;
-import group8.com.application.alert.DistractionActivity;
-import group8.com.application.alert.FuelActivity;
-import group8.com.application.alert.SpeedActivity;
 
 /**
  * Main controller for the application. Acts as a mediator between different classes.
@@ -103,21 +103,48 @@ public class Controller {
     public static void stopGrading() {
         GradingSystem.stopGradingSystem();
         MeasurementFactory.pauseMeasurements();
+        Session.pause();
+    }
+
+    public static void finishGrading (boolean save) {
+        Session.finishDrive();
+        if (save) {
+            eventSetMeasuremtents();
+            eventSetPoints();
+            eventSetLastScores();
+        }
     }
 
     public static boolean isGrading() {
         return GradingSystem.isGrading();
+    }
+
+    public static int getSpeedScore() {
+        return Session.getSpeedScore();
+    }
+
+    public static int getFuelConsumptionScore() {
+        return Session.getFuelConsumptionScore();
+    }
+
+    public static int getBrakeScore() {
+        return Session.getBrakeScore();
+    }
+
+    public static int getDriverDistractionLevelScore() {
+        return Session.getDriverDistractionLevelScore();
     }
 /* END - Methods for GradingSystem */
 
 
 
 /* Methods for login and register*/
-    public static int attemptLogin(String tag, String username, String password) {
+    
+    public static JSONObject attemptLogin(String tag, String username, String password) {
         return DBHandler.attemptLogin(tag, username, password);
     }
 
-    public static int registerUser(String username, String password) {
+    public static JSONObject registerUser(String username, String password) {
         return DBHandler.registerUser(username, password);
     }
 /* END - Methods for login and register*/
@@ -155,6 +182,8 @@ public class Controller {
     public static void eventSetPoints () {
         DBHandler.setPoints(Session.getUserName());
     }
+
+    public static void eventSetLastScores () {DBHandler.setScores(Session.getUserName());}
 /* END - Methods for the DBHandler */
 
 
@@ -190,6 +219,25 @@ public class Controller {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
 */
-
+    public static List<String> eventGetAllFriends () {
+        return DBHandler.getAllFriends(Session.getUserName());
     }
+
+    public static ArrayList<HashMap<String, String>> getAllRankings () {
+        return DBHandler.getAllRankings();
+    }
+
+    public static ArrayList<HashMap<String, String>> getFriendsRankings() {
+        return DBHandler.getFriendsRankings(Session.getUserName());
+    }
+
+    public static JSONObject addFriend (String friend) {
+        return DBHandler.addFriend(friend);
+    }
+
+    public static JSONObject removeFriend (String friend) {
+        return DBHandler.removeFriend(friend);
+    }
+
+}
 
