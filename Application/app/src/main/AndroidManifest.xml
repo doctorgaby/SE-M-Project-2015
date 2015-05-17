@@ -26,6 +26,7 @@
             android:name=".UI.Graphs.SpeedGraph"
             android:label="Speed Graph"></activity>
 
+
         <activity
             android:name="org.achartengine.GraphicalActivity"
             android:label="Bar Chart"></activity>
@@ -41,11 +42,22 @@
         <activity
             android:name=".UI.Graphs.DriverDistractionGraph"
             android:label="Driver Distraction"></activity>
+        <activity
+            android:name=".UI.Splash"
+            android:label="SplashScreen" >>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".UI.Login.LoginView"
-            android:label="Welcome">
-
+            android:label="Aga Driver Assistant">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -68,6 +80,9 @@
 
 
 
+<!--
+        <activity android:name=".alert.AlternativeChart.VisualizationActivity" />
+         -->
         <activity android:name=".alert.BrakesActivity" />
         <activity android:name=".alert.DistractionActivity" />
         <activity android:name=".alert.FuelActivity" />

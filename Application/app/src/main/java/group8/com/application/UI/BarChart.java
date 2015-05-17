@@ -84,22 +84,22 @@ public class BarChart extends Activity {
         mRenderer.setYLabelsColor(0, Color.WHITE);
 
         XYSeriesRenderer renderer = new XYSeriesRenderer();
-        renderer.setColor(Color.parseColor("#a300ff"));
+        renderer.setColor(Color.parseColor("#90a300ff"));
         renderer.setDisplayChartValues(true);
         renderer.setChartValuesTextSize(70);
 
         XYSeriesRenderer renderer2 = new XYSeriesRenderer();
-        renderer2.setColor(Color.parseColor("#0033ff"));
+        renderer2.setColor(Color.parseColor("#954099ff"));
         renderer2.setDisplayChartValues(true);
         renderer2.setChartValuesTextSize(70);
 
         XYSeriesRenderer renderer3 = new XYSeriesRenderer();
-        renderer3.setColor(Color.parseColor("#ff4d01"));
+        renderer3.setColor(Color.parseColor("#90f6546a"));
         renderer3.setDisplayChartValues(true);
         renderer3.setChartValuesTextSize(70);
 
         XYSeriesRenderer renderer4 = new XYSeriesRenderer();
-        renderer4.setColor(Color.parseColor("#ffff00"));
+        renderer4.setColor(Color.parseColor("#95ffff66"));
         renderer4.setDisplayChartValues(true);
         renderer4.setChartValuesTextSize(70);
 
@@ -111,5 +111,6 @@ public class BarChart extends Activity {
 
         mChartView = ChartFactory.getBarChartView(context, dataset, mRenderer, Type.STACKED);
         return mChartView;
+        //check
     }
 }
