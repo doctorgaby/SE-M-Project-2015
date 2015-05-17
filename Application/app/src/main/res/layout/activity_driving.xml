@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".Speed, .Brake, .FuelConsumption"
+    android:scaleType = "centerCrop"
+    android:orientation="vertical"
+    android:background="@drawable/driving_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="4"
+        android:baselineAligned="false">
+
+        <fragment
+            android:name="group8.com.application.UI.DrivingView.Fragments.SpeedFragment"
+            android:id="@+id/driving_view_speed"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            tools:layout="@layout/fragment_speed"
+            />
+
+        <fragment
+            android:name="group8.com.application.UI.DrivingView.Fragments.FuelFragment"
+            android:id="@+id/driving_view_fuel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            tools:layout="@layout/fragment_fuel"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="4"
+        android:baselineAligned="false">
+
+        <fragment
+            android:name="group8.com.application.UI.DrivingView.Fragments.BrakeFragment"
+            android:id="@+id/driving_view_brake"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            tools:layout="@layout/fragment_brake"
+            />
+
+        <fragment
+            android:name="group8.com.application.UI.DrivingView.Fragments.DistractionFragment"
+            android:id="@+id/driving_view_distraction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            tools:layout="@layout/fragment_distraction"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:weightSum="3">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pause_button_text"
+            android:textSize="15dp"
+            android:textColor="@color/white"
+
+            android:id="@+id/pauseButton" />
+
+    </LinearLayout>
+
+</LinearLayout>

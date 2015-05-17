@@ -10,6 +10,7 @@ public abstract class Session {
     private static String userName = "";
     public static DataList currentPoints = new DataList("p");
     public static DataList currentMeasurements = new DataList("m");
+    private static boolean paused = false;
 
     public static void setUserName(String username) {
         Session.userName = username;
@@ -21,6 +22,18 @@ public abstract class Session {
 
     public static boolean isLoggedIn() {
         return !userName.equals("");
+    }
+
+    public static void pause () {
+        paused = true;
+    }
+
+    public static void finishDrive () {
+        paused = false;
+    }
+
+    public static boolean isPaused() {
+        return paused;
     }
 
     public static void restart() {

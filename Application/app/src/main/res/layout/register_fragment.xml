@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/menuViewCenter">
+
+    <LinearLayout
+        android:layout_width="342dp"
+        android:layout_height="164dp"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:background="@drawable/login_pass_box"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:layout_marginLeft="42dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="40dp"
+            android:textColor="@color/menuViewGray"
+            android:hint="Username"/>
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="42dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginRight="40dp"
+            android:textColor="@color/menuViewGray"
+            android:layout_weight="1"
+            android:inputType="textPassword"
+            android:hint="Password"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/registerButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/menu_view_reg_button"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="5"
+            android:textColor="#B9B9B9"
+            android:textSize="20sp"
+            android:layout_margin="10dp"
+            android:typeface="serif"
+            android:text="Register"
+            />
+    </LinearLayout>
+
+</LinearLayout>

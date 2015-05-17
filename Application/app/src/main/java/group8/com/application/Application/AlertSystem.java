@@ -5,8 +5,14 @@ import android.util.Log;
 
 import group8.com.application.Model.ConstantData;
 
+/**
+ * This class is used to evaluate the behavior of the driver, and alert the driver if extreme situations occur.
+ * */
 public class AlertSystem {
 
+
+
+    /* Variable initialization */
     private static boolean brakeAlert = false, brakeIsCounting = false,
                            driverDistractionAlert = false, driverDistractionIsCounting = false,
                            speedAlert = true,
@@ -15,6 +21,9 @@ public class AlertSystem {
     private static int brakeCount = 0, distractionCount = 0;
     private static CountDownTimer brakeCountDown = null;
 
+
+
+    /* Initialize the cool down timer, which is preventing the alerts to appear more than once every 10 seconds */
     private static CountDownTimer coolDown = new CountDownTimer(10000, 10000) {
         @Override
         public void onTick(long millisUntilFinished) {
@@ -27,6 +36,13 @@ public class AlertSystem {
         }
     };
 
+
+
+    /**
+     * Evaluate the speed.
+     *
+     * @return true if the speed is above the set limit, and false if it is not.
+     * */
     protected static boolean evaluateSpeed() {
 
         if(shouldAlert && speedAlert && Controller.getCurrentSpeed() >= ConstantData.extremeSpeed) {
@@ -42,14 +58,23 @@ public class AlertSystem {
 
     }
 
+
+
+    /**
+     * Evaluate the fuel consumption.
+     *
+     * @return true if the fuel consumption is above the set limit, and false if it is not.
+     * */
     protected static boolean evaluateFuelConsumption() {
 
         if(shouldAlert && fuelAlert && Controller.getCurrentFuelConsumption() >= ConstantData.extremeFuelConsumption) {
             shouldAlert = false;
             fuelAlert = false;
             coolDown.start();
+            Log.d("fuel alert true", "" + Controller.getCurrentFuelConsumption());
             return true;
         } else if(Controller.getCurrentFuelConsumption() < ConstantData.extremeFuelConsumption) {
+            Log.d("fuel alert false", "" + Controller.getCurrentFuelConsumption());
             fuelAlert = true;
         }
 
@@ -57,6 +82,13 @@ public class AlertSystem {
 
     }
 
+
+
+    /**
+     * Evaluate the braking.
+     *
+     * @return true if the brake has been pushed for too long(5s), and false if it has not.
+     * */
     protected static boolean evaluateBrake() {
 
         if(!brakeIsCounting && Controller.getCurrentBrake() == 1 && brakeCount == 0) {
@@ -66,18 +98,13 @@ public class AlertSystem {
             brakeCountDown = new CountDownTimer(5000, 100) {
 
                 @Override
-                public void onTick(long millisUntilFinished) {
-
-                    Log.d("Brake countDown", "Counting");
-
-                }
+                public void onTick(long millisUntilFinished) {}
 
                 @Override
                 public void onFinish() {
 
                     brakeAlert = true;
                     brakeIsCounting = false;
-                    Log.d("Brake countDown", "Finish");
 
                 }
 
@@ -90,7 +117,6 @@ public class AlertSystem {
             if(brakeCountDown != null) {
 
                 brakeCountDown.cancel();
-                Log.d("Brake countDown", "Cancelled");
 
             }
 
@@ -114,6 +140,13 @@ public class AlertSystem {
 
     }
 
+
+
+    /**
+     * Evaluate the distraction level.
+     *
+     * @return true if the distraction level has been at maximum for too long(2s), and false if it has not.
+     * */
     protected static boolean evaluateDriverDistractionLevel() {
 
         if(!driverDistractionIsCounting && Controller.getCurrentDistractionLevel() == 4 && distractionCount == 0) {
