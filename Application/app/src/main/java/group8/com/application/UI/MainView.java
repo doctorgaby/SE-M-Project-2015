@@ -22,7 +22,6 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 
 import org.achartengine.GraphicalView;
-
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
@@ -55,6 +54,7 @@ public class MainView extends Activity {
     private Button graphBtn;
     private Button startButton;
     private Button stopButton;
+    Context context;
 
     //TEST
     private Button dbButton;
@@ -64,8 +64,10 @@ public class MainView extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getBaseContext();
+
         setContentView(R.layout.main_display);
+
+        Controller.initMeasurements();
 
         //checks if it's a new day
 //        dailyMessage();
@@ -88,9 +90,10 @@ public class MainView extends Activity {
             @Override
             public void onClick(View v) {
 
-                if(Controller.isReceivingSignal()) {
+                Controller.startGrading();
 
-                    startButton.setClickable(true);
+                Intent intent = new Intent(v.getContext(), DrivingView.class);
+                startActivityForResult(intent, 0);
 
                     startButton.setVisibility(View.INVISIBLE);
                     stopButton.setVisibility(View.VISIBLE);
@@ -114,7 +117,7 @@ public class MainView extends Activity {
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                layout.removeView(bView);
                 stopButton.setVisibility(View.INVISIBLE);
                 startButton.setVisibility(View.VISIBLE);
                 graphBtn.setVisibility(View.VISIBLE);
@@ -143,6 +146,8 @@ public class MainView extends Activity {
                 Controller.eventSetPoints();
             }
         });
+
+        context = this;
     }
 
 
@@ -173,6 +178,10 @@ public class MainView extends Activity {
                 this.startActivity(intent);
                 finish();
                 return true;
+            case R.id.mainviewmenu_ranking:
+                Intent rankingInt = new Intent(this, RankingView.class);
+                startActivityForResult(rankingInt, 0);
+                return true;
 
             case R.id.medal_view:
                 Intent intentMedals = new Intent(getContext(), MedalsView.class);
@@ -189,8 +198,8 @@ public class MainView extends Activity {
 
         BarChart bar = new BarChart();
         bView = bar.getView(this, speed, fuelconsumption, driverdistraction, brake);
-            layout = (LinearLayout) findViewById(R.id.chart);
-            layout.addView(bView);
+        layout = (LinearLayout) findViewById(R.id.chart);
+        layout.addView(bView);
 
     }
 
@@ -221,7 +230,6 @@ public class MainView extends Activity {
             getNewDay = System.currentTimeMillis();
             SharedPreferences.Editor editor = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0).edit();
             editor.putLong(ConstantData.TAG_SAVEDAY, getNewDay);
-
             editor.commit();
 
             //execute daily message

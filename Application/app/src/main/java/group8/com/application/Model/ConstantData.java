@@ -7,14 +7,12 @@ public abstract class ConstantData {
 
     /* GRADING SYSTEM*/
     public static final int initialPoints = 50;
-    public static final double goodFuelConsumption = 60.0;
-    public static final double extremeSpeed = 120;
-    public static final double extremeFuelConsumption = 100;
-    public static final int extremeBrake = 0;
-    public static final int extremeDriverDistractionLevel = 2000;
+    public static final double goodFuelConsumption = 600.0;
+    public static final double extremeSpeed = 120.0;
+    public static final double extremeFuelConsumption = 1200.0;
     public static final int outOfRangeSpeed = 20;
-    public static final int outOfRangeLowerMargin = 2;
-    public static final int outOfRangeMiddleMargin = 4;
+    public static final int outOfRangeSpeedLowerMargin = 2;
+    public static final int outOfRangeSpeedMiddleMargin = 4;
     /* END - GRADING SYSTEM*/
 
     public static final String TAG_SUCCESS = "success";
@@ -36,6 +34,25 @@ public abstract class ConstantData {
     public static final String TAG_SETMEASUREMENTS = "setMeasurements";
     public static final String TAG_SETPOINTS = "setPoints";
     public static final String TAG_SAVEDAY = "SaveDay";
+    public static final String TAG_SETFINALSCORES = "setFinalScore";
+
+
+    public static final String TAG_RANKING = "posts";
+    public static final String TAG_USERNAME = "username";
+
+    public static final String TAG_GETALLSCORES = "getAllScores";
+    public static final String TAG_GETFRIENDSSCORES = "getFriendsScores";
+    public static final String TAG_SETFRIEND = "setFriend";
+    public static final String TAG_REMOVEFRIEND = "removeFriend";
+    public static final String TAG_GETALLFRIENDS = "getAllFriends";
+
+
+    public static final String TAG_STARTFRAGMENT = "start_menu";
+    public static final String TAG_CONTINUEFINISHFRAGMENT = "continue_finish_menu";
+    public static final String TAG_LOGINREGISTERFRAGMENT = "login_reg_menu";
+    public static final String TAG_LOGINFRAGMENT = "login_frag";
+    public static final String TAG_REGISTERFRAGMENT = "login_frag";
+
     public static final String[] medalID = {"Brake Medal", "Distraction Medal", "Speed Medal", "Fuel Medal"};
     public static final String[] medalName = {"Master at braking", "Master at focus", "Master at speed", "Master at fuel upkeep"};
 

@@ -2,18 +2,21 @@ package group8.com.application.Application;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
-import group8.com.application.UI.MainView;
-import group8.com.application.UI.MedalsView;
+import group8.com.application.UI.ChartActivity;
 import group8.com.application.UI.NotificationSystem;
-import group8.com.application.alert.BrakesActivity;
-import group8.com.application.alert.DistractionActivity;
-import group8.com.application.alert.FuelActivity;
-import group8.com.application.alert.SpeedActivity;
+import group8.com.application.UI.mainView.menuView;
 
 /**
  * Main controller for the application. Acts as a mediator between different classes.
@@ -21,6 +24,9 @@ import group8.com.application.alert.SpeedActivity;
 public class Controller {
 
     private static Controller instance = null;
+
+    public static Context context = menuView.getContext();
+
 
     /**
      * Private constructor for the Controller class, which prevents other classes from instantiating a new instance of the Controller class.
@@ -46,29 +52,23 @@ public class Controller {
 /* Methods for MeasurementsFactory */
 
     protected static void eventSpeedChanged(double speed) {
-        //Session.setSpeed(speed);
         GradingSystem.updateSpeedScore(speed);
     }
 
     protected static void eventFuelConsumptionChanged(double fuelConsumption) {
-        //Session.setFuelConsumption(fuelConsumption);
         GradingSystem.updateFuelConsumptionScore(fuelConsumption);
     }
 
     protected static void eventBrakeChanged(int brake) {
-        //Session.setBrake(brake);
         GradingSystem.updateBrakeScore(brake, false);
     }
 
     protected static void eventDriverDistractionLevelChanged(int driverDistractionLevel) {
-        //Session.setDriverDistractionLevel(driverDistractionLevel);
         GradingSystem.updateDriverDistractionLevelScore(driverDistractionLevel);
     }
 
     public static void initMeasurements() {
-
         MeasurementFactory.initMeasurements();
-
     }
 
     public static boolean isMeasuring() {
@@ -77,63 +77,6 @@ public class Controller {
 
     public static boolean isReceivingSignal() {
         return true;
-    }
-
-    /* END - Methods for MeasurementsFactory */
-
-    /* Methods for GradingSystem */
-    public static void startGrading() {
-
-        MeasurementFactory.startMeasurements();
-        GradingSystem.startGradingSystem();
-
-    }
-
-    public static void stopGrading() {
-        GradingSystem.stopGradingSystem();
-        MeasurementFactory.pauseMeasurements();
-    }
-
-    public static boolean isGrading() {
-        return GradingSystem.isGrading();
-    }
-    /* Methods for GradingSystem */
-
-    /* Methods for login and register*/
-    public static int attemptLogin(String tag, String username, String password) {
-        return DBHandler.attemptLogin(tag, username, password);
-    }
-
-    public static int registerUser(String username, String password) {
-        return DBHandler.registerUser(username, password);
-    }
-    /* END - Methods for login and register*/
-
-    public static DataList eventGetMeasurements() {
-        return DBHandler.getMeasurements(Session.getUserName());
-    }
-
-    public static DataList eventGetFilteredMeasurements(int start, int stop) {
-        return DBHandler.getFilteredMeasurements(Session.getUserName(), start, stop);
-    }
-
-    public static DataList eventGetPoints() {
-        return DBHandler.getPoints(Session.getUserName());
-//        return Session.currentPoints;
-    }
-
-    public static DataList eventGetFilteredPoints(int start, int stop) {
-        return DBHandler.getFilteredPoints(Session.getUserName(), start, stop);
-    }
-
-    /*Daily message Method */
-
-    public static Toast eventGetCustomToast(Context context, View view){
-        return NotificationSystem.customToast(context, view);
-    }
-
-    public static boolean getUpdatedStatus(String s){
-        return MedalsLogic.setUpdatedMap(s);
     }
 
     public static double getCurrentSpeed() {
@@ -152,6 +95,97 @@ public class Controller {
         return MeasurementFactory.getDistractionLevel();
     }
 
+/* END - Methods for MeasurementsFactory */
+
+
+
+/* Methods for GradingSystem */
+    public static void startGrading() {
+
+        MeasurementFactory.startMeasurements();
+        GradingSystem.startGradingSystem();
+
+    }
+
+    public static void stopGrading() {
+        GradingSystem.stopGradingSystem();
+        MeasurementFactory.pauseMeasurements();
+        Session.pause();
+    }
+
+    public static void finishGrading (boolean save) {
+        Session.finishDrive();
+        if (save) {
+            eventSetMeasuremtents();
+            eventSetPoints();
+            eventSetLastScores();
+        }
+    }
+
+    public static boolean isGrading() {
+        return GradingSystem.isGrading();
+    }
+
+    public static int getSpeedScore() {
+        return Session.getSpeedScore();
+    }
+
+    public static int getFuelConsumptionScore() {
+        return Session.getFuelConsumptionScore();
+    }
+
+    public static int getBrakeScore() {
+        return Session.getBrakeScore();
+    }
+
+    public static int getDriverDistractionLevelScore() {
+        return Session.getDriverDistractionLevelScore();
+    }
+/* END - Methods for GradingSystem */
+
+
+
+/* Methods for login and register*/
+    
+    public static JSONObject attemptLogin(String tag, String username, String password) {
+        return DBHandler.attemptLogin(tag, username, password);
+    }
+
+    public static JSONObject registerUser(String username, String password) {
+        return DBHandler.registerUser(username, password);
+    }
+/* END - Methods for login and register*/
+
+
+
+/* Methods for the DBHandler */
+    public static DataList eventGetMeasurements() {
+        return DBHandler.getMeasurements(Session.getUserName());
+    }
+
+    public static DataList eventGetFilteredMeasurements(int start, int stop) {
+        return DBHandler.getFilteredMeasurements(Session.getUserName(), start, stop);
+    }
+
+    public static DataList eventGetPoints() {
+//        return DBHandler.getPoints(Session.getUserName());
+        return Session.currentPoints;
+    }
+
+    public static DataList eventGetFilteredPoints(int start, int stop) {
+        return DBHandler.getFilteredPoints(Session.getUserName(), start, stop);
+    }
+
+    /*Daily message Method */
+
+    public static Toast eventGetCustomToast(Context context, View view){
+        return NotificationSystem.customToast(context, view);
+    }
+
+    public static boolean getUpdatedStatus(String s){
+        return MedalsLogic.setUpdatedMap(s);
+    }
+
     public static void eventSetMeasuremtents () {
         DBHandler.setMeasurements(Session.getUserName());
     }
@@ -160,7 +194,12 @@ public class Controller {
         DBHandler.setPoints(Session.getUserName());
     }
 
-    /* Methods for AlertSystem */
+    public static void eventSetLastScores () {DBHandler.setScores(Session.getUserName());}
+/* END - Methods for the DBHandler */
+
+
+
+/* Methods for AlertSystem */
     public static boolean evaluateSpeedAlert() {
         return AlertSystem.evaluateSpeed();
     }
@@ -176,62 +215,42 @@ public class Controller {
     public static boolean evaluateDriverDistractionLevelAlert() {
         return AlertSystem.evaluateDriverDistractionLevel();
     }
-    /* END - Methods for AlertSystem */
+/* END - Methods for AlertSystem */
 
-
- /*
- *
- * The following 4 methods are used to call an alerting activity defined in the alert package
- *
- */
-/*
-    Context context = MainView.getContext();
-
-
-    public void speedAlert() {
-
-        Intent intent = new Intent(context, SpeedActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        context.startActivity(intent);
-
-    }
-    public void brakesAlert() {
-
-        
-        Intent intent = new Intent(context, BrakesActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        context.startActivity(intent);
-    }
-    public void fuelAlert() {
-
-        Intent intent = new Intent(context, FuelActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        context.startActivity(intent);
-    }
-    public void DistractionAlert() {
-
-        Intent intent = new Intent(context, DistractionActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        context.startActivity(intent);
- }*/
-    //
 
 
  /*
- * The following method are is used to call the alternative visualActivity
+ * The following method is used to display the graph
  */
 
- /*   public void visualData() {
+   public static void displayGraph() {
 
 
-        Intent intent = new Intent(context, VisualizationActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-*/
+       Intent intent = new Intent(context, ChartActivity.class);
+       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       context.startActivity(intent);
+   }
 
+
+    public static List<String> eventGetAllFriends () {
+        return DBHandler.getAllFriends(Session.getUserName());
     }
+
+    public static ArrayList<HashMap<String, String>> getAllRankings () {
+        return DBHandler.getAllRankings();
+    }
+
+    public static ArrayList<HashMap<String, String>> getFriendsRankings() {
+        return DBHandler.getFriendsRankings(Session.getUserName());
+    }
+
+    public static JSONObject addFriend (String friend) {
+        return DBHandler.addFriend(friend);
+    }
+
+    public static JSONObject removeFriend (String friend) {
+        return DBHandler.removeFriend(friend);
+    }
+
+}
 
