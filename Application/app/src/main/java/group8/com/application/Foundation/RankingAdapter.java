@@ -14,14 +14,14 @@ import java.util.List;
 import group8.com.application.Application.Controller;
 import group8.com.application.R;
 
-public class CustomAdapter extends SimpleAdapter {
+public class RankingAdapter extends SimpleAdapter {
     //private int color = Color.RED;
     int resource;
     String username;
     Context context;
     List<String> friendList;
 
-        public CustomAdapter(Context context, List<HashMap<String, String>> items, int resource, String[] from, int[] to, String username) {
+        public RankingAdapter(Context context, List<HashMap<String, String>> items, int resource, String[] from, int[] to, String username) {
             super(context, items, resource, from, to);
             this.resource = resource;
             this.context = context;

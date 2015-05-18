@@ -74,7 +74,6 @@ public class BarChart extends Activity {
         mRenderer.setShowAxes(true);
 
         mRenderer.setYAxisMin(0);
-       // mRenderer.setYAxisMax(MainView.max); // CHANGE
         mRenderer.setXAxisMin(0);
         mRenderer.setXAxisMax(4);
        // mRenderer.setXLabelsAlign(Paint.Align.LEFT);

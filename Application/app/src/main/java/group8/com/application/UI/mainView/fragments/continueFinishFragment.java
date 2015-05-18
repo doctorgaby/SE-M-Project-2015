@@ -23,14 +23,10 @@ import group8.com.application.UI.DrivingView.DrivingView;
 import group8.com.application.UI.RankingView;
 import group8.com.application.UI.ResultsView;
 
-/**
- * Created by kikedaddy on 14/05/15.
- */
 public class continueFinishFragment extends Fragment implements View.OnClickListener {
     Button continueBtn;
     Button finishBtn;
     Button disregardBtn;
-    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,9 +37,8 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.continue_finish_fragment,
+        return inflater.inflate(R.layout.continue_finish_fragment,
                 container, false);
-        return view;
     }
 
     @Override

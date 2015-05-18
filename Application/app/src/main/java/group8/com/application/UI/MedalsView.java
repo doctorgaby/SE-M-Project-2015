@@ -2,35 +2,28 @@ package group8.com.application.UI;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.usage.ConfigurationStats;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import group8.com.application.Application.Controller;
-import group8.com.application.Application.MedalAdapter;
+import group8.com.application.Foundation.MedalAdapter;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Model.Medal;
 import group8.com.application.R;
+import group8.com.application.UI.mainView.menuView;
 
 /**
  * Created by Kristiyan on 5/12/2015.
@@ -138,7 +131,7 @@ public class MedalsView extends Activity implements AbsListView.OnScrollListener
         switch (item.getItemId()) {
 
             case R.id.main_view_back:
-                Intent intent = new Intent(context,MainView.class);
+                Intent intent = new Intent(context, menuView.class);
                 startActivityForResult(intent, 0);
 
                 return true;

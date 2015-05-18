@@ -1,4 +1,4 @@
-package group8.com.application.Application;
+package group8.com.application.Foundation;
 
 import android.content.Context;
 import android.view.LayoutInflater;

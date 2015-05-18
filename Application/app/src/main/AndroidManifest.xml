@@ -9,17 +9,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".UI.MainView"
-            android:label="@string/app_name"></activity>
 
         <activity
             android:name=".UI.ResultsView"
             android:label="@string/points_grapher"></activity>
-
-        <activity
-            android:name=".UI.Graphs.SpeedGraph"
-            android:label="Speed Graph"></activity>
 
         <activity
             android:name="org.achartengine.GraphicalActivity"
@@ -29,13 +22,6 @@
             android:name=".UI.BarChart"
             android:label="BarChart"></activity>
 
-        <activity
-            android:name=".UI.Graphs.FuelConsumptionGraph"
-            android:label="Fuel Consumption"></activity>
-
-        <activity
-            android:name=".UI.Graphs.DriverDistractionGraph"
-            android:label="Driver Distraction"></activity>
         <activity
             android:name=".UI.Splash"
             android:label="@string/app_name" >>
@@ -66,11 +52,6 @@
         <activity android:name=".alert.DistractionActivity" />
         <activity android:name=".alert.FuelActivity" />
         <activity android:name=".alert.SpeedActivity" />
-
-
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
 
     </application>
 
