@@ -25,9 +25,7 @@ public class AlertSystem {
     /* Initialize the cool down timer, which is preventing the alerts to appear more than once every 10 seconds */
     private static CountDownTimer coolDown = new CountDownTimer(10000, 10000) {
         @Override
-        public void onTick(long millisUntilFinished) {
-
-        }
+        public void onTick(long millisUntilFinished) {}
 
         @Override
         public void onFinish() {
@@ -45,12 +43,18 @@ public class AlertSystem {
     protected static boolean evaluateSpeed() {
 
         if(shouldAlert && speedAlert && Controller.getCurrentSpeed() >= ConstantData.extremeSpeed) {
+
+            // The booleans are used to prevent the alert to appear more than once at a time
             shouldAlert = false;
             speedAlert = false;
             coolDown.start();
             return true;
+
         } else if(Controller.getCurrentSpeed() < ConstantData.extremeSpeed) {
+
+            // The speed alert can now appear again
             speedAlert = true;
+
         }
 
         return false;
@@ -67,12 +71,18 @@ public class AlertSystem {
     protected static boolean evaluateFuelConsumption() {
 
         if(shouldAlert && fuelAlert && Controller.getCurrentFuelConsumption() >= ConstantData.extremeFuelConsumption) {
+
+            // The booleans are used to prevent the alert to appear more than once at a time
             shouldAlert = false;
             fuelAlert = false;
             coolDown.start();
             return true;
+
         } else if(Controller.getCurrentFuelConsumption() < ConstantData.extremeFuelConsumption) {
+
+            // The fuel alert can now appear again
             fuelAlert = true;
+
         }
 
         return false;
@@ -88,6 +98,7 @@ public class AlertSystem {
      * */
     protected static boolean evaluateBrake() {
 
+        // When the brake is equal to 1, the brake pedal is active
         if(!brakeIsCounting && Controller.getCurrentBrake() == 1 && brakeCount == 0) {
 
             brakeIsCounting = true;
@@ -107,22 +118,26 @@ public class AlertSystem {
 
             }.start();
 
+            // To prevent the alert to appear more than once during one single brake(the pedal has to be released before another alert can appear)
             brakeCount++;
 
         } else if(Controller.getCurrentBrake() == 0) {
 
             if(brakeCountDown != null) {
 
+                // When the car releases the brake, the timer(and the alert) is cancelled
                 brakeCountDown.cancel();
 
             }
 
+            // Everything resets, in order to enable another alert
             brakeCount = 0;
             brakeIsCounting = false;
             brakeCountDown = null;
 
         }
 
+        // The alert should happen
         if(shouldAlert && brakeAlert) {
 
             shouldAlert = false;
@@ -146,6 +161,7 @@ public class AlertSystem {
      * */
     protected static boolean evaluateDriverDistractionLevel() {
 
+        // When the distraction level is equal to 4, the driver is fully distracted
         if(!driverDistractionIsCounting && Controller.getCurrentDistractionLevel() == 4 && distractionCount == 0) {
 
             driverDistractionIsCounting = true;
@@ -156,6 +172,7 @@ public class AlertSystem {
 
                     if(Session.getLastDriverDistractionLevel() == 0) {
 
+                        // When the driver is not distracted at all, the timer(and the alert) is cancelled
                         driverDistractionIsCounting = false;
                         this.cancel();
 
@@ -172,11 +189,14 @@ public class AlertSystem {
                 }
             }.start();
 
+            // To prevent the alert to appear more than once during one single distracted period(the driver has to be less distracted before another alert can appear)
             distractionCount++;
 
         } else if(Controller.getCurrentDistractionLevel() < 4)
+            // Counter resets, in order to enable another alert
             distractionCount = 0;
 
+        // The alert should happen
         if(shouldAlert && driverDistractionAlert) {
 
             shouldAlert = false;
