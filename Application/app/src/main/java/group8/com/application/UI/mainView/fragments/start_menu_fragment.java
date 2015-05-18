@@ -20,6 +20,7 @@ import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
 import group8.com.application.UI.DrivingView.DrivingView;
+import group8.com.application.UI.MedalsView;
 import group8.com.application.UI.RankingView;
 import group8.com.application.UI.ResultsView;
 
@@ -84,6 +85,11 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
                 Intent graphsInt = new Intent(getView().getContext(), ResultsView.class);
                 startActivityForResult(graphsInt, 0);
                 return true;
+            case R.id.menuViewMenuMedals:
+                Intent intentMedals = new Intent(getView().getContext(), MedalsView.class);
+                startActivityForResult(intentMedals, 0);
+                return true;
+
             case R.id.menuViewMenuLogout:
                 SharedPreferences sp = PreferenceManager
                         .getDefaultSharedPreferences(getView().getContext());

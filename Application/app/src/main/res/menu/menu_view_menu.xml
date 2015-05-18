@@ -16,6 +16,13 @@
         android:icon="@drawable/ic_launcher"
         android:title="Ranking"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuViewMenuMedals"
+        android:icon="@drawable/ic_launcher"
+        android:title="Achievements"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/menuViewMenuLogout"
         android:icon="@drawable/ic_launcher"

@@ -1,4 +1,4 @@
-package group8.com.application.UI;
+    package group8.com.application.UI;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,7 +35,7 @@ import group8.com.application.alert.SpeedActivity;
 
 
 public class MainView extends Activity {
-
+/*
     public static Context mContext;
     public static Context getContext(){
 
@@ -300,5 +300,5 @@ public class MainView extends Activity {
         pointsTimer.cancel();
 
     }
-
+*/
 }

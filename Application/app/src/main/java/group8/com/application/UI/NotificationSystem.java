@@ -1,6 +1,7 @@
 package group8.com.application.UI;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
+import group8.com.application.Model.DataList;
 import group8.com.application.R;
 
 /**
@@ -16,15 +18,22 @@ import group8.com.application.R;
  */
 public class NotificationSystem{
 
-    private static int speedScore;
-    private static int brakeScore;
-    private static int DDLScore;
-    private static int fuelScore;
+    private static DataList list = Controller.eventGetPoints();
+
+    private static int speedScore = 30;//list.getSpeed(list.getSpeedSize()-1).getValue();
+    private static int brakeScore = 20;//list.getBrake(list.getBrakeSize()-1).getValue();
+    private static int DDLScore = 10;//list.getDriverDistractionLevel(list.getDriverDistractionLevelSize()-1).getValue();
+    private static int fuelScore = 24;//list.getFuelConsumption(list.getFuelConsumptionSize()-1).getValue();
+
     private static int avg = 50;
     private static boolean isPositive;
 
     public static Toast customToast(Context context, View view) {
 
+        Log.d("attr",""+ speedScore);
+        Log.d("attr",""+ brakeScore);
+        Log.d("attr",""+ DDLScore);
+        Log.d("attr",""+ fuelScore);
         int duration = Toast.LENGTH_LONG;
 
         Toast toast = new Toast(context);
@@ -162,11 +171,6 @@ public class NotificationSystem{
         fuelScore = Session.getFuelConsumptionScore();
 */
 
-        speedScore = 70;//Controller.eventGetPoints().getSpeedSize() - 1;
-        brakeScore = 80;//Controller.eventGetPoints().getBrakeSize() - 1;
-        DDLScore = 50;//Controller.eventGetPoints().getDriverDistractionLevelSize() - 1;;
-        fuelScore = 60;//Controller.eventGetPoints().getFuelConsumptionSize() - 1;;
-
         if (!checker(speedScore, brakeScore, DDLScore, fuelScore)) {
 
             isPositive = false;
@@ -229,12 +233,6 @@ public class NotificationSystem{
         fuelScore = data.getMaxFuelConsumption();
 */
 
-        speedScore = 70;//Controller.eventGetPoints().getSpeedSize() - 1;
-        brakeScore = 80;//Controller.eventGetPoints().getBrakeSize() - 1;;
-        DDLScore = 50;//Controller.eventGetPoints().getDriverDistractionLevelSize() - 1;;
-        fuelScore = 60;//Controller.eventGetPoints().getFuelConsumptionSize() - 1;;
-
-
         int looper = 4;
         int pos = 4;
 
@@ -271,6 +269,7 @@ public class NotificationSystem{
                 }
             }
         }
+        Log.d("postion", "" + pos);
         return pos;
     }
 
@@ -390,7 +389,7 @@ public class NotificationSystem{
     //Display the right picture
     public static void setImage(ImageView view, int pos){
 
-        if (pos == 2 && !isPositive && pos == 3 && !isPositive && pos == 4 && !isPositive){
+        if (pos == 2 && !isPositive || pos == 3 && !isPositive || pos == 4 && !isPositive){
             if (evaluateList() == ConstantData.TAG_SPEED) {
                 view.setImageResource(R.drawable.speed_red);
             }
@@ -405,7 +404,7 @@ public class NotificationSystem{
             }
         }
 
-        if (pos == 0 && isPositive || pos == 1 && isPositive) {
+        if (pos == 0 || pos == 1) {
             if (evaluateList() == ConstantData.TAG_SPEED) {
                 view.setImageResource(R.drawable.speed_orange);
             }
