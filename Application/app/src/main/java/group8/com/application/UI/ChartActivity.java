@@ -30,7 +30,7 @@ public class ChartActivity extends Activity {
         super.onCreate(savedInstanceState);
        
         requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        setContentView(R.layout.activity_visualization);
+        setContentView(R.layout.activity_chart);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title) ;
 
         int speed = Session.getSpeedScore();
