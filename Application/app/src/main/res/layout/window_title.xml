@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="400dp"
+    android:layout_height="35dip"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/header"
+        android:src="@drawable/driving_view_speed"
+        android:layout_width="100dp"
+        android:layout_height="35dp"/>
+
+    <ImageView
+        android:id="@+id/header2"
+        android:src="@drawable/driving_view_distraction"
+        android:layout_width="60dp"
+        android:layout_height="35dp"/>
+
+    <ImageView
+        android:id="@+id/header3"
+        android:src="@drawable/driving_view_brake"
+        android:layout_width="80dp"
+        android:layout_height="35dp"/>
+
+    <ImageView
+        android:id="@+id/header4"
+        android:src="@drawable/driving_view_fuel"
+        android:layout_width="80dp"
+        android:layout_height="35dp"/>
+
+
+
+
+
+
+
+</LinearLayout>
