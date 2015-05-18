@@ -52,6 +52,7 @@ public abstract class ConstantData {
     public static final String TAG_LOGINREGISTERFRAGMENT = "login_reg_menu";
     public static final String TAG_LOGINFRAGMENT = "login_frag";
     public static final String TAG_REGISTERFRAGMENT = "login_frag";
+    public static final String TAG_GETFINALSCORE = "getFinalScore";
 
     public static final String[] medalID = {"Brake Medal", "Distraction Medal", "Speed Medal", "Fuel Medal"};
     public static final String[] medalName = {"Master at braking", "Master at focus", "Master at speed", "Master at fuel upkeep"};

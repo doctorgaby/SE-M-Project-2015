@@ -6,30 +6,32 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import java.util.HashMap;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
-import group8.com.application.Model.DataList;
 import group8.com.application.R;
 
-/**
- * Created by Kristiyan on 4/22/2015.
- */
 public class NotificationSystem{
 
-    private static DataList list = Controller.eventGetPoints();
-
-    private static int speedScore = 30;//list.getSpeed(list.getSpeedSize()-1).getValue();
-    private static int brakeScore = 20;//list.getBrake(list.getBrakeSize()-1).getValue();
-    private static int DDLScore = 10;//list.getDriverDistractionLevel(list.getDriverDistractionLevelSize()-1).getValue();
-    private static int fuelScore = 24;//list.getFuelConsumption(list.getFuelConsumptionSize()-1).getValue();
-
+    private static HashMap<String,Integer> list;
+    private static int speedScore;
+    private static int brakeScore;
+    private static int DDLScore;
+    private static int fuelScore;
     private static int avg = 50;
     private static boolean isPositive;
 
     public static Toast customToast(Context context, View view) {
 
+        list = Controller.eventGetFinalPoints();
+        speedScore = list.get(ConstantData.TAG_SPEED);
+        brakeScore = list.get(ConstantData.TAG_BRAKE);
+        DDLScore = list.get(ConstantData.TAG_DISTRACTION);
+        fuelScore = list.get(ConstantData.TAG_FUEL);
+
+
+        Log.d("user:", Session.getUserName());
         Log.d("attr",""+ speedScore);
         Log.d("attr",""+ brakeScore);
         Log.d("attr",""+ DDLScore);
@@ -156,21 +158,6 @@ public class NotificationSystem{
      */
     private static String evaluateList(){
 
-/*
-        data = Controller.eventGetPoints();
-        speedScore = data.getMaxSpeed();
-        brakeScore = data.getMaxBrake();
-        DDLScore = data.getMaxDriverDistractionLevel();
-        fuelScore = data.getMaxFuelConsumption();
-*/
-/*  Session test code
-
-        speedScore = Session.getSpeedScore();
-        brakeScore = Session.getBrakeScore();
-        DDLScore = Session.getDriverDistractionLevelScore();
-        fuelScore = Session.getFuelConsumptionScore();
-*/
-
         if (!checker(speedScore, brakeScore, DDLScore, fuelScore)) {
 
             isPositive = false;
@@ -187,6 +174,8 @@ public class NotificationSystem{
             if (fuelScore < speedScore && fuelScore < brakeScore && fuelScore < DDLScore) {
                 return ConstantData.TAG_FUEL;
             }
+            if (speedScore == fuelScore && speedScore == brakeScore && speedScore == DDLScore)
+                return ConstantData.TAG_SPEED;
         } else {
 
             isPositive = true;
@@ -206,8 +195,11 @@ public class NotificationSystem{
             if (DDLScore == avg && speedScore == avg && brakeScore == avg && fuelScore == avg){
                 return "good";
             }
+            if (speedScore == fuelScore && speedScore == brakeScore && speedScore == DDLScore)
+                return ConstantData.TAG_SPEED;
 
         }
+        Log.d("Terminate!", "TERMINATE!");
 
         return "terminate";
 
@@ -225,16 +217,13 @@ public class NotificationSystem{
      */
 
     private static int getPosition(){
-/*
-        data = Controller.eventGetPoints();
-        speedScore =  data.getMaxSpeed();
-        brakeScore = data.getMaxBrake();
-        DDLScore = data.getMaxDriverDistractionLevel();
-        fuelScore = data.getMaxFuelConsumption();
-*/
+        Log.d("getpos",""+ speedScore);
+        Log.d("getpos",""+ brakeScore);
+        Log.d("getpos",""+ DDLScore);
+        Log.d("getpos",""+ fuelScore);
 
         int looper = 4;
-        int pos = 4;
+        int pos=1;
 
         if (!checker(speedScore, brakeScore, DDLScore, fuelScore)) {
             for (int i = 0; i <= looper; i++) {
@@ -254,17 +243,20 @@ public class NotificationSystem{
             }
         } else {
             for (int i = 0; i <= looper; i++) {
-
-                if (speedScore >= avg + rangeOne(i) && speedScore >= avg + rangeTwo(i)) {
+                if (speedScore >= avg + rangeOne(i) && speedScore <= avg + rangeTwo(i)) {
+                    Log.d("first if",""+i);
                     pos = i;
                 }
-                if (brakeScore >= avg + rangeOne(i) && brakeScore >= avg + rangeTwo(i)) {
+                if (brakeScore >= avg + rangeOne(i) && brakeScore <= avg + rangeTwo(i)) {
+                    Log.d("second if",""+i);
                     pos = i;
                 }
-                if (DDLScore >= avg + rangeOne(i) && DDLScore >= avg + rangeTwo(i)) {
+                if (DDLScore >= avg + rangeOne(i) && DDLScore <= avg + rangeTwo(i)) {
+                    Log.d("third if",""+i);
                     pos = i;
                 }
-                if (fuelScore >= avg + rangeOne(i) && fuelScore >= avg + rangeTwo(i)) {
+                if (fuelScore >= avg + rangeOne(i) && fuelScore <= avg + rangeTwo(i)) {
+                    Log.d("fourth if",""+i);
                     pos = i;
                 }
             }
@@ -353,32 +345,32 @@ public class NotificationSystem{
 
         //Return a informative message depending on performance
         if (!isPositive) {
-            if (eval == ConstantData.TAG_SPEED) {
+            if (eval.equals(ConstantData.TAG_SPEED)) {
                 return speedNegative[pos];
             }
-            if (eval == ConstantData.TAG_BRAKE) {
+            if (eval.equals(ConstantData.TAG_BRAKE)) {
                 return brakeNegative[pos];
             }
-            if (eval == ConstantData.TAG_FUEL) {
+            if (eval.equals(ConstantData.TAG_FUEL)) {
                 return fuelNegative[pos];
             }
-            if (eval == ConstantData.TAG_DISTRACTION) {
+            if (eval.equals(ConstantData.TAG_DISTRACTION)) {
                 return ddlNegative[pos];
             }
         } else {
-            if (eval == ConstantData.TAG_SPEED) {
+            if (eval.equals(ConstantData.TAG_SPEED)) {
                 return speedPositive[pos];
             }
-            if (eval == ConstantData.TAG_BRAKE) {
+            if (eval.equals(ConstantData.TAG_BRAKE)) {
                 return brakePositive[pos];
             }
-            if (eval == ConstantData.TAG_FUEL) {
+            if (eval.equals(ConstantData.TAG_FUEL)) {
                 return fuelPositive[pos];
             }
-            if (eval == ConstantData.TAG_DISTRACTION) {
+            if (eval.equals(ConstantData.TAG_DISTRACTION)) {
                 return ddlPositive[pos];
             }
-            if (eval == "good") {
+            if (eval.equals("good")) {
                 return average;
             }
 
@@ -388,48 +380,49 @@ public class NotificationSystem{
 
     //Display the right picture
     public static void setImage(ImageView view, int pos){
+        String temp = evaluateList();
 
         if (pos == 2 && !isPositive || pos == 3 && !isPositive || pos == 4 && !isPositive){
-            if (evaluateList() == ConstantData.TAG_SPEED) {
+            if (temp.equals(ConstantData.TAG_SPEED)) {
                 view.setImageResource(R.drawable.speed_red);
             }
-            if (evaluateList() == ConstantData.TAG_BRAKE) {
+            if (temp.equals(ConstantData.TAG_BRAKE)) {
                 view.setImageResource(R.drawable.brake_red);
             }
-            if (evaluateList() == ConstantData.TAG_FUEL) {
+            if (temp.equals(ConstantData.TAG_FUEL)) {
                 view.setImageResource(R.drawable.fuel_red);
             }
-            if (evaluateList() == ConstantData.TAG_DISTRACTION) {
+            if (temp.equals(ConstantData.TAG_DISTRACTION)) {
                 view.setImageResource(R.drawable.distraction_red);
             }
         }
 
         if (pos == 0 || pos == 1) {
-            if (evaluateList() == ConstantData.TAG_SPEED) {
+            if (temp.equals(ConstantData.TAG_SPEED)) {
                 view.setImageResource(R.drawable.speed_orange);
             }
-            if (evaluateList() == ConstantData.TAG_BRAKE) {
+            if (temp.equals(ConstantData.TAG_BRAKE)) {
                 view.setImageResource(R.drawable.brake_orange);
             }
-            if (evaluateList() == ConstantData.TAG_FUEL) {
+            if (temp.equals(ConstantData.TAG_FUEL)) {
                 view.setImageResource(R.drawable.fuel_orange);
             }
-            if (evaluateList() == ConstantData.TAG_DISTRACTION) {
+            if (temp.equals(ConstantData.TAG_DISTRACTION)) {
                 view.setImageResource(R.drawable.distraction_orange);
             }
         }
 
         if (pos == 2 && isPositive || pos == 3 && isPositive || pos == 4 && isPositive){
-            if (evaluateList() == ConstantData.TAG_SPEED) {
+            if (temp.equals(ConstantData.TAG_SPEED)) {
                 view.setImageResource(R.drawable.speed_green);
             }
-            if (evaluateList() == ConstantData.TAG_BRAKE) {
+            if (temp.equals(ConstantData.TAG_BRAKE)) {
                 view.setImageResource(R.drawable.brake_green);
             }
-            if (evaluateList() == ConstantData.TAG_FUEL) {
+            if (temp.equals(ConstantData.TAG_FUEL)) {
                 view.setImageResource(R.drawable.fuel_green);
             }
-            if (evaluateList() == ConstantData.TAG_DISTRACTION) {
+            if (temp.equals(ConstantData.TAG_DISTRACTION)) {
                 view.setImageResource(R.drawable.distraction_green);
             }
         }
