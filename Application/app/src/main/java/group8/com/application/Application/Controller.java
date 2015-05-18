@@ -182,6 +182,10 @@ public class Controller {
         return NotificationSystem.customToast(context, view);
     }
 
+    public static HashMap<String, Integer> eventGetFinalPoints (){
+        return DBHandler.getFinalScore(Session.getUserName());
+    }
+
     public static boolean getUpdatedStatus(String s){
         return MedalsLogic.setUpdatedMap(s);
     }

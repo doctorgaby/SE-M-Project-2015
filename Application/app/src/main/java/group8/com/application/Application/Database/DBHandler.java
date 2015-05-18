@@ -339,6 +339,37 @@ public abstract class DBHandler {
         return rankingList;
     }
 
+    public static HashMap<String, Integer> getFinalScore (String user) {
+        HashMap<String, Integer> list = new HashMap<>();
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("action", ConstantData.TAG_GETFINALSCORE));
+        params.add(new BasicNameValuePair(ConstantData.TAG_USERNAME, user));
+        Log.d("getFinalScore!", "starting");
+        JSONObject json = new JSONObject();
+        JSONArray array;
+        try {
+            json = new doExecuteValues(params).execute().get();
+            array = json.getJSONArray(ConstantData.TAG_RANKING);
+            if (!array.isNull(0)) {
+                JSONObject c = array.getJSONObject(0);
+                list.put(ConstantData.TAG_SPEED,c.getInt(ConstantData.TAG_SPEED));
+                list.put(ConstantData.TAG_BRAKE,c.getInt(ConstantData.TAG_BRAKE));
+                list.put(ConstantData.TAG_FUEL, c.getInt(ConstantData.TAG_FUEL));
+                list.put(ConstantData.TAG_DISTRACTION, c.getInt(ConstantData.TAG_DISTRACTION));
+            }
+            else {
+                // ADD DEFAULT VALUES TO THE LIST JUST IN CASE ITS NULL.
+                list.put(ConstantData.TAG_SPEED,ConstantData.initialPoints);
+                list.put(ConstantData.TAG_BRAKE,ConstantData.initialPoints);
+                list.put(ConstantData.TAG_FUEL, ConstantData.initialPoints);
+                list.put(ConstantData.TAG_DISTRACTION, ConstantData.initialPoints);
+            }
+        } catch (Exception e) {
+            Log.e("DBHandler Error: ", "Problem with get Final Score.");
+        }
+        return list;
+    }
+
     public static ArrayList<HashMap<String, String>> getAllRankings() {
         ArrayList<HashMap<String, String>> rankingList= new ArrayList<>();
         List<NameValuePair> params = new ArrayList<>();
