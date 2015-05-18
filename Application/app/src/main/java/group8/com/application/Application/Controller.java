@@ -132,6 +132,10 @@ public class Controller {
         return NotificationSystem.customToast(context, view);
     }
 
+    public static boolean getUpdatedStatus(String s){
+        return MedalsLogic.setUpdatedMap(s);
+    }
+
     public static double getCurrentSpeed() {
         return MeasurementFactory.getSpeed();
     }
