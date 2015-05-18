@@ -36,4 +36,7 @@ public abstract class ConstantData {
     public static final String TAG_SETMEASUREMENTS = "setMeasurements";
     public static final String TAG_SETPOINTS = "setPoints";
     public static final String TAG_SAVEDAY = "SaveDay";
+    public static final String[] medalID = {"Brake Medal", "Distraction Medal", "Speed Medal", "Fuel Medal"};
+    public static final String[] medalName = {"Master at braking", "Master at focus", "Master at speed", "Master at fuel upkeep"};
+
 }

@@ -22,6 +22,7 @@ import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 
 import org.achartengine.GraphicalView;
+
 import group8.com.application.Model.ConstantData;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
@@ -172,6 +173,12 @@ public class MainView extends Activity {
                 this.startActivity(intent);
                 finish();
                 return true;
+
+            case R.id.medal_view:
+                Intent intentMedals = new Intent(getContext(), MedalsView.class);
+                startActivityForResult(intentMedals, 0);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -214,6 +221,7 @@ public class MainView extends Activity {
             getNewDay = System.currentTimeMillis();
             SharedPreferences.Editor editor = getSharedPreferences(ConstantData.TAG_SAVEDAY, 0).edit();
             editor.putLong(ConstantData.TAG_SAVEDAY, getNewDay);
+
             editor.commit();
 
             //execute daily message
