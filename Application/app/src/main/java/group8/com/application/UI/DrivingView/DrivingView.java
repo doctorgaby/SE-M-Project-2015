@@ -35,9 +35,8 @@ public class DrivingView extends Activity {
             public void onClick(View v) {
 
                 Controller.stopGrading();
-
                 Intent intent = new Intent(v.getContext(), menuView.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
 
             }
         });

@@ -1,12 +1,17 @@
 package group8.com.application.Model;
 
+import com.github.mikephil.charting.data.Entry;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import group8.com.application.Foundation.TimeComparator;
@@ -175,36 +180,54 @@ public class DataList {
 //GETPLOTTABLE -- These getters get a copy of each list with a different format. Instead of being a
 // list of DataObjects, its a list of Integers. The list has the format {x,y,x1,y1,x2,y2....xn,yn}.
 // The purpose of this is to make them plottable in the graph.
-    public List<Integer> getPlottableFuelConsumption()
+    public HashMap<String,ArrayList> getPlottableFuelConsumption(String time)
     {
-        return transformList(fuelConsumption);
+        return transformList(fuelConsumption, time);
     }
 
-    public List<Integer> getPlottableSpeed()
+    public HashMap<String,ArrayList> getPlottableSpeed(String time)
     {
-        return transformList(speed);
+        return transformList(speed, time);
     }
 
-    public List<Integer> getPlottableBrake()
+    public HashMap<String,ArrayList> getPlottableBrake(String time)
     {
-        return transformList(brake);
+        return transformList(brake, time);
     }
 
-    public List<Integer> getPlottableDriverDistraction()
+    public HashMap<String,ArrayList> getPlottableDriverDistraction(String time)
     {
-        return transformList(driverDistractionLevel);
+        return transformList(driverDistractionLevel, time);
     }
 
 // Helper function that transforms a list into a plottable list.
-    private List<Integer> transformList (List<DataObject> list)
+    private HashMap<String,ArrayList> transformList (List<DataObject> list, String time)
     {
-        List<Integer> temp = new ArrayList<>();
-        for (DataObject counter:list)
+        ArrayList<String> xVals = new ArrayList<>();
+        ArrayList<Entry> yVals = new ArrayList<>();
+        int size = list.size();
+        int includedValues = 0;
+        for (int i=0; i<size; i++)
         {
-            temp.add(counter.getTime());
-            temp.add(counter.getValue());
+            int currenttime = list.get(i).getTime();
+            if (currenttime !=0) {
+                yVals.add(new Entry(list.get(i).getValue(), includedValues));
+                includedValues++;
+                Date date = new Date((long) currenttime*1000);
+                SimpleDateFormat sdf;
+                if (time.equals("now"))
+                    sdf = new SimpleDateFormat("hh:mm");
+                else
+                    sdf = new SimpleDateFormat("yy-MM-dd");
+                String formattedDate = sdf.format(date);
+                //Log.d("value: " + data.getSpeed(i).getValue(), "date: " + formattedDate);
+                xVals.add(formattedDate);
+            }
         }
-        return temp;
+        HashMap<String, ArrayList> answer = new HashMap<>();
+        answer.put("xVals", xVals);
+        answer.put("yVals", yVals);
+        return answer;
     }
 
 // Get the JSON representation of the lists

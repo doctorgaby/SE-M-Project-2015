@@ -1,8 +1,7 @@
 package group8.com.application.Application;
 
 import android.content.Context;
-import android.content.Intent;
-import android.view.Menu;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -14,7 +13,6 @@ import java.util.List;
 
 import group8.com.application.Application.Database.DBHandler;
 import group8.com.application.Model.DataList;
-import group8.com.application.UI.ChartActivity;
 import group8.com.application.UI.NotificationSystem;
 import group8.com.application.UI.mainView.menuView;
 
@@ -173,6 +171,7 @@ public class Controller {
     }
 
     public static DataList eventGetFilteredPoints(int start, int stop) {
+        Log.d("start, stop", start + " , " + stop);
         return DBHandler.getFilteredPoints(Session.getUserName(), start, stop);
     }
 
@@ -226,14 +225,6 @@ public class Controller {
  /*
  * The following method is used to display the graph
  */
-
-   public static void displayGraph() {
-
-
-       Intent intent = new Intent(context, ChartActivity.class);
-       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-       context.startActivity(intent);
-   }
 
 
     public static List<String> eventGetAllFriends () {
