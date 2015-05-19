@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:background="@color/menuViewCenter">
+    android:background="@color/menuViewCenter"
+    android:weightSum="1">
 
     <Button
         android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_height="80dp"
         android:background="@drawable/menu_view_buttons"
         android:shadowDx="2"
         android:shadowDy="2"
@@ -20,6 +20,102 @@
         android:textSize="45sp"
         android:typeface="serif"
         android:text="Start"
-        android:layout_marginTop="10dp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="77dp" />
 
-</LinearLayout>
+    <ImageButton
+        android:layout_width="130dp"
+        android:layout_height="78dp"
+        android:scaleType="fitXY"
+        android:id="@+id/graphsButton"
+        android:src="@drawable/graphs_fr"
+        android:layout_marginLeft="30dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="140dp"
+        android:layout_height="90dp"
+        android:scaleType="fitXY"
+        android:id="@+id/rankingsButton"
+        android:src="@drawable/ranking_fr"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="51dp" />
+
+    <ImageButton
+        android:layout_width="97dp"
+        android:layout_height="78dp"
+        android:id="@+id/achievementsButton"
+        android:layout_marginRight="55dp"
+        android:src="@drawable/achievement_fr"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@+id/graphsButton"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/rankingsButton" />
+
+    <ImageButton
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:id="@+id/trendButton"
+        android:layout_marginRight="30dp"
+        android:src="@drawable/finalbarchart_fr"
+        android:scaleType="fitXY"
+        android:layout_alignTop="@+id/rankingsButton"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Graphs"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView"
+        android:layout_below="@+id/graphsButton"
+        android:gravity="center"
+        android:layout_alignStart="@id/graphsButton"
+        android:layout_alignEnd="@id/graphsButton"
+        android:typeface="serif" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Achievements"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView2"
+        android:gravity="center"
+        android:typeface="serif"
+        android:layout_below="@+id/achievementsButton"
+        android:layout_alignStart="@id/achievementsButton"
+        android:layout_alignEnd="@id/achievementsButton"
+/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Rankings"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView3"
+        android:gravity="center"
+        android:typeface="serif"
+        android:layout_below="@+id/rankingsButton"
+        android:layout_alignStart="@id/rankingsButton"
+        android:layout_alignEnd="@id/rankingsButton"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Trend"
+        android:textColor="#FFFFFF"
+        android:id="@+id/textView4"
+        android:gravity="center"
+        android:typeface="serif"
+        android:layout_below="@+id/trendButton"
+        android:layout_alignStart="@+id/trendButton"
+        android:layout_alignEnd="@id/trendButton"/>
+</RelativeLayout>
