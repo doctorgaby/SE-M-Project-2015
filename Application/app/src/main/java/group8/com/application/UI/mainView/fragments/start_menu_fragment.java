@@ -20,15 +20,12 @@ import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
 import group8.com.application.UI.DrivingView.DrivingView;
+import group8.com.application.UI.MedalsView;
 import group8.com.application.UI.RankingView;
 import group8.com.application.UI.ResultsView;
 
-/**
- * Created by kikedaddy on 14/05/15.
- */
 public class start_menu_fragment extends Fragment implements View.OnClickListener {
     Button start;
-    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,9 +37,7 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.start_menu_fragment,
-                container, false);
-        return view;
+        return inflater.inflate(R.layout.start_menu_fragment, container, false);
     }
 
     @Override
@@ -84,6 +79,11 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
                 Intent graphsInt = new Intent(getView().getContext(), ResultsView.class);
                 startActivityForResult(graphsInt, 0);
                 return true;
+            case R.id.menuViewMenuMedals:
+                Intent intentMedals = new Intent(getView().getContext(), MedalsView.class);
+                startActivityForResult(intentMedals, 0);
+                return true;
+
             case R.id.menuViewMenuLogout:
                 SharedPreferences sp = PreferenceManager
                         .getDefaultSharedPreferences(getView().getContext());
@@ -109,9 +109,7 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
     private View customLayout(){
 
         LayoutInflater myInflator = getActivity().getLayoutInflater();
-        View myLayout = myInflator.inflate(R.layout.toast_layout, (ViewGroup) getView().findViewById(R.id.toast_layout_root));
-
-        return myLayout;
+        return myInflator.inflate(R.layout.toast_layout, (ViewGroup) getView().findViewById(R.id.toast_layout_root));
 
     }
 }

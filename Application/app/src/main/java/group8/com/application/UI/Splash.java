@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import group8.com.application.R;
+import group8.com.application.UI.mainView.menuView;
 
 /**
  * Created by doctorgaby on 5/13/2015.
@@ -20,10 +21,10 @@ public class Splash extends Activity {
         int secondsDelayed = 1;
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(Splash.this, MainView.class));
+                startActivity(new Intent(Splash.this, menuView.class));
                 finish();
             }
-        }, secondsDelayed * 1000);
+        }, secondsDelayed * 3000);
     }
 }
 

@@ -4,8 +4,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.nicholas.alert.BrakesActivity">
-
+    tools:context="com.example.nicholas.alert.BrakesActivity"
+    android:background="@drawable/fragment_background_red">
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -14,9 +14,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="360dp"
+            android:layout_height="300dp"
             android:id="@+id/imageView2"
             android:layout_gravity="center"
-            android:src="@drawable/brakes" />
+            android:src="@drawable/driving_view_brake" />
     </FrameLayout>
 </RelativeLayout>

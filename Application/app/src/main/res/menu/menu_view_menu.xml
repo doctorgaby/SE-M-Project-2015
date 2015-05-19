@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="group8.com.application.UI.MainView"
+    tools:context="group8.com.application.UI.menuView"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
@@ -16,6 +16,13 @@
         android:icon="@drawable/ic_launcher"
         android:title="Ranking"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menuViewMenuMedals"
+        android:icon="@drawable/ic_launcher"
+        android:title="Achievements"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/menuViewMenuLogout"
         android:icon="@drawable/ic_launcher"

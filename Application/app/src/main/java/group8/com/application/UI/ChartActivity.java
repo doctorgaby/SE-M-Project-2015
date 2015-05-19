@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+
 import java.util.ArrayList;
 
 import group8.com.application.Application.Session;
@@ -22,13 +25,13 @@ public class ChartActivity extends Activity {
     Context context = menuView.getContext();
     CountDownTimer cdt;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
         setContentView(R.layout.activity_chart);
+        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title) ;
 
         int speed = Session.getSpeedScore();
         int fuel = Session.getFuelConsumptionScore();
@@ -36,7 +39,6 @@ public class ChartActivity extends Activity {
         int brake = Session.getBrakeScore();
 
         // The code above is/ will be used to update the array list
-
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
         entries.add(new BarEntry(speed, 0));
@@ -58,15 +60,16 @@ public class ChartActivity extends Activity {
         setContentView(chart);
         BarData data = new BarData(labels, dataset);
         chart.setData(data);
-
+        YAxis leftAxis = chart.getAxisLeft();
+        YAxis rightAxis = chart.getAxisRight();
+        leftAxis.setSpaceTop(130);
+        rightAxis.setEnabled(false);
 
         chart.setDescription("Your points");
 
         dataset.setColors(ColorTemplate.JOYFUL_COLORS); // add colors
 
         chart.animateY(5000); // Add some animations
-
-
 
 
         cdt = new CountDownTimer(15000, 1000) {  //10 seconds for demonstration purposes
@@ -82,8 +85,6 @@ public class ChartActivity extends Activity {
                 //Intent nextScreen = new Intent(getApplicationContext(), mainView.class);
 
                 finish ();
-
-
             }
         };
 

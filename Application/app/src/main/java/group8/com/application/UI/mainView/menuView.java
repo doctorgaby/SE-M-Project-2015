@@ -17,9 +17,7 @@ import group8.com.application.UI.mainView.fragments.continueFinishFragment;
 import group8.com.application.UI.mainView.fragments.login_reg_menu_fragment;
 import group8.com.application.UI.mainView.fragments.start_menu_fragment;
 
-/**
- * Created by kikedaddy on 14/05/15.
- */
+
 public class menuView extends FragmentActivity {
 
     public static Context mContext;

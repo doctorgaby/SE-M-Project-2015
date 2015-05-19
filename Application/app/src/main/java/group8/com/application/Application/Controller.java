@@ -168,8 +168,8 @@ public class Controller {
     }
 
     public static DataList eventGetPoints() {
-//        return DBHandler.getPoints(Session.getUserName());
-        return Session.currentPoints;
+        return DBHandler.getPoints(Session.getUserName());
+//        return Session.currentPoints;
     }
 
     public static DataList eventGetFilteredPoints(int start, int stop) {
@@ -180,6 +180,14 @@ public class Controller {
 
     public static Toast eventGetCustomToast(Context context, View view){
         return NotificationSystem.customToast(context, view);
+    }
+
+    public static HashMap<String, Integer> eventGetFinalPoints (){
+        return DBHandler.getFinalScore(Session.getUserName());
+    }
+
+    public static boolean getUpdatedStatus(String s){
+        return MedalsLogic.setUpdatedMap(s);
     }
 
     public static void eventSetMeasuremtents () {

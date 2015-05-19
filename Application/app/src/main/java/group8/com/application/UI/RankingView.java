@@ -1,7 +1,7 @@
 package group8.com.application.UI;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
-import group8.com.application.Foundation.CustomAdapter;
+import group8.com.application.Foundation.RankingAdapter;
 import group8.com.application.R;
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -12,7 +12,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -21,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -109,7 +107,7 @@ public class RankingView extends ListActivity {
     }
 
     private void updateList(ArrayList<HashMap<String, String>> list) {
-        ListAdapter adapter = new CustomAdapter(this, list,
+        ListAdapter adapter = new RankingAdapter(this, list,
                 R.layout.single_post, new String[]{ConstantData.TAG_SPEED, ConstantData.TAG_FUEL,
                 ConstantData.TAG_BRAKE, ConstantData.TAG_DISTRACTION, ConstantData.TAG_USERNAME, "totalPoints", "position"}
                 , new int[]{R.id.speed, R.id.fuel, R.id.brake, R.id.distraction, R.id.username, R.id.totalPoints, R.id.rankingPosition}, Session.getUserName());

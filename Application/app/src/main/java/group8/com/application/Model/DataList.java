@@ -169,7 +169,7 @@ public class DataList {
         temp.add(getMaxFuelConsumptionTime());
         temp.add(getMaxBrakeTime());
         temp.add(getMaxDriverDistractionLevelTime());
-        return Collections.max(temp);
+        return (Collections.max(temp) / 1000);
     }
 
 //GETPLOTTABLE -- These getters get a copy of each list with a different format. Instead of being a
