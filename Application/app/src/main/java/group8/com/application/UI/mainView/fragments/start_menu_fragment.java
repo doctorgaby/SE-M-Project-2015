@@ -14,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
+import group8.com.application.UI.ChartActivity;
 import group8.com.application.UI.DrivingView.DrivingView;
 import group8.com.application.UI.MedalsView;
 import group8.com.application.UI.RankingView;
@@ -26,6 +28,11 @@ import group8.com.application.UI.ResultsView;
 
 public class start_menu_fragment extends Fragment implements View.OnClickListener {
     Button start;
+    ImageButton graphs;
+    ImageButton ranking;
+    ImageButton achievements;
+    ImageButton trend;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,14 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
         start = (Button) getView().findViewById(R.id.startButton);
         start.setOnClickListener(this);
         Controller.eventGetCustomToast(getActivity(), customLayout());
+        graphs = (ImageButton) getView().findViewById(R.id.graphsButton);
+        graphs.setOnClickListener(this);
+        ranking = (ImageButton) getView().findViewById(R.id.rankingsButton);
+        ranking.setOnClickListener(this);
+        achievements = (ImageButton) getView().findViewById(R.id.achievementsButton);
+        achievements.setOnClickListener(this);
+        trend = (ImageButton) getView().findViewById(R.id.trendButton);
+        trend.setOnClickListener(this);
     }
 
     @Override
@@ -57,6 +72,22 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
                 Intent intent = new Intent(v.getContext(), DrivingView.class);
                 startActivityForResult(intent, 0);
                 getActivity().finish();
+            case R.id.graphsButton:
+                Intent intent2 = new Intent(v.getContext(),ResultsView.class);
+                startActivityForResult(intent2, 0);
+                getActivity().finish();
+            case R.id.rankingsButton:
+                Intent intent3 = new Intent(v.getContext(),RankingView.class);
+                startActivityForResult(intent3, 0);
+                getActivity().finish();
+            case R.id.achievementsButton:
+                Intent intent4 = new Intent(v.getContext(),MedalsView.class);
+                startActivityForResult(intent4, 0);
+                getActivity().finish();
+           /* case R.id.trendButton:
+                Intent intent5 = new Intent(v.getContext(),ChartActivity.class);
+                startActivityForResult(intent5, 0);
+                getActivity().finish();*/
                 break;
         }
     }

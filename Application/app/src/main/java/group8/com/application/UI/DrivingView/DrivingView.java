@@ -51,7 +51,7 @@ public class DrivingView extends Activity {
 
         alertTimer = new CountDownTimer(1000, 1000) {
 
-            public void onTick(long millisUntilFinished) {
+                public void onTick(long millisUntilFinished) {
             }
 
             public void onFinish() {
