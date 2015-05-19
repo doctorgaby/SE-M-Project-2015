@@ -36,19 +36,21 @@ public class ChartActivity extends Activity {
         setContentView(R.layout.activity_chart);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.window_title) ;
 
+
+
+        // Used to update the Arraylist
         int speed = Session.getSpeedScore();
-        int fuel = Session.getFuelConsumptionScore();
         int distraction = Session.getDriverDistractionLevelScore();
         int brake = Session.getBrakeScore();
+        int fuel = Session.getFuelConsumptionScore();
+        
 
-        // The code above is/ will be used to update the array list
 
-
-        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
+        ArrayList<BarEntry> entries = new ArrayList<>();
         entries.add(new BarEntry(speed, 0));
-        entries.add(new BarEntry(fuel, 1));
-        entries.add(new BarEntry(distraction, 2));
-        entries.add(new BarEntry(brake, 3));
+        entries.add(new BarEntry(distraction, 1));
+        entries.add(new BarEntry(brake, 2));
+        entries.add(new BarEntry(fuel, 3));
 
 
         BarDataSet dataset = new BarDataSet(entries, "Points Earned");
