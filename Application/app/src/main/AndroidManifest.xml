@@ -19,10 +19,6 @@
             android:label="Bar Chart"></activity>
 
         <activity
-            android:name=".UI.BarChart"
-            android:label="BarChart"></activity>
-
-        <activity
             android:name=".UI.Splash"
             android:label="@string/app_name" >>
             <intent-filter>

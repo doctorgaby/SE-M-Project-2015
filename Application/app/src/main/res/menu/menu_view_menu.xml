@@ -5,11 +5,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menuViewMenuGraphs"
+        android:id="@+id/menuViewMenuBarGraph"
         android:icon="@drawable/ic_launcher"
-        android:title="Graphs"
+        android:title="Current Points"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menuViewMenuGraphs"
+        android:icon="@drawable/ic_launcher"
+        android:title="Results"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menuViewMenuRanking"

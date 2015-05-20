@@ -19,7 +19,9 @@ import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
+import group8.com.application.UI.ChartActivity;
 import group8.com.application.UI.DrivingView.DrivingView;
+import group8.com.application.UI.MedalsView;
 import group8.com.application.UI.RankingView;
 import group8.com.application.UI.ResultsView;
 
@@ -61,16 +63,14 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
             case R.id.continueButton:
                 Controller.startGrading();
                 Intent intent = new Intent(v.getContext(), DrivingView.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
                 getActivity().finish();
                 break;
             case R.id.finishButton:
+                Intent graphInt = new Intent(getActivity(), ChartActivity.class);
+                startActivity(graphInt);
                 Controller.finishGrading(true);
-                Session.restart(Session.getUserName());
-                Controller.displayGraph(); // display graph briefly
-                fragment = new start_menu_fragment();
-                transaction.replace(R.id.menuViewFrame, fragment, ConstantData.TAG_STARTFRAGMENT);
-                transaction.commit();
+                getActivity().finish();
                 break;
             case R.id.disregard:
                 Controller.finishGrading(false);
@@ -93,13 +93,21 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
+            case R.id.menuViewMenuBarGraph:
+                Intent barInt = new Intent(getView().getContext(), ChartActivity.class);
+                startActivity(barInt);
+                return true;
             case R.id.menuViewMenuRanking:
                 Intent rankingInt = new Intent(getView().getContext(), RankingView.class);
-                startActivityForResult(rankingInt, 0);
+                startActivity(rankingInt);
                 return true;
             case R.id.menuViewMenuGraphs:
                 Intent graphsInt = new Intent(getView().getContext(), ResultsView.class);
-                startActivityForResult(graphsInt, 0);
+                startActivity(graphsInt);
+                return true;
+            case R.id.menuViewMenuMedals:
+                Intent intentMedals = new Intent(getView().getContext(), MedalsView.class);
+                startActivity(intentMedals);
                 return true;
             case R.id.menuViewMenuLogout:
                 SharedPreferences sp = PreferenceManager

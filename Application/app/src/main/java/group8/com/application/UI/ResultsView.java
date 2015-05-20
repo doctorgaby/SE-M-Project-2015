@@ -1,361 +1,293 @@
 package group8.com.application.UI;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-import com.androidplot.xy.BoundaryMode;
-import com.androidplot.xy.LineAndPointFormatter;
-import com.androidplot.xy.PointLabelFormatter;
-import com.androidplot.xy.SimpleXYSeries;
-import com.androidplot.xy.XYPlot;
-import com.androidplot.xy.XYSeries;
-import com.androidplot.xy.XYStepMode;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import group8.com.application.Application.Session;
 import group8.com.application.Application.Controller;
+import group8.com.application.Application.Session;
+import group8.com.application.Model.ConstantData;
 import group8.com.application.Model.DataList;
 import group8.com.application.R;
 
+import static group8.com.application.R.id;
+import static group8.com.application.R.layout;
 
 public class ResultsView extends Activity {
 
-    private int xMin, xMax, xRange, yMin, yMax, yRange;
-    protected DataList data;
-    private XYPlot plot;
-    private String setPlot;
-    private Button currBtn;
+    private String TAG_NOW = "now";
+    private String TAG_WEEK = "week";
+    private String TAG_MONTH = "month";
+    private String TAG_NODATAMSG = "No data yet. Start Using the app.";
+    private LineChart mchart;
+    private String time = TAG_NOW;
+    private String type = ConstantData.TAG_SPEED;
+    DataList data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.results_display);
+        setContentView(layout.results_display);
 
-        //build a default graph from session
-        buildPlot(data = Controller.eventGetPoints(), setPlot);
+        customizeChart();
+        executionMenu();
 
         //Listeners for filter buttons
-        currBtn = (Button) findViewById(R.id.currBtn);
+        Button currBtn = (Button) findViewById(id.currBtn);
         currBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                plot.clear();
-                buildPlot(data = Controller.eventGetPoints(), setPlot);
-                plot.redraw();
-
+                time = TAG_NOW;
+                executionMenu();
             }
         });
 
-        Button weekBtn = (Button) findViewById(R.id.weekBtn);
+        Button weekBtn = (Button) findViewById(id.weekBtn);
         weekBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                plot.clear();
-                buildPlot(data = Controller.eventGetFilteredPoints((int) ((System.currentTimeMillis() / 1000) - 300), (int) (System.currentTimeMillis() / 1000)) , setPlot);
-                plot.redraw();
-
+                time = TAG_WEEK;
+                executionMenu ();
             }
         });
 
-        Button monthBtn = (Button) findViewById(R.id.monthBtn);
+        Button monthBtn = (Button) findViewById(id.monthBtn);
         monthBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                plot.clear();
-                buildPlot(data = Controller.eventGetFilteredPoints((int) System.currentTimeMillis() / 1000, (int) System.currentTimeMillis() / 1000 - 262800), setPlot);
-                plot.redraw();
+                time = TAG_MONTH;
+                executionMenu ();
+            }
+        });
 
+        Button speedBtn = (Button) findViewById(id.speedBtn);
+        speedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = ConstantData.TAG_SPEED;
+                executionMenu ();
+            }
+        });
+        Button brakeBtn = (Button) findViewById(id.brakeBtn);
+        brakeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = ConstantData.TAG_BRAKE;
+                executionMenu ();
+            }
+        });
+        Button fuelBtn = (Button) findViewById(id.fuelBtn);
+        fuelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = ConstantData.TAG_FUEL;
+                executionMenu ();
+            }
+        });
+        Button distractionBtn = (Button) findViewById(id.distractionBtn);
+        distractionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                type = ConstantData.TAG_DISTRACTION;
+                executionMenu ();
             }
         });
 
     }
 
-    /**
-     * Builds the actual graph
-     *
-     * @param data
-     */
-
-    private void buildPlot(DataList data, String s){
-
-        //Android Plot
-        plot = (XYPlot) findViewById(R.id.Graph);
-
-        //Plotting Variables
-        xMin = 0;
-        xMax = data.getMaxTime();
-        xRange = xMax / 5;
-        yMin = 0;
-        yMax = 100;
-        yRange = yMax / 5;
-
-        //Domain: X-Axis
-        plot.setDomainStep(XYStepMode.INCREMENT_BY_VAL, xRange);
-        plot.setDomainBoundaries(xMin, xMax, BoundaryMode.FIXED);
-
-        //Range: Y-Axis
-        plot.setRangeStep(XYStepMode.INCREMENT_BY_VAL, yRange);
-        plot.setRangeBoundaries(yMin, yMax + yRange, BoundaryMode.FIXED);
-
-        if (s == "speed"){
-            buildSpeedPlot(data);
-
-        }
-        else if (s == "fuel"){
-            buildFuelPlot(data);
-
-        }
-        else if (s == "distraction"){
-            buildDistractionPlot(data);
-
+    private void executionMenu () {
+        mchart.clear();
+        if (time.equals(TAG_WEEK)) {
+            data = Controller.eventGetFilteredPoints((int) ((System.currentTimeMillis() / 1000) - 604800), (int) (System.currentTimeMillis() / 1000));
+        } else if (time.equals(TAG_MONTH)) {
+            data = Controller.eventGetFilteredPoints((int) ((System.currentTimeMillis() / 1000) - 2628000), (int) (System.currentTimeMillis() / 1000));
         } else {
-            buildFullPlot(data);
-
-       }
-
-    }
-
-    /**
-     * builds a graph for the
-     * speed score
-     *
-     * @param data sets values
-     */
-
-    private void buildSpeedPlot(DataList data){
-
-        //set plot UI description
-        plot.getRangeLabelWidget().setText("Speed (km/h)");
-        plot.getTitleWidget().setText("Speed per Measurement");
-
-        //Initiate Series to Draw
-        XYSeries speedSeries = new SimpleXYSeries(
-                (data.getPlottableSpeed()),
-                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-                "Speed");
-
-        //Initiate the formatters for the lines.
-        // Create a formatter to use for drawing a series using LineAndPointRenderer
-        // and configure it from xml:
-        LineAndPointFormatter speedFormat = new LineAndPointFormatter();
-        speedFormat.setPointLabelFormatter(new PointLabelFormatter());
-        speedFormat.configure(getApplicationContext(),
-                R.xml.lpf_speed);
-
-        //Add series to the plot with the correct formats.
-        plot.clear();
-        plot.addSeries(speedSeries, speedFormat);
-
-    }
-
-    /**
-     * builds a graph for the
-     * fuel consumption score
-     *
-     * @param data sets values
-     */
-
-    private void buildFuelPlot(DataList data){
-
-        //set Plot UI description
-        plot.getRangeLabelWidget().setText("Fuel Consumption");
-        plot.getTitleWidget().setText("Liters per Measurement");
-
-        //Initiate Series to Draw
-        XYSeries fuelConsumptionSeries = new SimpleXYSeries(
-                data.getPlottableFuelConsumption(),
-                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-                "Fuel Consumption");
-
-        //Initiate the formatters for the lines.
-        // Create a formatter to use for drawing a series using LineAndPointRenderer
-        // and configure it from xml:
-        LineAndPointFormatter fuelConsumptionFormat = new LineAndPointFormatter();
-        fuelConsumptionFormat.setPointLabelFormatter(new PointLabelFormatter());
-        fuelConsumptionFormat.configure(getApplicationContext(),
-                R.xml.lfp_fuelconsumption);
-
-        //Add series to the plot with the correct formats.
-        plot.clear();
-        plot.addSeries(fuelConsumptionSeries, fuelConsumptionFormat);
-
-    }
-
-    /**
-     * builds a graph for the
-     * driver distraction score
-     *
-     * @param data sets values
-     */
-
-    private void buildDistractionPlot(DataList data){
-
-        //set plot UI description
-        plot.getRangeLabelWidget().setText("Driver Distraction");
-        plot.getTitleWidget().setText("Distraction per Measurement");
-
-        //Initiate Series to Draw
-        XYSeries driverDistractionSeries = new SimpleXYSeries(
-                data.getPlottableDriverDistraction(),
-                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-                "DDL");
-
-        //Initiate the formatters for the lines.
-        // Create a formatter to use for drawing a series using LineAndPointRenderer
-        // and configure it from xml:
-        LineAndPointFormatter driverDistractionFormat = new LineAndPointFormatter();
-        driverDistractionFormat.setPointLabelFormatter(new PointLabelFormatter());
-        driverDistractionFormat.configure(getApplicationContext(),
-                R.xml.lpf_driverdistractionlevel);
-
-        //Add series to the plot with the correct formats.
-        plot.clear();
-        plot.addSeries(driverDistractionSeries, driverDistractionFormat);
-
-    }
-
-    /**
-     * builds a graph with points from all
-     * measurement
-     *
-     * @param data sets values
-     */
-    private void buildFullPlot(DataList data) {
-
-        //Initiate Series to Draw
-        XYSeries speedSeries = new SimpleXYSeries(
-                data.getPlottableSpeed(),
-                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-                "S");
-
-        XYSeries fuelConsumptionSeries = new SimpleXYSeries(
-                data.getPlottableFuelConsumption(),
-                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-                "FC");
-
-        XYSeries brakeSeries = new SimpleXYSeries(
-                data.getPlottableBrake(),
-                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-                "B");
-
-        XYSeries driverDistractionSeries = new SimpleXYSeries(
-                data.getPlottableDriverDistraction(),
-                SimpleXYSeries.ArrayFormat.XY_VALS_INTERLEAVED, // Y_VALS_ONLY means use the element index as the x value
-                "DDL");
-
-        //Initiate the formatters for the lines.
-        // Create a formatter to use for drawing a series using LineAndPointRenderer
-        // and configure it from xml:
-        LineAndPointFormatter speedFormat = new LineAndPointFormatter();
-        speedFormat.setPointLabelFormatter(new PointLabelFormatter());
-        speedFormat.configure(getApplicationContext(),
-                R.xml.lpf_speed);
-
-        LineAndPointFormatter fuelConsumptionFormat = new LineAndPointFormatter();
-        fuelConsumptionFormat.setPointLabelFormatter(new PointLabelFormatter());
-        fuelConsumptionFormat.configure(getApplicationContext(),
-                R.xml.lfp_fuelconsumption);
-
-        LineAndPointFormatter brakeFormat = new LineAndPointFormatter();
-        brakeFormat.setPointLabelFormatter(new PointLabelFormatter());
-        brakeFormat.configure(getApplicationContext(),
-                R.xml.lpf_brake);
-
-        LineAndPointFormatter driverDistractionFormat = new LineAndPointFormatter();
-        driverDistractionFormat.setPointLabelFormatter(new PointLabelFormatter());
-        driverDistractionFormat.configure(getApplicationContext(),
-                R.xml.lpf_driverdistractionlevel);
-
-        //Add series to the plot with the correct formats.
-        plot.clear();
-        plot.addSeries(speedSeries, speedFormat);
-        plot.addSeries(fuelConsumptionSeries, fuelConsumptionFormat);
-        plot.addSeries(brakeSeries, brakeFormat);
-        plot.addSeries(driverDistractionSeries, driverDistractionFormat);
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.action_bar, menu);
-        return true;
-    }
-
-    /**
-     * updates the menu with new values
-     * in this case it sets the visibility
-     *
-     * @param menu
-     * @return true
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-
-        if (setPlot == "speed") {
-            menu.findItem(R.id.menuSpeedOption).setVisible(false);
-            menu.findItem(R.id.menuFuel_consumptionOption).setVisible(true);
-            menu.findItem(R.id.menuDriverDistractionOption).setVisible(true);
-            menu.findItem(R.id.menuPointsOption).setVisible(true);
+            data = Session.currentPoints;
         }
-        else if(setPlot == "fuel"){
-            menu.findItem(R.id.menuSpeedOption).setVisible(true);
-            menu.findItem(R.id.menuFuel_consumptionOption).setVisible(false);
-            menu.findItem(R.id.menuDriverDistractionOption).setVisible(true);
-            menu.findItem(R.id.menuPointsOption).setVisible(true);
-        }
-        else if (setPlot == "distraction") {
-            menu.findItem(R.id.menuSpeedOption).setVisible(true);
-            menu.findItem(R.id.menuFuel_consumptionOption).setVisible(true);
-            menu.findItem(R.id.menuDriverDistractionOption).setVisible(false);
-            menu.findItem(R.id.menuPointsOption).setVisible(true);
-        } else {
-            menu.findItem(R.id.menuSpeedOption).setVisible(true);
-            menu.findItem(R.id.menuFuel_consumptionOption).setVisible(true);
-            menu.findItem(R.id.menuDriverDistractionOption).setVisible(true);
-            menu.findItem(R.id.menuPointsOption).setVisible(false);
-        }
-
-        super.onPrepareOptionsMenu(menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle presses on the action bar items
-        //clears and repaints before every change
-        switch (item.getItemId()) {
-
-            case R.id.menuSpeedOption:
-                setPlot = "speed";
-                currBtn.callOnClick();
-                return true;
-
-            case R.id.menuFuel_consumptionOption:
-                setPlot = "fuel";
-                currBtn.callOnClick();
-                return true;
-
-            case R.id.menuDriverDistractionOption:
-                setPlot = "distraction";
-                currBtn.callOnClick();
-                return true;
-
-            case R.id.menuPointsOption:
-                setPlot = "";
-                currBtn.callOnClick();
-                return true;
-
+        switch (type) {
+            case ConstantData.TAG_BRAKE:
+                addBrakeData();
+                break;
+            case ConstantData.TAG_FUEL:
+                addFuelData();
+                break;
+            case ConstantData.TAG_DISTRACTION:
+                addDistractionData();
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                addSpeedData();
+                break;
         }
     }
 
+    private void customizeChart(){
+        //Customize the chart
+        LinearLayout mainLayout = (LinearLayout) findViewById(id.graphLayout);
+        mchart = new LineChart(this);
+        mainLayout.addView(mchart);
+        mchart.setDescription("");
+        mchart.setNoDataTextDescription("No Data for the Moment.");
+
+        mchart.setDragEnabled(false);
+        mchart.setClickable(false);
+        mchart.setScaleEnabled(false);
+        mchart.setDrawGridBackground(true);
+        mchart.setPinchZoom(false);
+        mchart.setTouchEnabled(false);
+
+        mchart.setBackgroundColor(getResources().getColor(R.color.menuViewCenter));
+
+        Legend leg = mchart.getLegend();
+        leg.setForm(Legend.LegendForm.LINE);
+        leg.setTextColor(Color.WHITE);
+        leg.setTextSize(15f);
+
+        XAxis xax = mchart.getXAxis();
+        xax.setTextColor(Color.WHITE);
+        xax.setDrawGridLines(true);
+        xax.setAvoidFirstLastClipping(true);
+
+        YAxis yax = mchart.getAxisLeft();
+        yax.setTextColor(Color.WHITE);
+        yax.setAxisMaxValue(110);
+        yax.setDrawGridLines(true);
+        YAxis yaxR = mchart.getAxisRight();
+        yaxR.setEnabled(false);
+    }
+
+    private void addSpeedData () {
+
+        HashMap<String,ArrayList> map = data.getPlottableSpeed(time);
+        ArrayList<String> xVals = map.get("xVals");
+        ArrayList<Entry> yVals = map.get("yVals");
+        LineDataSet dataset = createSpeedSet(yVals);
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(dataset);
+        LineData data;
+        if (!xVals.isEmpty())
+             data =  new LineData(xVals,dataSets);
+        else {
+            data = new LineData();
+            Toast.makeText(this, TAG_NODATAMSG, Toast.LENGTH_LONG).show();
+        }
+        mchart.setData(data);
+    }
+
+    private LineDataSet createSpeedSet (ArrayList<Entry> yVals) {
+        LineDataSet set = new LineDataSet(yVals, "Speed");
+        set.setDrawCubic(true);
+        set.setCubicIntensity(0.2f);
+        set.setColor(getResources().getColor(R.color.speedChart));
+        set.setCircleColor(getResources().getColor(R.color.speedChart));
+        set.setLineWidth(2f);
+        set.setCircleSize(0.2f);
+        set.setFillColor(getResources().getColor(R.color.speedChart));
+        set.setDrawValues(false);
+        return set;
+    }
+
+    private void addBrakeData () {
+        HashMap<String,ArrayList> map = data.getPlottableBrake(time);
+        ArrayList<String> xVals = map.get("xVals");
+        ArrayList<Entry> yVals = map.get("yVals");
+        LineDataSet dataset = createBreakSet(yVals);
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(dataset);
+        LineData data;
+        if (!xVals.isEmpty())
+            data =  new LineData(xVals,dataSets);
+        else {
+            data = new LineData();
+            Toast.makeText(this, TAG_NODATAMSG, Toast.LENGTH_LONG).show();
+        }
+        mchart.setData(data);
+    }
+
+    private LineDataSet createBreakSet (ArrayList<Entry> yVals) {
+        LineDataSet set = new LineDataSet(yVals, "Brake");
+        set.setDrawCubic(true);
+        set.setCubicIntensity(0.2f);
+        set.setColor(getResources().getColor(R.color.brakeChart));
+        set.setCircleColor(getResources().getColor(R.color.brakeChart));
+        set.setLineWidth(2f);
+        set.setCircleSize(0.2f);
+        set.setFillColor(getResources().getColor(R.color.brakeChart));
+        set.setDrawValues(false);
+        return set;
+    }
+
+    private void addFuelData () {
+        HashMap<String,ArrayList> map = data.getPlottableFuelConsumption(time);
+        ArrayList<String> xVals = map.get("xVals");
+        ArrayList<Entry> yVals = map.get("yVals");
+        LineDataSet dataset = createFuelSet(yVals);
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(dataset);
+        LineData data;
+        if (!xVals.isEmpty())
+            data =  new LineData(xVals,dataSets);
+        else {
+            data = new LineData();
+            Toast.makeText(this, TAG_NODATAMSG, Toast.LENGTH_LONG).show();
+        }
+        mchart.setData(data);
+    }
+
+    private LineDataSet createFuelSet (ArrayList<Entry> yVals) {
+        LineDataSet set = new LineDataSet(yVals, "Fuel");
+        set.setDrawCubic(true);
+        set.setCubicIntensity(0.2f);
+        set.setColor(getResources().getColor(R.color.fuelChart));
+        set.setCircleColor(getResources().getColor(R.color.fuelChart));
+        set.setLineWidth(2f);
+        set.setCircleSize(0.2f);
+        set.setFillColor(getResources().getColor(R.color.fuelChart));
+        set.setDrawValues(false);
+        return set;
+    }
+
+    private void addDistractionData () {
+        HashMap<String,ArrayList> map = data.getPlottableDriverDistraction(time);
+        ArrayList<String> xVals = map.get("xVals");
+        ArrayList<Entry> yVals = map.get("yVals");
+        LineDataSet dataset = createDistractionSet(yVals);
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(dataset);
+        LineData data;
+        if (!xVals.isEmpty())
+            data =  new LineData(xVals,dataSets);
+        else {
+            data = new LineData();
+            Toast.makeText(this, TAG_NODATAMSG, Toast.LENGTH_LONG).show();
+        }
+        mchart.setData(data);
+    }
+
+    private LineDataSet createDistractionSet (ArrayList<Entry> yVals) {
+        LineDataSet set = new LineDataSet(yVals, "Distraction");
+        set.setDrawCubic(true);
+        set.setCubicIntensity(0.2f);
+        set.setColor(getResources().getColor(R.color.distractionChart));
+        set.setCircleColor(getResources().getColor(R.color.distractionChart));
+        set.setLineWidth(3f);
+        set.setCircleSize(0.2f);
+        set.setFillColor(getResources().getColor(R.color.distractionChart));
+        set.setDrawValues(false);
+        return set;
+    }
 }

@@ -19,6 +19,7 @@ import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
+import group8.com.application.UI.ChartActivity;
 import group8.com.application.UI.DrivingView.DrivingView;
 import group8.com.application.UI.MedalsView;
 import group8.com.application.UI.RankingView;
@@ -55,7 +56,7 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
                 Controller.startGrading();
 
                 Intent intent = new Intent(v.getContext(), DrivingView.class);
-                startActivityForResult(intent, 0);
+                startActivity(intent);
                 getActivity().finish();
                 break;
         }
@@ -71,17 +72,21 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
+            case R.id.menuViewMenuBarGraph:
+                Intent barInt = new Intent(getView().getContext(), ChartActivity.class);
+                startActivity(barInt);
+                return true;
             case R.id.menuViewMenuRanking:
                 Intent rankingInt = new Intent(getView().getContext(), RankingView.class);
-                startActivityForResult(rankingInt, 0);
+                startActivity(rankingInt);
                 return true;
             case R.id.menuViewMenuGraphs:
                 Intent graphsInt = new Intent(getView().getContext(), ResultsView.class);
-                startActivityForResult(graphsInt, 0);
+                startActivity(graphsInt);
                 return true;
             case R.id.menuViewMenuMedals:
                 Intent intentMedals = new Intent(getView().getContext(), MedalsView.class);
-                startActivityForResult(intentMedals, 0);
+                startActivity(intentMedals);
                 return true;
 
             case R.id.menuViewMenuLogout:

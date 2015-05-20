@@ -1,81 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    android:background="#b73e3e3e">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-
-    <com.androidplot.xy.XYPlot
-        android:id="@+id/Graph"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        androidPlot.title="Points per Measurement"
-        androidPlot.domainLabel="Time(intervals)"
-        androidPlot.rangeLabel="Points"
-        androidPlot.titleWidget.labelPaint.textSize="@dimen/title_font_size"
-        androidPlot.domainLabelWidget.labelPaint.textSize="@dimen/domain_label_font_size"
-        androidPlot.rangeLabelWidget.labelPaint.textSize="@dimen/range_label_font_size"
-        androidPlot.graphWidget.marginTop="20dp"
-        androidPlot.graphWidget.marginLeft="30dp"
-        androidPlot.graphWidget.marginBottom="25dp"
-        androidPlot.graphWidget.marginRight="10dp"
-        androidPlot.graphWidget.rangeLabelPaint.textSize="@dimen/range_tick_label_font_size"
-        androidPlot.graphWidget.rangeOriginLabelPaint.textSize="@dimen/range_tick_label_font_size"
-        androidPlot.graphWidget.domainLabelPaint.textSize="@dimen/domain_tick_label_font_size"
-        androidPlot.graphWidget.domainOriginLabelPaint.textSize="@dimen/domain_tick_label_font_size"
-        androidPlot.legendWidget.textPaint.textSize="@dimen/legend_text_font_size"
-        androidPlot.legendWidget.iconSizeMetrics.heightMetric.value="15dp"
-        androidPlot.legendWidget.iconSizeMetrics.widthMetric.value="15dp"
-        androidPlot.legendWidget.heightMetric.value="25dp"
-        androidPlot.legendWidget.positionMetrics.anchor="right_bottom"
-
-
-        android:layout_below="@+id/currBtn" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/current"
-        android:id="@+id/currBtn"
-        android:layout_alignTop="@+id/weekBtn"
-        android:layout_toStartOf="@+id/weekBtn" />
+        android:orientation="horizontal"
+        android:background="@drawable/menu_view_title"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:background="@drawable/rounded_button_w_shadow"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="@string/current"
+            android:id="@+id/currBtn"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_w_shadow"
+            android:padding="5dp"
+            android:text="@string/one_week"
+            android:id="@+id/weekBtn"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_w_shadow"
+            android:padding="5dp"
+            android:text="@string/one_month"
+            android:id="@+id/monthBtn"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+    </LinearLayout>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/graphLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/menuViewCenter"
+        android:orientation="vertical"
+        android:layout_weight="0.6">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/one_week"
-        android:id="@+id/weekBtn"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/monthBtn" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/one_month"
-        android:id="@+id/monthBtn"
-        android:layout_above="@+id/Graph"
-        android:layout_alignEnd="@+id/Graph" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Filters:"
-        android:id="@+id/filter_text"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/Graph"
-        android:layout_toStartOf="@+id/currBtn"
-        android:textAlignment="center" />
-
-</RelativeLayout>
-
-    <!--androidPlot.graphWidget.gridLinePaint.color="#000000"-->
+        android:orientation="horizontal"
+        android:background="@drawable/menu_view_title"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp">
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:background="@drawable/rounded_button_w_shadow"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="Speed"
+            android:id="@+id/speedBtn"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_w_shadow"
+            android:padding="5dp"
+            android:text="Brake"
+            android:id="@+id/brakeBtn"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_w_shadow"
+            android:padding="5dp"
+            android:text="Fuel"
+            android:id="@+id/fuelBtn"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button_w_shadow"
+            android:padding="5dp"
+            android:text="Distraction"
+            android:id="@+id/distractionBtn"/>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" >
+        </Space>
+    </LinearLayout>
+</LinearLayout>

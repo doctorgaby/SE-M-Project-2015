@@ -26,9 +26,10 @@ public abstract class MeasurementFactory {
     private static int brake, distractionLevel;
 
     /**
-     * Start measuring.
+     * Initialize the measurements and connection to the car. The measurements have, however, not been started.
+     * To start the measurements call the method startMeasurements().
      * */
-    public static void initMeasurements() {
+    protected static void initMeasurements() {
 
         if(measurementTask == null) {
 
@@ -100,22 +101,19 @@ public abstract class MeasurementFactory {
 
     }
 
+    /**
+     * Start measuring.
+     * */
     protected static void startMeasurements() {
-
         running = true;
-
     }
-
 
     /**
      * Stop measuring.
      * */
     protected static void pauseMeasurements() {
-
         running = false;
-
     }
-
 
     /**
      * Check if the MeasurementFactory is measuring.
@@ -123,23 +121,41 @@ public abstract class MeasurementFactory {
      * @return true if the MeasurementFactory is measuring, and false if it is not.
      * */
     protected static boolean isMeasuring() {
-
         return running;
-
     }
 
+    /**
+     * Get the current speed.
+     *
+     * @return the current speed level of the car, a value from 0 - 300(km/h).
+     * */
     protected static double getSpeed() {
         return speed;
     }
 
+    /**
+     * Get the current fuel consumption.
+     *
+     * @return the current fuel consumption, a value from 0.0 - 3212.75(Litres per hour).
+     * */
     protected static double getFuelConsumption() {
         return fuelConsumption;
     }
 
+    /**
+     * Get the current brake status.
+     *
+     * @return 0 if the brake is in released state, and 1 if it is in pressed state.
+     * */
     protected static int getBrake() {
         return brake;
     }
 
+    /**
+     * Get the current distraction level of the driver.
+     *
+     * @return a value from 1 - 4, with 1 being no distraction, and 4 being very high distraction.
+     * */
     protected static int getDistractionLevel() {
         return distractionLevel;
     }

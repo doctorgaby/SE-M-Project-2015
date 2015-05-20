@@ -289,7 +289,7 @@ public abstract class DBHandler {
                 Integer speed = c.getInt(ConstantData.TAG_SPEED);
                 Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
                 list.setSpeed(measuredAt, speed);
-                Log.d("Speed number: " + i, "value: " + measuredAt);
+                //Log.d("Speed number: " + i, "value: " + measuredAt);
             }
             JSONArray brakeArray = json.getJSONArray(ConstantData.TAG_BRAKE);
             for (int i = 0; i < brakeArray.length(); i++) {
@@ -298,7 +298,7 @@ public abstract class DBHandler {
                 Integer brake = c.getInt(ConstantData.TAG_BRAKE);
                 Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
                 list.setBrake(measuredAt, brake);
-                Log.d("Brake number: " + i, "value: " + measuredAt);
+                //Log.d("Brake number: " + i, "value: " + measuredAt);
             }
             JSONArray fuelArray = json.getJSONArray(ConstantData.TAG_FUEL);
             for (int i = 0; i < fuelArray.length(); i++) {
@@ -307,7 +307,7 @@ public abstract class DBHandler {
                 Integer fuel = c.getInt(ConstantData.TAG_FUEL);
                 Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
                 list.setFuelConsumption(measuredAt, fuel);
-                Log.d("Fuel number: " + i, "value: " + measuredAt);
+                //Log.d("Fuel number: " + i, "value: " + measuredAt);
             }
             JSONArray distractionArray = json.getJSONArray(ConstantData.TAG_DISTRACTION);
             for (int i = 0; i < distractionArray.length(); i++) {
@@ -316,7 +316,7 @@ public abstract class DBHandler {
                 Integer distraction = c.getInt(ConstantData.TAG_DISTRACTION);
                 Integer measuredAt = c.getInt(ConstantData.TAG_MEASUREDAT);
                 list.setDriverDistractionLevel(measuredAt, distraction);
-                Log.d("Distraction number: " + i, "value: " + measuredAt);
+                //Log.d("Distraction number: " + i, "value: " + measuredAt);
             }
         } catch (JSONException e) {
             Log.e("DBHANDLER ERROR", "ERROR WITH THE JSON PARSER. " + e.toString());
