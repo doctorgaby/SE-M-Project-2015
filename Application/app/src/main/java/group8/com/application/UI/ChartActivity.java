@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Window;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
