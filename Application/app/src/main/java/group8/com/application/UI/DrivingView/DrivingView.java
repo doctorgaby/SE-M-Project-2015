@@ -40,13 +40,19 @@ public class DrivingView extends Activity {
             }
         });
 
+        // The context is used to open the alert intents
         context = this.getBaseContext();
         startTimer();
 
     }
 
+    /**
+     * Start the timer, used to evaluate the alerts.
+     * */
     private void startTimer() {
 
+        // The timer runs for one second. When the timer is finished, it evaluates the alerts, and displays them if needed.
+        // When the timer finishes, it restarts.
         alertTimer = new CountDownTimer(1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -83,6 +89,7 @@ public class DrivingView extends Activity {
                 }
 
                 alertTimer.start();
+
             }
 
         }.start();
