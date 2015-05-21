@@ -68,22 +68,25 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
         switch(v.getId()) {
             case R.id.startButton:
                 Controller.startGrading();
-
                 Intent intent = new Intent(v.getContext(), DrivingView.class);
                 startActivity(intent);
                 getActivity().finish();
+                break;
             case R.id.graphsButton:
                 Intent intent2 = new Intent(v.getContext(),ResultsView.class);
-                startActivityForResult(intent2, 0);
+                startActivity(intent2);
+                break;
             case R.id.rankingsButton:
                 Intent intent3 = new Intent(v.getContext(),RankingView.class);
-                startActivityForResult(intent3, 0);
+                startActivity(intent3);
+                break;
             case R.id.achievementsButton:
                 Intent intent4 = new Intent(v.getContext(),MedalsView.class);
-                startActivityForResult(intent4, 0);
+                startActivity(intent4);
+                break;
             case R.id.trendButton:
                 Intent intent5 = new Intent(v.getContext(),ChartActivity.class);
-                startActivityForResult(intent5, 0);
+                startActivity(intent5);
                 break;
         }
     }
