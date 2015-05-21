@@ -185,8 +185,8 @@ public class Controller {
         return DBHandler.getFinalScore(Session.getUserName());
     }
 
-    public static boolean getUpdatedStatus(String s){
-        return MedalsLogic.setUpdatedMap(s);
+    public static boolean updateStatus(String s, Context context){
+        return MedalsLogic.medalStatus(s, context);
     }
 
     public static void eventSetMeasuremtents () {

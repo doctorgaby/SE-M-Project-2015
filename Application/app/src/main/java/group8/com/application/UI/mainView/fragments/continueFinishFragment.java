@@ -3,6 +3,7 @@ package group8.com.application.UI.mainView.fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import group8.com.application.Application.Controller;
+import group8.com.application.Application.MedalsLogic;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
@@ -69,6 +71,10 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
             case R.id.finishButton:
                 Intent graphInt = new Intent(getActivity(), ChartActivity.class);
                 startActivity(graphInt);
+                Controller.updateStatus(ConstantData.medalID[0],v.getContext());
+                Controller.updateStatus(ConstantData.medalID[1],v.getContext());
+                Controller.updateStatus(ConstantData.medalID[2],v.getContext());
+                Controller.updateStatus(ConstantData.medalID[3],v.getContext());
                 Controller.finishGrading(true);
                 getActivity().finish();
                 break;
