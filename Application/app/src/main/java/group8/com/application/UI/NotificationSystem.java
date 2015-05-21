@@ -158,6 +158,21 @@ public class NotificationSystem{
      */
     private static String evaluateList(){
 
+/*
+        data = Controller.eventGetPoints();
+        speedScore = data.getMaxSpeed();
+        brakeScore = data.getMaxBrake();
+        DDLScore = data.getMaxDriverDistractionLevel();
+        fuelScore = data.getMaxFuelConsumption();
+*/
+/*  Session test code
+
+        speedScore = Session.getSpeedScore();
+        brakeScore = Session.getBrakeScore();
+        DDLScore = Session.getDriverDistractionLevelScore();
+        fuelScore = Session.getFuelConsumptionScore();
+*/
+
         if (!checker(speedScore, brakeScore, DDLScore, fuelScore)) {
 
             isPositive = false;

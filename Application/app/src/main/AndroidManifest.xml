@@ -44,7 +44,7 @@
             
         <activity
             android:name=".UI.MedalsView"
-            android:label="Medals"></activity>
+            android:label="Achievements"></activity>
 
 
         <activity android:name=".alert.BrakesActivity" />

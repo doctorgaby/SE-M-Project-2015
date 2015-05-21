@@ -1,6 +1,7 @@
 package group8.com.application.UI;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,9 +27,7 @@ import group8.com.application.Model.Medal;
 import group8.com.application.R;
 import group8.com.application.UI.mainView.menuView;
 
-/**
- * Created by Kristiyan on 5/12/2015.
- */
+
 public class MedalsView extends Activity implements AbsListView.OnScrollListener{
 
     List medals;
@@ -71,23 +71,41 @@ public class MedalsView extends Activity implements AbsListView.OnScrollListener
 
         final Dialog dialog = new Dialog(this);
 
-        dialog.setContentView(R.layout.custom_dialog);
+        dialog.setContentView(R.layout.dialog_layout);
         dialog.setTitle(title);
 
-        final TextView editText = (TextView)dialog.findViewById(R.id.dialog_text);
+        final TextView editText = (TextView)dialog.findViewById(R.id.textDialog);
+        ImageView dialogImage = (ImageView) dialog.findViewById(R.id.imageDialog);
 
         for (int i = 0; i <= 3;i++) {
             if (title == ConstantData.medalName[i])
                 if (state) {
+
+                    if(title.equals(ConstantData.medalName[0])){
+                        dialogImage.setImageResource(R.drawable.medal_brakes);
+                    }
+                    if(title.equals(ConstantData.medalName[1])){
+                        dialogImage.setImageResource(R.drawable.medal_distraction);
+                    }
+                    if(title.equals(ConstantData.medalName[2])){
+                        dialogImage.setImageResource(R.drawable.medal_speed);
+                    }
+                    if(title.equals(ConstantData.medalName[3])){
+                        dialogImage.setImageResource(R.drawable.medal_fuel);
+                    }
+
                     editText.setText("You have unlocked this medal!");
+
                 } else {
+
+                    dialogImage.setImageResource(R.drawable.locked);
                     editText.setText("Score 100 points in " + name[i] + " to unlock this medal");
                 }
         }
 
-        Button save = (Button)dialog.findViewById(R.id.ok_dialog);
+        Button ok = (Button)dialog.findViewById(R.id.okButton);
 
-        save.setOnClickListener(new View.OnClickListener() {
+        ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
@@ -103,7 +121,7 @@ public class MedalsView extends Activity implements AbsListView.OnScrollListener
         SharedPreferences.Editor editor = getSharedPreferences("Save_Medal_Data", 0).edit();
         SharedPreferences prefs = getSharedPreferences("Save_Medal_Data", 0);
 
-        if(Controller.getUpdatedStatus(s) == true) {
+        if(Controller.getUpdatedStatus(s)) {
             editor.putBoolean(Session.getUserName() + s, true);
             editor.apply();
         }
