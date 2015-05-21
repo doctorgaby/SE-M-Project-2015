@@ -69,12 +69,17 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
                 getActivity().finish();
                 break;
             case R.id.finishButton:
+
+//                Controller.eventGetMedalToast(v.getContext(), customLayout());
+
                 Intent graphInt = new Intent(getActivity(), ChartActivity.class);
                 startActivity(graphInt);
-                Controller.updateStatus(ConstantData.medalID[0],v.getContext());
-                Controller.updateStatus(ConstantData.medalID[1],v.getContext());
-                Controller.updateStatus(ConstantData.medalID[2],v.getContext());
-                Controller.updateStatus(ConstantData.medalID[3],v.getContext());
+
+               Controller.updateStatus(ConstantData.medalID[0],v.getContext());
+               Controller.updateStatus(ConstantData.medalID[1],v.getContext());
+               Controller.updateStatus(ConstantData.medalID[2],v.getContext());
+               Controller.updateStatus(ConstantData.medalID[3],v.getContext());
+
                 Controller.finishGrading(true);
                 getActivity().finish();
                 break;
@@ -135,6 +140,13 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+    }
+
+    private View customLayout(){
+
+        LayoutInflater myInflator = getActivity().getLayoutInflater();
+        return myInflator.inflate(R.layout.toast_layout, (ViewGroup) getView().findViewById(R.id.toast_layout_root));
 
     }
 

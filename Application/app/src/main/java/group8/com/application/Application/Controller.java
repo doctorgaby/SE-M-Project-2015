@@ -1,5 +1,6 @@
 package group8.com.application.Application;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -181,11 +182,19 @@ public class Controller {
         return NotificationSystem.customToast(context, view);
     }
 
+    public static Toast eventGetMedalToast(Context context, View view){
+        return NotificationSystem.medalUpdateMessage(context, view);
+    }
+
     public static HashMap<String, Integer> eventGetFinalPoints (){
         return DBHandler.getFinalScore(Session.getUserName());
     }
 
     public static boolean updateStatus(String s, Context context){
+        return MedalsLogic.medalStatusUpdate(s, context);
+    }
+
+    public static boolean getMedalStatus(String s, Context context){
         return MedalsLogic.medalStatus(s, context);
     }
 

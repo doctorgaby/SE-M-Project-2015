@@ -1,8 +1,11 @@
 package group8.com.application.UI;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -10,6 +13,7 @@ import java.util.HashMap;
 import group8.com.application.Application.Controller;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
+import group8.com.application.Model.DataList;
 import group8.com.application.R;
 
 public class NotificationSystem{
@@ -21,6 +25,10 @@ public class NotificationSystem{
     private static int fuelScore;
     private static int avg = 50;
     private static boolean isPositive;
+    private static boolean speed = false;
+    private static boolean DDl = false;
+    private static boolean fuel = false;
+    private static boolean brake = false;
 
     public static Toast customToast(Context context, View view) {
 
@@ -42,7 +50,7 @@ public class NotificationSystem{
         toast.setDuration(duration);
         toast.setView(view);
 
-        TextView myMessage = (TextView)view.findViewById(R.id.text);
+        TextView myMessage = (TextView)view.findViewById(R.id.txt);
         myMessage.setText(setMessage());
 
         ImageView myImage = (ImageView)view.findViewById(R.id.img);
@@ -55,34 +63,33 @@ public class NotificationSystem{
         return toast;
 
     }
-/*  >>>>>>>>>>>>> WORK IN PROGRESS <<<<<<<<<<<<<<<<<<<<<
 
     public static Toast medalUpdateMessage(Context context, View view){
 
-        int speedScore = Session.getSpeedScore();
-        int brakeScore = Session.getBrakeScore();
-        int DDLScore = Session.getDriverDistractionLevelScore();
-        int fuelScore = Session.getFuelConsumptionScore();
-
-        int duration = Toast.LENGTH_LONG;
+        int duration = Toast.LENGTH_SHORT;
 
         Toast toast = new Toast(context);
         toast.setDuration(duration);
         toast.setView(view);
 
-        TextView myMessage = (TextView)view.findViewById(R.id.text);
-        myMessage.setText(setMessage());
+
+        TextView myMessage = (TextView)view.findViewById(R.id.txt);
+        myMessage.setText(setMedalMessage(context));
 
         ImageView myImage = (ImageView)view.findViewById(R.id.img);
-        setImage(myImage, getPosition());
+        setMedalImage(myImage, evaluateMedal(context));
+
+        if (evaluateMedal(context) != "terminate") {
+            toast.show();
+        }
+
+        return toast;
 
     }
 
-    >>>>>>>>>>>>> WORK IN PROGRESS <<<<<<<<<<<<<<<<<<<<<
-*/
-    private static CharSequence setMedalMessage(){
+    private static CharSequence setMedalMessage(Context context){
 
-        CharSequence msg = message(evaluateList(), getPosition());
+        CharSequence msg = medalMessage(evaluateMedal(context));
         return msg;
 
     }
@@ -158,21 +165,6 @@ public class NotificationSystem{
      */
     private static String evaluateList(){
 
-/*
-        data = Controller.eventGetPoints();
-        speedScore = data.getMaxSpeed();
-        brakeScore = data.getMaxBrake();
-        DDLScore = data.getMaxDriverDistractionLevel();
-        fuelScore = data.getMaxFuelConsumption();
-*/
-/*  Session test code
-
-        speedScore = Session.getSpeedScore();
-        brakeScore = Session.getBrakeScore();
-        DDLScore = Session.getDriverDistractionLevelScore();
-        fuelScore = Session.getFuelConsumptionScore();
-*/
-
         if (!checker(speedScore, brakeScore, DDLScore, fuelScore)) {
 
             isPositive = false;
@@ -189,8 +181,34 @@ public class NotificationSystem{
             if (fuelScore < speedScore && fuelScore < brakeScore && fuelScore < DDLScore) {
                 return ConstantData.TAG_FUEL;
             }
-            if (speedScore == fuelScore && speedScore == brakeScore && speedScore == DDLScore)
+            if (speedScore == fuelScore && speedScore == brakeScore && speedScore == DDLScore) {
                 return ConstantData.TAG_SPEED;
+            }
+            if (speedScore == fuelScore && speedScore == brakeScore && speedScore < DDLScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (speedScore == fuelScore && speedScore < brakeScore && speedScore == DDLScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (brakeScore == speedScore && brakeScore < fuelScore && brakeScore == DDLScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (brakeScore == speedScore && brakeScore == fuelScore && brakeScore < DDLScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (brakeScore < speedScore && brakeScore == fuelScore && brakeScore == DDLScore){
+                return ConstantData.TAG_BRAKE;
+            }
+            if (DDLScore == speedScore && DDLScore == brakeScore && DDLScore < fuelScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (DDLScore < speedScore && DDLScore == brakeScore && DDLScore == fuelScore){
+                return ConstantData.TAG_BRAKE;
+            }
+            if (DDLScore == speedScore && DDLScore < brakeScore && DDLScore == fuelScore){
+                return ConstantData.TAG_SPEED;
+            }
+
         } else {
 
             isPositive = true;
@@ -210,10 +228,77 @@ public class NotificationSystem{
             if (DDLScore == avg && speedScore == avg && brakeScore == avg && fuelScore == avg){
                 return "good";
             }
-            if (speedScore == fuelScore && speedScore == brakeScore && speedScore == DDLScore)
+            if (speedScore == fuelScore && speedScore == brakeScore && speedScore == DDLScore) {
                 return ConstantData.TAG_SPEED;
-
+            }
+            if (speedScore == fuelScore && speedScore > brakeScore && speedScore == DDLScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (brakeScore == speedScore && brakeScore > fuelScore && brakeScore == DDLScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (brakeScore == speedScore && brakeScore == fuelScore && brakeScore > DDLScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (brakeScore > speedScore && brakeScore == fuelScore && brakeScore == DDLScore){
+                return ConstantData.TAG_BRAKE;
+            }
+            if (DDLScore == speedScore && DDLScore == brakeScore && DDLScore > fuelScore){
+                return ConstantData.TAG_SPEED;
+            }
+            if (DDLScore > speedScore && DDLScore == brakeScore && DDLScore == fuelScore){
+                return ConstantData.TAG_BRAKE;
+            }
+            if (DDLScore == speedScore && DDLScore > brakeScore && DDLScore == fuelScore){
+                return ConstantData.TAG_SPEED;
+            }
         }
+        Log.d("Terminate!", "TERMINATE!");
+
+        return "terminate";
+
+    }
+
+    private static String evaluateMedal(Context context){
+
+        int brakeScore = Session.getBrakeScore();
+        int DDLScore = Session.getDriverDistractionLevelScore();
+        int speedScore = Session.getSpeedScore();
+        int fuelScore = Session.getFuelConsumptionScore();
+
+        //checks if medal is achieved, necessary for queuing toasts
+        if (!Controller.getMedalStatus(ConstantData.medalID[0], context) && !brake){
+            brake = true;
+
+            if (brakeScore == 100){
+                Controller.updateStatus(ConstantData.medalID[0], context);
+                return ConstantData.medalID[0];
+            }
+        }
+        if (!Controller.getMedalStatus(ConstantData.medalID[1], context) && !DDl){
+            DDl = true;
+
+            if (DDLScore == 100) {
+                Controller.updateStatus(ConstantData.medalID[1], context);
+                return ConstantData.medalID[1];
+            }
+        }
+        if (!Controller.getMedalStatus(ConstantData.medalID[2], context) && !speed){
+            speed = true;
+            if (speedScore == 100){
+                Controller.updateStatus(ConstantData.medalID[2], context);
+                return ConstantData.medalID[2];
+            }
+        }
+        if (!Controller.getMedalStatus(ConstantData.medalID[3], context) && !fuel) {
+            fuel = true;
+
+            if (fuelScore == 100){
+                Controller.updateStatus(ConstantData.medalID[3], context);
+                return ConstantData.medalID[3];
+            }
+        }
+
         Log.d("Terminate!", "TERMINATE!");
 
         return "terminate";
@@ -320,6 +405,32 @@ public class NotificationSystem{
         }
 
         return set;
+    }
+
+    private static String medalMessage(String s){
+
+        String speed = "You have achieved the Master of Speed medal!";
+        String distraction = "You have achieved the Master of Focus medal!";
+        String brake = "You have achieved the Master of Braking medal!";
+        String fuel = "You have achieved the Master of Fuel upkeep medal!";
+
+        if (s.equals(ConstantData.medalID[0])){
+            return brake;
+        }
+        if (s.equals(ConstantData.medalID[1])){
+            return distraction;
+        }
+        if (s.equals(ConstantData.medalID[2])){
+            return speed;
+        }
+        if (s.equals(ConstantData.medalID[3])){
+            return fuel;
+        }  else {
+
+            Log.d("Terminate:", "TERMINATE");
+            return "terminate";
+        }
+
     }
 
     /**
@@ -440,6 +551,26 @@ public class NotificationSystem{
             if (temp.equals(ConstantData.TAG_DISTRACTION)) {
                 view.setImageResource(R.drawable.distraction_green);
             }
+        }
+
+    }
+
+    private static void setMedalImage(ImageView view, String s){
+
+        if (s.equals(ConstantData.medalID[0])){
+            view.setImageResource(R.drawable.medal_brakes);
+        }
+
+        if (s.equals(ConstantData.medalID[1])){
+            view.setImageResource(R.drawable.medal_distraction);
+        }
+
+        if (s.equals(ConstantData.medalID[2])){
+            view.setImageResource(R.drawable.medal_speed);
+        }
+
+        if (s.equals(ConstantData.medalID[3])){
+            view.setImageResource(R.drawable.medal_fuel);
         }
 
     }

@@ -48,10 +48,10 @@ public class MedalsView extends Activity implements AbsListView.OnScrollListener
 
         // populate data
         medals = new ArrayList();
-        medals.add(new Medal("Master at braking", R.drawable.medal_brakes, MedalsLogic.medalStatus(ConstantData.medalID[0], context)));
-        medals.add(new Medal("Master at focus", R.drawable.medal_distraction, MedalsLogic.medalStatus(ConstantData.medalID[1], context)));
-        medals.add(new Medal("Master at speed", R.drawable.medal_speed, MedalsLogic.medalStatus(ConstantData.medalID[2], context)));
-        medals.add(new Medal("Master at fuel upkeep", R.drawable.medal_fuel, MedalsLogic.medalStatus(ConstantData.medalID[3], context)));
+        medals.add(new Medal("Master at braking", R.drawable.medal_brakes, MedalsLogic.medalStatusUpdate(ConstantData.medalID[0], context)));
+        medals.add(new Medal("Master at focus", R.drawable.medal_distraction, MedalsLogic.medalStatusUpdate(ConstantData.medalID[1], context)));
+        medals.add(new Medal("Master at speed", R.drawable.medal_speed, MedalsLogic.medalStatusUpdate(ConstantData.medalID[2], context)));
+        medals.add(new Medal("Master at fuel upkeep", R.drawable.medal_fuel, MedalsLogic.medalStatusUpdate(ConstantData.medalID[3], context)));
 
         gvMedals = (GridView) findViewById(R.id.grid_medals);
         adapterMedals = new MedalAdapter(this, medals);

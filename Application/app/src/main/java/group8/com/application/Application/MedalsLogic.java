@@ -68,7 +68,21 @@ public class MedalsLogic {
 
     }
 
-    public static boolean medalStatus(String s,Context context){
+    public static boolean medalStatus(String s, Context context){
+
+        SharedPreferences prefs = context.getSharedPreferences("Save_Medal_Data", 0);
+
+        boolean status = prefs.getBoolean(Session.getUserName() + s, false);
+
+        if (!status){
+            return false;
+        } else {
+            return status;
+        }
+
+    }
+
+    public static boolean medalStatusUpdate(String s,Context context){
 
         SharedPreferences.Editor editor = context.getSharedPreferences("Save_Medal_Data", 0).edit();
         SharedPreferences prefs = context.getSharedPreferences("Save_Medal_Data", 0);
