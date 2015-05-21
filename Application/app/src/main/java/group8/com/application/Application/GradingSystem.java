@@ -24,10 +24,10 @@ public abstract class GradingSystem {
     private static ArrayList<Double> tempFuelList;
     private static ArrayList<Integer> tempBrakeList;
     private static ArrayList<Integer> tempDistractionList;
-    private static int currentDistraction=0;
-    private static int currentBrake=0;
-    private static double currentFuel=0;
-    private static double currentSpeed=0;
+    private static int currentDistraction;
+    private static int currentBrake;
+    private static double currentFuel;
+    private static double currentSpeed;
 
     /**
      * Start the grading system.
