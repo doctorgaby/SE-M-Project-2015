@@ -19,7 +19,7 @@ public abstract class Session {
     private static CountDownTimer timer = new CountDownTimer(101, 101) {
         public void onTick(long millisUntilFinished) {}
         public void onFinish() {
-            isMeasuring = false;
+            isMeasuring = true;
         }
     };
 
