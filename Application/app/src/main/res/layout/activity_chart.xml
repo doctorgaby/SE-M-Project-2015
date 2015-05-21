@@ -5,12 +5,70 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/menu_view_title"
+        android:id="@+id/buttonsLayout"
+        android:gravity="center">
+        <Space
+            android:layout_width="45dp"
+            android:layout_height="match_parent"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/driving_view_speed"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/driving_view_brake"/>
+                </LinearLayout>
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/driving_view_fuel"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/driving_view_distraction"/>
+            </LinearLayout>
+        </LinearLayout>
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/barChartLayout"
         android:orientation="vertical"
         android:background="@color/menuViewCenter"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buttonlayout">
+        android:layout_above="@+id/buttonlayout"
+        android:layout_below="@id/buttonsLayout">
     </LinearLayout>
 
     <LinearLayout

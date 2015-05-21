@@ -36,6 +36,7 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -69,13 +70,13 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
                 getActivity().finish();
                 break;
             case R.id.finishButton:
+                Session.doFinish = true;
                 Intent graphInt = new Intent(getActivity(), ChartActivity.class);
                 startActivity(graphInt);
                 Controller.updateStatus(ConstantData.medalID[0],v.getContext());
                 Controller.updateStatus(ConstantData.medalID[1],v.getContext());
                 Controller.updateStatus(ConstantData.medalID[2],v.getContext());
                 Controller.updateStatus(ConstantData.medalID[3],v.getContext());
-                Controller.finishGrading(true);
                 getActivity().finish();
                 break;
             case R.id.disregard:

@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.TimeZone;
 
 import group8.com.application.Foundation.TimeComparator;
 import group8.com.application.Foundation.ValueComparator;
@@ -216,9 +217,10 @@ public class DataList {
                 Date date = new Date((long) currenttime*1000);
                 SimpleDateFormat sdf;
                 if (time.equals("now"))
-                    sdf = new SimpleDateFormat("hh:mm");
+                    sdf = new SimpleDateFormat("HH:mm");
                 else
                     sdf = new SimpleDateFormat("yy-MM-dd");
+                sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
                 String formattedDate = sdf.format(date);
                 //Log.d("value: " + data.getSpeed(i).getValue(), "date: " + formattedDate);
                 xVals.add(formattedDate);

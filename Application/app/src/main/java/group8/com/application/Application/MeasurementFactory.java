@@ -5,9 +5,11 @@ import android.swedspot.automotiveapi.AutomotiveSignal;
 import android.swedspot.automotiveapi.AutomotiveSignalId;
 import android.swedspot.scs.data.SCSFloat;
 import android.swedspot.scs.data.Uint8;
+import android.util.Log;
 
 import com.swedspot.automotiveapi.AutomotiveFactory;
 import com.swedspot.automotiveapi.AutomotiveListener;
+import com.swedspot.automotiveapi.AutomotiveManager;
 import com.swedspot.vil.distraction.DriverDistractionLevel;
 import com.swedspot.vil.distraction.DriverDistractionListener;
 import com.swedspot.vil.distraction.LightMode;
@@ -17,7 +19,7 @@ import com.swedspot.vil.policy.AutomotiveCertificate;
 /**
  * Class that retrieves the signals from AGA, and sends them to the controller.
  */
-public abstract class MeasurementFactory {
+public abstract class MeasurementFactory implements AutomotiveManager {
 
     /* Local variables */
     private static boolean running = false;
@@ -42,6 +44,7 @@ public abstract class MeasurementFactory {
                             new AutomotiveListener() { // Listener that observes the Signals
                                 @Override
                                 public void receive(final AutomotiveSignal automotiveSignal) {
+                                    Session.continueTimer();
                                     int choice = automotiveSignal.getSignalId();
                                     switch (choice) {
                                         case 320: //Speed has signalID 320.
@@ -92,6 +95,8 @@ public abstract class MeasurementFactory {
                             }
                     ).register(AutomotiveSignalId.FMS_FUEL_RATE, AutomotiveSignalId.FMS_WHEEL_BASED_SPEED, AutomotiveSignalId.FMS_BRAKE_SWITCH); // Register for the speed signal
 
+
+                    Log.d("Almost done with ", "do in background");
                     return null;
                 }
             };

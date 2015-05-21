@@ -46,6 +46,7 @@ public class RankingAdapter extends SimpleAdapter {
         ImageView iv = (ImageView) view.findViewById(R.id.friendIcon);
         String currentUser = (String)userTxt.getText();
         if (currentUser.equals(username)) {
+            view.setBackgroundColor(resource);
             view.setActivated(true);
             userTxt.setTextColor(Color.WHITE);
             rp.setTextColor(Color.WHITE);
@@ -55,7 +56,17 @@ public class RankingAdapter extends SimpleAdapter {
             br.setTextColor(Color.WHITE);
             sp.setTextColor(Color.WHITE);
         }
-        view.setBackgroundColor(resource);
+        else {
+            view.setActivated(false);
+            view.setBackgroundColor(resource);
+            userTxt.setTextColor(Color.parseColor("#5d5d5d"));
+            rp.setTextColor(Color.parseColor("#333000"));
+            tp.setTextColor(Color.parseColor("#333000"));
+            dis.setTextColor(Color.parseColor("#acacac"));
+            fu.setTextColor(Color.parseColor("#acacac"));
+            br.setTextColor(Color.parseColor("#acacac"));
+            sp.setTextColor(Color.parseColor("#acacac"));
+        }
         if (friendList.contains(currentUser)) {
             Log.d("Contains in list;" , currentUser);
             iv.setVisibility(View.VISIBLE);
