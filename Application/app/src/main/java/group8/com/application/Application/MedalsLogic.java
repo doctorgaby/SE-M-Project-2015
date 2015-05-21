@@ -1,12 +1,7 @@
 package group8.com.application.Application;
 
-import android.content.SharedPreferences;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import group8.com.application.Model.ConstantData;
-import group8.com.application.Model.Medal;
 
 /**
  * Created by Kristiyan on 5/12/2015.

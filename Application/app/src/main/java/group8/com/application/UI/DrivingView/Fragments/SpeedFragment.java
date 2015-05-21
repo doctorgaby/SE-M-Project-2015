@@ -44,8 +44,13 @@ public class SpeedFragment extends Fragment {
         super.onPause();
     }
 
+    /**
+     * Start the timer used to update the content of the fragment(score and color).
+     * */
     private void startTimer() {
 
+        // The timer runs for one second. When the timer is finished, it evaluates the score and color, and updates them.
+        // When the timer finishes, it restarts.
         pointsTimer = new CountDownTimer(1000, 1000) {
 
             public void onTick(long millisUntilFinished) {

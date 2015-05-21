@@ -15,4 +15,8 @@
     <color name="drivingViewGreen">#00E89D</color>
     <color name="drivingViewYellow">#E8D94C</color>
     <color name="drivingViewRed">#FF4B4A</color>
+    <color name="fuelChart">#6aa786</color>
+    <color name="brakeChart">#fef778</color>
+    <color name="speedChart">#d9508a</color>
+    <color name="distractionChart">#fe9532</color>
 </resources>

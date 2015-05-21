@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">ADA</string>
-    <string name="full_app_name">Automotive Driver Assistance</string>
+    <string name="full_app_name">Automotive Driver Assistant</string>
     <string name="action_settings">Settings</string>
     <string name="points_grapher">Points Graph</string>
     <string name="action_search">Action Bar</string>

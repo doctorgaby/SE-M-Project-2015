@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import group8.com.application.Model.ConstantData;
 
 /**
- * Created by Hampus on 2015-03-18.
- *
  * Class representing the logic for the grading of drivers performance.
  * To start the grading system, the method startGrading() has to be called.
  */
 public abstract class GradingSystem {
 
     /* Private variables */
-    private static Controller controller = null;
     private static int lastDistractionLevel;                // Stores the current distraction level(updates when the distraction level is changed)
-    private static boolean shouldDecreaseBrakeScore = true; // Is set to true when the brake is released
     private static boolean running = false;                  // Flag used in the threads loop
     private static CountDownTimer brakeTimer;               // Timer used for grading the braking
     private static CountDownTimer speedTimer;
@@ -34,7 +30,6 @@ public abstract class GradingSystem {
         if(MeasurementFactory.isMeasuring()) {
 
             running = true;
-            controller = Controller.getInstance();
 
             // Create a new countdown. When the countdown has finished, the braking score increases by 1.
             tempBrakeList =  new ArrayList<>();

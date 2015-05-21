@@ -1,6 +1,7 @@
 package group8.com.application.Foundation;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,35 +22,48 @@ public class RankingAdapter extends SimpleAdapter {
     Context context;
     List<String> friendList;
 
-        public RankingAdapter(Context context, List<HashMap<String, String>> items, int resource, String[] from, int[] to, String username) {
-            super(context, items, resource, from, to);
-            this.resource = resource;
-            this.context = context;
-            this.username = username;
-            friendList = Controller.eventGetAllFriends();
-            Log.d("FriendsList:", friendList.toString());
-        }
+    public RankingAdapter(Context context, List<HashMap<String, String>> items, int resource, String[] from, int[] to, String username) {
+        super(context, items, resource, from, to);
+        this.resource = resource;
+        this.context = context;
+        this.username = username;
+        friendList = Controller.eventGetAllFriends();
+        Log.d("FriendsList:", friendList.toString());
+    }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view = super.getView(position, convertView, parent);
-            TextView userTxt = (TextView) view.findViewById(R.id.username);
-            ImageView iv = (ImageView) view.findViewById(R.id.friendIcon);
-            String currentUser = (String)userTxt.getText();
-            if (currentUser.equals(username)) {
-                view.setBackgroundColor(context.getResources().getColor(R.color.user_color));
-            } else {
-                view.setBackgroundColor(resource);
-            }
-            TextView tv = (TextView) view.findViewById(R.id.rankingPosition);
-            if (friendList.contains(currentUser)) {
-                Log.d("Contains in list;" , currentUser);
-                iv.setVisibility(View.VISIBLE);
-            }
-            else {
-                iv.setVisibility(View.INVISIBLE);
-            }
-            tv.setText(Integer.toString(position +1)+".");
-            return view;
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = super.getView(position, convertView, parent);
+
+        TextView userTxt = (TextView) view.findViewById(R.id.username);
+        TextView rp = (TextView) view.findViewById(R.id.rankingPosition);
+        TextView tp = (TextView) view.findViewById(R.id.totalPoints);
+        TextView dis = (TextView) view.findViewById(R.id.distraction);
+        TextView fu = (TextView) view.findViewById(R.id.fuel);
+        TextView br = (TextView) view.findViewById(R.id.brake);
+        TextView sp = (TextView) view.findViewById(R.id.speed);
+
+        ImageView iv = (ImageView) view.findViewById(R.id.friendIcon);
+        String currentUser = (String)userTxt.getText();
+        if (currentUser.equals(username)) {
+            view.setActivated(true);
+            userTxt.setTextColor(Color.WHITE);
+            rp.setTextColor(Color.WHITE);
+            tp.setTextColor(Color.WHITE);
+            dis.setTextColor(Color.WHITE);
+            fu.setTextColor(Color.WHITE);
+            br.setTextColor(Color.WHITE);
+            sp.setTextColor(Color.WHITE);
         }
+        view.setBackgroundColor(resource);
+        if (friendList.contains(currentUser)) {
+            Log.d("Contains in list;" , currentUser);
+            iv.setVisibility(View.VISIBLE);
+        }
+        else {
+            iv.setVisibility(View.INVISIBLE);
+        }
+        rp.setText(Integer.toString(position + 1) + ".");
+        return view;
+    }
 }

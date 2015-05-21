@@ -1,6 +1,5 @@
 package group8.com.application.alert;
 import android.app.Activity;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
