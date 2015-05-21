@@ -24,7 +24,10 @@ public abstract class GradingSystem {
     private static ArrayList<Double> tempFuelList;
     private static ArrayList<Integer> tempBrakeList;
     private static ArrayList<Integer> tempDistractionList;
-    private static int currentDistraction;
+    private static int currentDistraction=0;
+    private static int currentBrake=0;
+    private static double currentFuel=0;
+    private static double currentSpeed=0;
 
     /**
      * Start the grading system.
@@ -37,9 +40,11 @@ public abstract class GradingSystem {
 
             // Create a new countdown. When the countdown has finished, the braking score increases by 1.
             tempBrakeList =  new ArrayList<>();
-            brakeTimer = new CountDownTimer(5000, 5000) {
+            brakeTimer = new CountDownTimer(5000, 1000) {
 
-                public void onTick(long millisUntilFinished) {}
+                public void onTick(long millisUntilFinished) {
+                    tempBrakeList.add(currentBrake);
+                }
                 public void onFinish() {
                     if (Session.isMeasuring) {
                         int currentScore = Session.getBrakeScore();
@@ -57,21 +62,22 @@ public abstract class GradingSystem {
 
             // Create a new countdown. When the countdown has finished, the speed score increases by 1 if the speed changes are reasonable.
             tempSpeedList =  new ArrayList<>();
-            speedTimer = new CountDownTimer(10000, 5000) {
-                int points = 0;
+            speedTimer = new CountDownTimer(5000, 1000) {
+
                 public void onTick(long millisUntilFinished) {
                     if (Session.isMeasuring) {
-                        points = points + evaluateSpeedAverage();
-                        if (tempSpeedList.size() != 0)
-                            Session.setSpeed(tempSpeedList.get(tempSpeedList.size() - 1)); //Sets the speed measurement every 5 seconds.
-                        tempSpeedList = new ArrayList<>();
+                        tempSpeedList.add(currentSpeed);
                     }
                 }
 
                 public void onFinish() {
+                    int points = 0;
+                    points = points + evaluateSpeedAverage();
                     if (Session.isMeasuring) {
                         int currentScore = Session.getSpeedScore();
                         int newScore = currentScore + points;
+                        if (tempSpeedList.size() != 0)
+                            Session.setSpeed(tempSpeedList.get(tempSpeedList.size() - 1)); //Sets the speed measurement every 5 seconds.
                         if (newScore>100)
                             newScore = 100;
                         else if (newScore<0)
@@ -79,7 +85,7 @@ public abstract class GradingSystem {
                         if (newScore >= 0 && newScore <= 100) {
                             Session.setSpeedScore(newScore); //Sets the speed points every 10 seconds.
                         }
-                        points = 0;
+                        tempSpeedList = new ArrayList<>();
                     }
                     speedTimer.start();
                 }
@@ -88,8 +94,9 @@ public abstract class GradingSystem {
             // Create a new countdown. When the countdown has finished, the fuel score increases by 1
             // if the fuel changes are reasonable.
             tempFuelList =  new ArrayList<>();
-            fuelTimer = new CountDownTimer(5000, 5000) {
+            fuelTimer = new CountDownTimer(5000, 1000) {
                 public void onTick(long millisUntilFinished) {
+                    tempFuelList.add(currentFuel);
                 }
 
                 public void onFinish() {
@@ -164,6 +171,7 @@ public abstract class GradingSystem {
     protected static void updateSpeedScore(double speed) {
 
         if(running&&Session.isMeasuring) {
+            currentSpeed = speed;
             tempSpeedList.add(speed);
         }
 
@@ -177,6 +185,7 @@ public abstract class GradingSystem {
     protected static void updateFuelConsumptionScore(double fuelConsumption) {
 
         if(running&&Session.isMeasuring) {
+            currentFuel = fuelConsumption;
             tempFuelList.add(fuelConsumption);
         }
 
@@ -189,6 +198,7 @@ public abstract class GradingSystem {
     protected static void updateBrakeScore(int brake, boolean timerFinished) {
 
         if(running&&Session.isMeasuring) {
+            currentBrake = brake;
             tempBrakeList.add(brake);
         }
 
@@ -202,32 +212,6 @@ public abstract class GradingSystem {
     protected static void updateDriverDistractionLevelScore(int distractionLevel) {
 
         if(running&&Session.isMeasuring) {
-/*
-            // Store the current score and the new score
-            int currentScore = Session.getDriverDistractionLevelScore();
-            int newScore = currentScore;
-
-            // Evaluate the measurements
-            if (distractionLevel == 3 && lastDistractionLevel < 3)
-                newScore = currentScore - 1;
-
-            if (distractionLevel == 4 && lastDistractionLevel < 4) {
-                newScore = currentScore - 2;
-            }
-
-            if (distractionLevel == 0 && lastDistractionLevel != 0)
-                newScore = currentScore + 1;
-
-            lastDistractionLevel = distractionLevel;
-
-            // Update the lists of measurements and scores
-            if(newScore != currentScore) {
-                if (newScore>=0&&newScore<=100) {
-                    Session.setDriverDistractionLevel(distractionLevel);
-                    Session.setDriverDistractionLevelScore(newScore);
-                }
-            }
-*/
             currentDistraction = distractionLevel;
             tempDistractionList.add(distractionLevel);
         }
@@ -261,9 +245,7 @@ public abstract class GradingSystem {
                 outOfRange= outOfRange+1;
         }
 
-        if (outOfRange<=ConstantData.outOfRangeSpeedLowerMargin)
-            return 2;
-        else if (outOfRange <=ConstantData.outOfRangeSpeedMiddleMargin)
+        if (outOfRange <=ConstantData.outOfRangeSpeedMiddleMargin)
             return 1;
         else
             return -1;

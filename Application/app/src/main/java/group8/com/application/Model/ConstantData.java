@@ -20,7 +20,15 @@ public abstract class ConstantData {
     public static final String TAG_ACTION_LOGIN = "login";
     public static final String TAG_ACTION_FBLOGIN = "fblogin";
     public static final String TAG_ACTION_REGISTER = "register";
+
+
+    //REMOTE HOST
     public static final String INDEX_URL = "http://semprojectgroup8.site50.net/project_systems_dev/index.php";
+
+    //LOCALHOST
+    //public static final String INDEX_URL = "http://192.168.56.1:80/AutomotiveDriverAssistant/index.php";
+
+
     public static final String TAG_POSTS = "posts";
     public static final String TAG_SPEED = "speed";
     public static final String TAG_FUEL = "fuel";
