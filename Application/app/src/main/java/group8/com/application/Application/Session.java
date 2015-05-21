@@ -1,5 +1,7 @@
 package group8.com.application.Application;
 
+import android.os.CountDownTimer;
+
 import org.json.JSONObject;
 
 import group8.com.application.Model.DataList;
@@ -11,6 +13,24 @@ public abstract class Session {
     public static DataList currentPoints = new DataList("p");
     public static DataList currentMeasurements = new DataList("m");
     private static boolean paused = false;
+    public static boolean doFinish = false;
+    public static boolean showToast = true;
+    public static boolean isMeasuring = false;
+    private static CountDownTimer timer = new CountDownTimer(101, 101) {
+        public void onTick(long millisUntilFinished) {}
+        public void onFinish() {
+            isMeasuring = false;
+        }
+    };
+
+    public static void startTimer () {
+        timer.start();
+    }
+
+    public static void continueTimer () {
+        isMeasuring = true;
+        timer.start();
+    }
 
     public static void setUserName(String username) {
         Session.userName = username;

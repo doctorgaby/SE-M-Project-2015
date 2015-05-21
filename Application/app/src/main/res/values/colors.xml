@@ -2,7 +2,7 @@
 <resources>
     <color name="pressed_color">#00e8ae</color>
     <color name="default_color">#ffffff</color>
-    <color name="user_color">#4d90fe</color>
+    <color name="user_color">#3aabd4</color>
     <color name="menuViewButtons">#00e8ae</color>
     <color name="menuViewTitleBackground">#777676</color>
     <color name="menuViewCenter">#686767</color>

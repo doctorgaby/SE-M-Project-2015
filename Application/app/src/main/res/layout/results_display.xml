@@ -9,8 +9,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/menu_view_title"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"
@@ -72,8 +72,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@drawable/menu_view_title"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp">
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
         <Space
             android:layout_width="0dp"
             android:layout_height="1dp"

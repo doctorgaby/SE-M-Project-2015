@@ -1,6 +1,7 @@
 package group8.com.application.Application;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,12 @@ public abstract class GradingSystem {
     private static CountDownTimer brakeTimer;               // Timer used for grading the braking
     private static CountDownTimer speedTimer;
     private static CountDownTimer fuelTimer;
+    private static CountDownTimer distractionTimer;
     private static ArrayList<Double> tempSpeedList;
     private static ArrayList<Double> tempFuelList;
     private static ArrayList<Integer> tempBrakeList;
+    private static ArrayList<Integer> tempDistractionList;
+    private static int currentDistraction;
 
     /**
      * Start the grading system.
@@ -37,14 +41,16 @@ public abstract class GradingSystem {
 
                 public void onTick(long millisUntilFinished) {}
                 public void onFinish() {
-                    int currentScore = Session.getBrakeScore();
-                    if (tempBrakeList.size()!=0)
-                        Session.setBrake(brakingAverage());
-                    int newScore = currentScore + evaluateBrake();
-                    if (newScore <= 100 && newScore >= 0) {
-                        Session.setBrakeScore(newScore);
+                    if (Session.isMeasuring) {
+                        int currentScore = Session.getBrakeScore();
+                        if (tempBrakeList.size() != 0)
+                            Session.setBrake(brakingAverage());
+                        int newScore = currentScore + evaluateBrake();
+                        if (newScore <= 100 && newScore >= 0) {
+                            Session.setBrakeScore(newScore);
+                        }
+                        tempBrakeList = new ArrayList<>();
                     }
-                    tempBrakeList =  new ArrayList<>();
                     brakeTimer.start();
                 }
             }.start();
@@ -54,19 +60,27 @@ public abstract class GradingSystem {
             speedTimer = new CountDownTimer(10000, 5000) {
                 int points = 0;
                 public void onTick(long millisUntilFinished) {
-                    points = points + evaluateSpeedAverage();
-                    if (tempSpeedList.size()!=0)
-                        Session.setSpeed(tempSpeedList.get(tempSpeedList.size()-1)); //Sets the speed measurement every 5 seconds.
-                    tempSpeedList =  new ArrayList<>();
+                    if (Session.isMeasuring) {
+                        points = points + evaluateSpeedAverage();
+                        if (tempSpeedList.size() != 0)
+                            Session.setSpeed(tempSpeedList.get(tempSpeedList.size() - 1)); //Sets the speed measurement every 5 seconds.
+                        tempSpeedList = new ArrayList<>();
+                    }
                 }
 
                 public void onFinish() {
-                    int currentScore = Session.getSpeedScore();
-                    int newScore = currentScore + points;
-                    if (newScore>=0&&newScore<=100) {
-                        Session.setSpeedScore(newScore); //Sets the speed points every 10 seconds.
+                    if (Session.isMeasuring) {
+                        int currentScore = Session.getSpeedScore();
+                        int newScore = currentScore + points;
+                        if (newScore>100)
+                            newScore = 100;
+                        else if (newScore<0)
+                            newScore = 0;
+                        if (newScore >= 0 && newScore <= 100) {
+                            Session.setSpeedScore(newScore); //Sets the speed points every 10 seconds.
+                        }
+                        points = 0;
                     }
-                    points = 0;
                     speedTimer.start();
                 }
             }.start();
@@ -79,14 +93,42 @@ public abstract class GradingSystem {
                 }
 
                 public void onFinish() {
-                    int currentScore = Session.getFuelConsumptionScore();
-                    if (tempFuelList.size()!=0)
-                        Session.setFuelConsumption(tempFuelList.get(tempFuelList.size()-1));
-                    int newScore = currentScore + evaluateFuel();
-                    if (newScore<=100&&newScore>=0)
-                    Session.setFuelConsumptionScore(newScore);
-                    tempFuelList =  new ArrayList<>();
+                    if (Session.isMeasuring) {
+                        int currentScore = Session.getFuelConsumptionScore();
+                        if (tempFuelList.size() != 0)
+                            Session.setFuelConsumption(tempFuelList.get(tempFuelList.size() - 1));
+                        int newScore = currentScore + evaluateFuel();
+                        if (newScore <= 100 && newScore >= 0)
+                            Session.setFuelConsumptionScore(newScore);
+                        tempFuelList = new ArrayList<>();
+                    }
                     fuelTimer.start();
+                }
+            }.start();
+
+            // Create a new countdown. When the countdown has finished, the distraction score increases by 1
+            // if the fuel changes are reasonable.
+            tempDistractionList =  new ArrayList<>();
+            distractionTimer = new CountDownTimer(5000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                    tempDistractionList.add(currentDistraction);
+                }
+
+                public void onFinish() {
+                    if (Session.isMeasuring) {
+                        int currentScore = Session.getDriverDistractionLevelScore();
+                        if (tempDistractionList.size() != 0)
+                            Session.setDriverDistractionLevel(tempDistractionList.get(tempDistractionList.size() - 1));
+                        int newScore = currentScore + evaluateDistraction();
+                        if (newScore>100)
+                            newScore = 100;
+                        if (newScore<0)
+                            newScore = 0;
+                        if (newScore <= 100 && newScore >= 0)
+                            Session.setDriverDistractionLevelScore(newScore);
+                        tempDistractionList = new ArrayList<>();
+                    }
+                    distractionTimer.start();
                 }
             }.start();
 
@@ -121,7 +163,7 @@ public abstract class GradingSystem {
      * */
     protected static void updateSpeedScore(double speed) {
 
-        if(running) {
+        if(running&&Session.isMeasuring) {
             tempSpeedList.add(speed);
         }
 
@@ -134,7 +176,7 @@ public abstract class GradingSystem {
      * */
     protected static void updateFuelConsumptionScore(double fuelConsumption) {
 
-        if(running) {
+        if(running&&Session.isMeasuring) {
             tempFuelList.add(fuelConsumption);
         }
 
@@ -146,7 +188,7 @@ public abstract class GradingSystem {
      * */
     protected static void updateBrakeScore(int brake, boolean timerFinished) {
 
-        if(running) {
+        if(running&&Session.isMeasuring) {
             tempBrakeList.add(brake);
         }
 
@@ -159,8 +201,8 @@ public abstract class GradingSystem {
      * */
     protected static void updateDriverDistractionLevelScore(int distractionLevel) {
 
-        if(running) {
-
+        if(running&&Session.isMeasuring) {
+/*
             // Store the current score and the new score
             int currentScore = Session.getDriverDistractionLevelScore();
             int newScore = currentScore;
@@ -185,7 +227,9 @@ public abstract class GradingSystem {
                     Session.setDriverDistractionLevelScore(newScore);
                 }
             }
-
+*/
+            currentDistraction = distractionLevel;
+            tempDistractionList.add(distractionLevel);
         }
 
     }
@@ -260,11 +304,37 @@ public abstract class GradingSystem {
     private static int evaluateBrake () {
         int total = 0;
         for (int i=0; i<tempBrakeList.size();i++) {
+            Log.d("Brake Value:", "" + tempBrakeList.get(i));
             total = total+tempBrakeList.get(i);
         }
         if (total >= 25)
             return -1;
         else
             return 1;
+    }
+
+    private static int evaluateDistraction() {
+        int total1=0;
+        int total2=0;
+        for (int i=0;i<tempDistractionList.size();i++) {
+            int value = tempDistractionList.get(i);
+            Log.d("Distraction Value:", "" + value);
+            if (value == 4) {
+                return -2;
+            } else if (value == 3) {
+                return -1;
+            } else if (value == 2) {
+                total2 = total2+1;
+            } else if (value==1) {
+                total1 = total1+1;
+            }
+        }
+        if (total2>2) {
+            return -1;
+        } else if (total1>3) {
+            return -1;
+        } else {
+            return 1;
+        }
     }
 }

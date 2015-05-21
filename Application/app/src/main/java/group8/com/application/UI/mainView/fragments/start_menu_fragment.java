@@ -61,6 +61,10 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
         achievements.setOnClickListener(this);
         trend = (ImageButton) getView().findViewById(R.id.trendButton);
         trend.setOnClickListener(this);
+        if (Session.showToast) {
+            Controller.eventGetCustomToast(getActivity(), customLayout());
+            Session.showToast = false;
+        }
     }
 
     @Override

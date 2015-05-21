@@ -6,25 +6,25 @@
 
     <item
         android:id="@+id/menuViewMenuBarGraph"
-        android:icon="@drawable/ic_launcher"
-        android:title="Current Points"
-        app:showAsAction="ifRoom" />
-
-    <item
-        android:id="@+id/menuViewMenuGraphs"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/finalbarchart_fr"
         android:title="Results"
         app:showAsAction="ifRoom" />
 
     <item
+        android:id="@+id/menuViewMenuGraphs"
+        android:icon="@drawable/graphs_fr"
+        android:title="Statistics"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/menuViewMenuRanking"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/ranking_fr"
         android:title="Ranking"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menuViewMenuMedals"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/achievement_fr"
         android:title="Achievements"
         app:showAsAction="ifRoom" />
 

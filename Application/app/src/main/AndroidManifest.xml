@@ -38,8 +38,7 @@
             android:label="@string/app_name"></activity>
 
         <activity android:name=".UI.ChartActivity"
-            android:label="@string/app_name"
-            android:theme="@style/CustomTheme"></activity>
+            android:label="@string/app_name"></activity>
             
             
         <activity

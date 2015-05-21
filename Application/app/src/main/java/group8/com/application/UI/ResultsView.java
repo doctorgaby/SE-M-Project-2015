@@ -146,7 +146,7 @@ public class ResultsView extends Activity {
         mchart.setDragEnabled(false);
         mchart.setClickable(false);
         mchart.setScaleEnabled(false);
-        mchart.setDrawGridBackground(true);
+        mchart.setDrawGridBackground(false);
         mchart.setPinchZoom(false);
         mchart.setTouchEnabled(false);
 
@@ -161,11 +161,21 @@ public class ResultsView extends Activity {
         xax.setTextColor(Color.WHITE);
         xax.setDrawGridLines(true);
         xax.setAvoidFirstLastClipping(true);
+        xax.setGridColor(Color.parseColor("#ffffff"));
+        xax.setGridLineWidth(1f);
+        xax.setAxisLineColor(Color.parseColor("#ffffff"));
+        xax.setAxisLineWidth(4f);
+        xax.setPosition(XAxis.XAxisPosition.BOTTOM);
 
         YAxis yax = mchart.getAxisLeft();
         yax.setTextColor(Color.WHITE);
         yax.setAxisMaxValue(110);
         yax.setDrawGridLines(true);
+        yax.setGridColor(Color.parseColor("#ffffff"));
+        yax.setGridLineWidth(1f);
+        yax.setAxisLineColor(Color.parseColor("#ffffff"));
+        yax.setAxisLineWidth(4f);
+
         YAxis yaxR = mchart.getAxisRight();
         yaxR.setEnabled(false);
     }
@@ -194,7 +204,7 @@ public class ResultsView extends Activity {
         set.setCubicIntensity(0.2f);
         set.setColor(getResources().getColor(R.color.speedChart));
         set.setCircleColor(getResources().getColor(R.color.speedChart));
-        set.setLineWidth(2f);
+        set.setLineWidth(3f);
         set.setCircleSize(0.2f);
         set.setFillColor(getResources().getColor(R.color.speedChart));
         set.setDrawValues(false);
@@ -224,7 +234,7 @@ public class ResultsView extends Activity {
         set.setCubicIntensity(0.2f);
         set.setColor(getResources().getColor(R.color.brakeChart));
         set.setCircleColor(getResources().getColor(R.color.brakeChart));
-        set.setLineWidth(2f);
+        set.setLineWidth(3f);
         set.setCircleSize(0.2f);
         set.setFillColor(getResources().getColor(R.color.brakeChart));
         set.setDrawValues(false);
@@ -254,7 +264,7 @@ public class ResultsView extends Activity {
         set.setCubicIntensity(0.2f);
         set.setColor(getResources().getColor(R.color.fuelChart));
         set.setCircleColor(getResources().getColor(R.color.fuelChart));
-        set.setLineWidth(2f);
+        set.setLineWidth(3f);
         set.setCircleSize(0.2f);
         set.setFillColor(getResources().getColor(R.color.fuelChart));
         set.setDrawValues(false);

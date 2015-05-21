@@ -3,7 +3,6 @@ package group8.com.application.UI.mainView.fragments;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import group8.com.application.Application.Controller;
-import group8.com.application.Application.MedalsLogic;
 import group8.com.application.Application.Session;
 import group8.com.application.Model.ConstantData;
 import group8.com.application.R;
@@ -36,6 +34,7 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -69,6 +68,7 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
                 getActivity().finish();
                 break;
             case R.id.finishButton:
+                Session.doFinish = true;
 
 //                Controller.eventGetMedalToast(v.getContext(), customLayout());
 
@@ -140,13 +140,6 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
             default:
                 return super.onOptionsItemSelected(item);
         }
-
-    }
-
-    private View customLayout(){
-
-        LayoutInflater myInflator = getActivity().getLayoutInflater();
-        return myInflator.inflate(R.layout.toast_layout, (ViewGroup) getView().findViewById(R.id.toast_layout_root));
 
     }
 

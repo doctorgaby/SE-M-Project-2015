@@ -75,7 +75,7 @@ public class Controller {
     }
 
     public static boolean isReceivingSignal() {
-        return true;
+        return Session.isMeasuring;
     }
 
     public static double getCurrentSpeed() {
@@ -100,16 +100,16 @@ public class Controller {
 
 /* Methods for GradingSystem */
     public static void startGrading() {
-
         MeasurementFactory.startMeasurements();
         GradingSystem.startGradingSystem();
-
+        Session.startTimer();
     }
 
     public static void stopGrading() {
         GradingSystem.stopGradingSystem();
         MeasurementFactory.pauseMeasurements();
         Session.pause();
+        //Session.stopTimer();
     }
 
     public static void finishGrading (boolean save) {
@@ -118,6 +118,7 @@ public class Controller {
             eventSetMeasuremtents();
             eventSetPoints();
             eventSetLastScores();
+            Session.doFinish = false;
         }
     }
 
