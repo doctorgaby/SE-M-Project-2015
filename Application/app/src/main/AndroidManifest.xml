@@ -46,10 +46,10 @@
             android:label="Achievements"></activity>
 
 
-        <activity android:name=".alert.BrakesActivity" />
-        <activity android:name=".alert.DistractionActivity" />
-        <activity android:name=".alert.FuelActivity" />
-        <activity android:name=".alert.SpeedActivity" />
+        <activity android:name=".UI.alert.BrakesActivity" />
+        <activity android:name=".UI.alert.DistractionActivity" />
+        <activity android:name=".UI.alert.FuelActivity" />
+        <activity android:name=".UI.alert.SpeedActivity" />
 
     </application>
 
