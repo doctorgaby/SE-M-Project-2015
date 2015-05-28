@@ -11,10 +11,10 @@ import android.widget.Button;
 import group8.com.application.Application.Controller;
 import group8.com.application.R;
 import group8.com.application.UI.mainView.menuView;
-import group8.com.application.alert.BrakesActivity;
-import group8.com.application.alert.DistractionActivity;
-import group8.com.application.alert.FuelActivity;
-import group8.com.application.alert.SpeedActivity;
+import group8.com.application.UI.alert.BrakesActivity;
+import group8.com.application.UI.alert.DistractionActivity;
+import group8.com.application.UI.alert.FuelActivity;
+import group8.com.application.UI.alert.SpeedActivity;
 
 public class DrivingView extends Activity {
 

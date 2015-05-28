@@ -1,6 +1,4 @@
-package group8.com.application.alert;
-
-
+package group8.com.application.UI.alert;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -11,14 +9,14 @@ import android.view.WindowManager;
 import group8.com.application.R;
 
 
-public class SpeedActivity extends Activity {
+public class DistractionActivity extends Activity {
+
 
     // Assigning variables
     CountDownTimer cdt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
 
         //Remove title bar
@@ -27,7 +25,7 @@ public class SpeedActivity extends Activity {
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_speed);
+        setContentView(R.layout.activity_distraction);
 
         // Countdown timer
         cdt = new CountDownTimer(4000, 1000) {  //4 seconds
@@ -50,13 +48,11 @@ public class SpeedActivity extends Activity {
         //Start the timer
         cdt.start();
 
-
         // Warning sound
-        MediaPlayer mpAlert = MediaPlayer.create(this,R.raw.audio1);
+        MediaPlayer mpAlert = MediaPlayer.create(this,R.raw.audio4);
         MediaPlayer mpAlert2 = MediaPlayer.create(this,R.raw.sounds1);
 
         mpAlert.start();
         mpAlert2.start();
-
     }
 }

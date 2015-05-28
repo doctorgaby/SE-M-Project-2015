@@ -1,4 +1,4 @@
-package group8.com.application.alert;
+package group8.com.application.UI.alert;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -6,11 +6,11 @@ import android.os.CountDownTimer;
 import android.view.Window;
 import android.view.WindowManager;
 
+
 import group8.com.application.R;
 
 
-public class DistractionActivity extends Activity {
-
+public class FuelActivity extends Activity {
 
     // Assigning variables
     CountDownTimer cdt;
@@ -25,7 +25,7 @@ public class DistractionActivity extends Activity {
         //Remove notification bar
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setContentView(R.layout.activity_distraction);
+        setContentView(R.layout.activity_fuel);
 
         // Countdown timer
         cdt = new CountDownTimer(4000, 1000) {  //4 seconds
@@ -49,10 +49,12 @@ public class DistractionActivity extends Activity {
         cdt.start();
 
         // Warning sound
-        MediaPlayer mpAlert = MediaPlayer.create(this,R.raw.audio4);
+        MediaPlayer mpAlert = MediaPlayer.create(this,R.raw.audio2);
         MediaPlayer mpAlert2 = MediaPlayer.create(this,R.raw.sounds1);
 
         mpAlert.start();
         mpAlert2.start();
+
+
     }
 }
