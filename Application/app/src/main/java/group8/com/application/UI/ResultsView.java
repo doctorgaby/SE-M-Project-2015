@@ -30,13 +30,22 @@ import static group8.com.application.R.layout;
 
 public class ResultsView extends Activity {
 
+    //Tags to handle the time chosen.
     private String TAG_NOW = "now";
     private String TAG_WEEK = "week";
     private String TAG_MONTH = "month";
+
+    //Message if no user is available.
     private String TAG_NODATAMSG = "No data yet. Start Using the app.";
+
+    //Chart to show the information.
     private LineChart mchart;
+
+    //Variables to keep track of what is clicked. They are initialized with default values.
     private String time = TAG_NOW;
     private String type = ConstantData.TAG_SPEED;
+
+    //Data list that holds the data of the user currently logged in.
     DataList data;
 
     @Override
@@ -110,6 +119,7 @@ public class ResultsView extends Activity {
 
     }
 
+    //Executes the calling of methods accordingly to the choices clicked.
     private void executionMenu () {
         mchart.clear();
         if (time.equals(TAG_WEEK)) {
@@ -135,6 +145,7 @@ public class ResultsView extends Activity {
         }
     }
 
+    //Fills the chart with the DataList at hand.
     private void customizeChart(){
         //Customize the chart
         LinearLayout mainLayout = (LinearLayout) findViewById(id.graphLayout);
@@ -179,6 +190,10 @@ public class ResultsView extends Activity {
         YAxis yaxR = mchart.getAxisRight();
         yaxR.setEnabled(false);
     }
+
+    //*******Helper Methods to load the desired values into the variables used by the chart filler.
+    //Includes also the design methods for each type of value being shown in the graph.
+
 
     private void addSpeedData () {
 

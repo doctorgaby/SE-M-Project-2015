@@ -34,6 +34,7 @@ public class menuView extends FragmentActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_view);
+        //Initialize measurents.
         Controller.initMeasurements();
         if (findViewById(R.id.menuViewFrame) != null) {
 

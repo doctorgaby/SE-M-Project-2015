@@ -283,7 +283,7 @@ public abstract class GradingSystem {
 
     /**
      * Function to find the average amongst the breaking measurements in the tempBrakeList
-     * @return
+     * @return 1 or 0 representing the average of braking during the time frame.
      */
     private static int brakingAverage () {
         int total = 0;
@@ -299,7 +299,7 @@ public abstract class GradingSystem {
     /**
      * Function to evaluate the braking. If the total measurement are greater or equal to 25 it returns -1
      * if they are lower than 25 it returns a 1.
-     * @return
+     * @return -1 or 1 depending if the braking is good or bad.
      */
     private static int evaluateBrake () {
         int total = 0;
@@ -313,6 +313,12 @@ public abstract class GradingSystem {
             return 1;
     }
 
+    /**
+     * Function to evaluate the distraction. If the list contains a very high distraction (4) then it returns -2,
+     * if it has a high distraction (3) it returns a -1 if it has more than 2 seconds of medium distraction (2) or
+     * more than 3 seconds of low distraction (1) it returns -1, otherwise it returns 1.
+     * @return -2, -1 or 1 depending if the distraction is good, bad or really bad.
+     */
     private static int evaluateDistraction() {
         int total1=0;
         int total2=0;

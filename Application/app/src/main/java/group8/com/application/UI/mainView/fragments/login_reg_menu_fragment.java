@@ -27,6 +27,7 @@ public class login_reg_menu_fragment extends Fragment implements View.OnClickLis
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //Get a reference to the buttons on the view.
         login = (Button) view.findViewById(R.id.loginButton);
         login.setOnClickListener(this);
         register = (Button) view.findViewById(R.id.registerButton);
@@ -39,6 +40,7 @@ public class login_reg_menu_fragment extends Fragment implements View.OnClickLis
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         String tag;
+        //Change between fragments on button clicked..
         switch(v.getId()){
             case R.id.loginButton:
                 fragment = new loginFragment();

@@ -50,6 +50,8 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        //Get a reference of all the items needed for the view.
         start = (Button) getView().findViewById(R.id.startButton);
         start.setOnClickListener(this);
         Controller.eventGetCustomToast(getActivity(), customLayout());
@@ -61,6 +63,8 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
         achievements.setOnClickListener(this);
         trend = (ImageButton) getView().findViewById(R.id.trendButton);
         trend.setOnClickListener(this);
+
+        //Checks if the toast should be shown or not.
         if (Session.showToast) {
             Controller.eventGetCustomToast(getActivity(), customLayout());
             Session.showToast = false;
@@ -69,6 +73,7 @@ public class start_menu_fragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+        //Handles the click of the buttons.
         switch(v.getId()) {
             case R.id.startButton:
                 Controller.startGrading();

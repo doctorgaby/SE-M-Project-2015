@@ -60,6 +60,7 @@ public class loginFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    //Class that extends AsyncTask wich handles the login of the user.
     class AsyncLogin extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {

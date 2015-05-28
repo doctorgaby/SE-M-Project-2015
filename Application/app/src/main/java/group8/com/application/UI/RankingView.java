@@ -1,8 +1,4 @@
 package group8.com.application.UI;
-import group8.com.application.Application.Controller;
-import group8.com.application.Application.Session;
-import group8.com.application.Foundation.RankingAdapter;
-import group8.com.application.R;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -21,15 +17,22 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import group8.com.application.Application.Controller;
+import group8.com.application.Application.Session;
+import group8.com.application.Foundation.RankingAdapter;
 import group8.com.application.Model.ConstantData;
+import group8.com.application.R;
 
 public class RankingView extends ListActivity {
-    private ArrayList<HashMap<String, String>> rankingList;
-    private ArrayList<HashMap<String, String>> searchResults;
+    private ArrayList<HashMap<String, String>> rankingList; //List in order of total points.
+    private ArrayList<HashMap<String, String>> searchResults; //Temporary list that includes only the people matching the search.
     private Button changeView;
     private EditText searchTxt;
     private boolean allView;
@@ -40,12 +43,14 @@ public class RankingView extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ranking_display);
+
+        //Get reference of things needed for the view.
         searchTxt = (EditText) findViewById(R.id.searchTxt);
         changeView = (Button) findViewById(R.id.changeView);
         changeView.setText("Friends");
         allView = true;
         lv = (ListView) findViewById(android.R.id.list);
-        loadRanking();
+        loadRanking(); //loads the ranking.
 
         changeView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +103,7 @@ public class RankingView extends ListActivity {
         });
     }
 
+    //Updates the ranking list accordingly if its only a friend list or if its the whole users list.
     public void updateJSONdata() {
         if (allView) {
             rankingList = Controller.getAllRankings();
@@ -106,6 +112,7 @@ public class RankingView extends ListActivity {
         }
     }
 
+    //Updates the list in the view accordingly with the desired list.
     private void updateList(ArrayList<HashMap<String, String>> list) {
         ListAdapter adapter = new RankingAdapter(this, list,
                 R.layout.single_post, new String[]{ConstantData.TAG_SPEED, ConstantData.TAG_FUEL,
@@ -131,6 +138,7 @@ public class RankingView extends ListActivity {
         });
     }
 
+    //Sequence of calls to load the entire ranking.
     public void loadRanking() {
         updateJSONdata();
         updateList(rankingList);
@@ -141,9 +149,11 @@ public class RankingView extends ListActivity {
         }
     }
 
+    //Method to add or remove a user as a friend to the database.
     public void addFriend(String userClicked) {
         int success = 0;
         String message = "Error with JSON.";
+        //ADD FRIEND
         if (allView) {
             JSONObject json = Controller.addFriend(userClicked);
             try {
@@ -161,6 +171,7 @@ public class RankingView extends ListActivity {
                 toast.show();
             }
         } else {
+            //Remove Friend
             JSONObject json = Controller.removeFriend(userClicked);
             try {
                 success = json.getInt(ConstantData.TAG_SUCCESS);
@@ -177,16 +188,19 @@ public class RankingView extends ListActivity {
                 toast.show();
             }
         }
-        lv.clearFocus();
-        this.userClicked = "";
+        lv.clearFocus(); //Clear focuse from the list in the view.
+        this.userClicked = ""; //Sets the variable of person clicked to empty string.
     }
 
+    //Cleans the choices clicked by the user.
     public void closeDialog() {
         userClicked = "";
         lv.clearChoices();
         lv.requestLayout();
     }
 
+    //Builds an alert dialoge depending of the view we are in. All = add friend, Friends = remove friend.
+    //The dialog will appear respectively to the user clicked.
     public void doOptionDialogue(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(RankingView.this);
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

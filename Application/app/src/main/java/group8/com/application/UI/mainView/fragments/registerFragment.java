@@ -57,6 +57,7 @@ public class registerFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //Class that extends AsyncTask and handles the register of the user.
     class CreateUser extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {

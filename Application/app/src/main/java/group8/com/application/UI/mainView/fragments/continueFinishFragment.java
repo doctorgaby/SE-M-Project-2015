@@ -47,6 +47,8 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        //Get a reference to the buttons on the view.
         continueBtn = (Button) getView().findViewById(R.id.continueButton);
         continueBtn.setOnClickListener(this);
         finishBtn = (Button) getView().findViewById(R.id.finishButton);
@@ -57,6 +59,7 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
+        //Change between fragments or between views.
         Fragment fragment;
         FragmentManager fm = getFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();

@@ -8,14 +8,28 @@ import group8.com.application.Model.DataList;
 
 public abstract class Session {
 
-    private static Controller controller = Controller.getInstance();
+    // Username for the user logged in for the current session.
     private static String userName = "";
+
+    //DataList of points for the session.
     public static DataList currentPoints = new DataList("p");
+
+    //DataList of measurements for the session.
     public static DataList currentMeasurements = new DataList("m");
+
+    //Boolean variable to know when the session is paused.
     private static boolean paused = false;
+
+    //Boolean variable to know if the user wants to finish the drive.
     public static boolean doFinish = false;
+
+    //Boolean variable to know if the toast should be shown at the beggining of the session.
     public static boolean showToast = true;
+
+    //Boolean variable to know if the Simulator has been initialized and is measuring.
     public static boolean isMeasuring = false;
+
+    //Count Down timer used to check if the Simulator is still measuring. (Note: works only for Linux simulator).
     private static CountDownTimer timer = new CountDownTimer(101, 101) {
         public void onTick(long millisUntilFinished) {}
         public void onFinish() {
@@ -23,6 +37,7 @@ public abstract class Session {
         }
     };
 
+    //Functions considering the timer and whether it should be initialized or continued.
     public static void startTimer () {
         timer.start();
     }
@@ -32,26 +47,22 @@ public abstract class Session {
         timer.start();
     }
 
-    public static void setUserName(String username) {
-        Session.userName = username;
-    }
-
+    //Function to get the currently logged in username.
     public static String getUserName() {
         return userName;
     }
 
-    public static boolean isLoggedIn() {
-        return !userName.equals("");
-    }
-
+    //Pause the Session
     public static void pause () {
         paused = true;
     }
 
+    //Finish Drive.
     public static void finishDrive () {
         paused = false;
     }
 
+    //Check if the Session is paused.
     public static boolean isPaused() {
         return paused;
     }
@@ -62,6 +73,7 @@ public abstract class Session {
         userName = "";
     }
 
+    //Restart the session with the given username.
     public static void restart(String username) {
         userName = username;
         currentPoints = new DataList("p");
