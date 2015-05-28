@@ -28,7 +28,10 @@ public abstract class DBHandler {
     //                              **************************
 
     /**
-     * @param
+     * Returns all the saved measurements for a specific user.
+     *
+     * @param user the user from which to get the measurements from.
+     * @return a list of all the saved measurements for the specific user.
      */
     public static DataList getMeasurements(String user) {
         List<NameValuePair> params = new ArrayList<>();
@@ -47,7 +50,12 @@ public abstract class DBHandler {
     }
 
     /**
-     * @param
+     * Returns all the saved measurements between two specific times for a specific user.
+     *
+     * @param user  the user from which to get the measurements from.
+     * @param start start getting measurements from(unix timestamp).
+     * @param stop  get measurements to(unix timestamp).
+     * @return a list of all the saved measurements between the two specific times for the specific user.
      */
     public static DataList getFilteredMeasurements(String user, int start, int stop) {
         List<NameValuePair> params = new ArrayList<>();
@@ -68,7 +76,10 @@ public abstract class DBHandler {
     }
 
     /**
-     * @param
+     * Returns all the saved points for a specific user.
+     *
+     * @param user the user from which to get the points from.
+     * @return a list of all the saved points for the specific user.
      */
     public static DataList getPoints(String user) {
         List<NameValuePair> params = new ArrayList<>();
@@ -88,7 +99,12 @@ public abstract class DBHandler {
     }
 
     /**
-     * @param
+     * Returns all the saved points between two specific times for a specific user.
+     *
+     * @param user  the user from which to get the points from.
+     * @param start start getting points from(unix timestamp).
+     * @param stop  get points to(unix timestamp).
+     * @return a list of all the saved points between the two specific times for the specific user.
      */
     public static DataList getFilteredPoints(String user, int start, int stop) {
         List<NameValuePair> params = new ArrayList<>();
@@ -115,7 +131,9 @@ public abstract class DBHandler {
     //                              **************************
 
     /**
-     * @param
+     * Saves the last scores(final scores) of a drive, to the database.
+     *
+     * @param user the user that saves the scores.
      */
     public static void setScores(String user) {
         JSONObject json;
@@ -123,7 +141,7 @@ public abstract class DBHandler {
         int brake = Session.getBrakeScore();
         int fuel = Session.getFuelConsumptionScore();
         int distraction = Session.getDriverDistractionLevelScore();
-        int measuredAt =(int) System.currentTimeMillis() / 1000;
+        int measuredAt = (int) System.currentTimeMillis() / 1000;
 
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("action", ConstantData.TAG_SETFINALSCORES));
@@ -145,7 +163,9 @@ public abstract class DBHandler {
     }
 
     /**
-     * @param
+     * Saves all the stored measurements(as a list) of a drive, to the database.
+     *
+     * @param user the user that saves the measurements.
      */
     public static void setMeasurements(String user) {
         JSONObject json;
@@ -169,7 +189,9 @@ public abstract class DBHandler {
     }
 
     /**
-     * @param
+     * Saves all the stored measurements(as a list) of a drive, to the database.
+     *
+     * @param user the user that saves the measurements.
      */
     public static void setPoints(String user) {
         JSONObject json;
@@ -278,7 +300,11 @@ public abstract class DBHandler {
     //                              **************************
 
     /**
-     * @param
+     * Insert the values of a json object with data from the database, into a DataList.
+     * This is used for the getters in this class.
+     *
+     * @param list the list to insert the json values into.
+     * @param json the json object to extract the values from.
      */
     private static void jsonToList(DataList list, JSONObject json) {
         try {
@@ -323,6 +349,12 @@ public abstract class DBHandler {
         }
     }
 
+    /**
+     * Returns a list of a specific users friends and their scores.
+     *
+     * @param username the user from which to get the friends rankings from.
+     * @return a list of the specific users friends and their rankings.
+     */
     public static ArrayList<HashMap<String, String>> getFriendsRankings(String username) {
         ArrayList<HashMap<String, String>> rankingList= new ArrayList<>();
         List<NameValuePair> params = new ArrayList<>();
@@ -339,6 +371,11 @@ public abstract class DBHandler {
         return rankingList;
     }
 
+    /**
+     * Gets the last scores(final scores) for the latest drive, from the database.
+     *
+     * @param user the user that gets the scores.
+     */
     public static HashMap<String, Integer> getFinalScore (String user) {
         HashMap<String, Integer> list = new HashMap<>();
         List<NameValuePair> params = new ArrayList<>();
@@ -370,6 +407,11 @@ public abstract class DBHandler {
         return list;
     }
 
+    /**
+     * Returns a list of all users and their scores.
+     *
+     * @return a list of all users and their scores.
+     */
     public static ArrayList<HashMap<String, String>> getAllRankings() {
         ArrayList<HashMap<String, String>> rankingList= new ArrayList<>();
         List<NameValuePair> params = new ArrayList<>();
@@ -385,6 +427,13 @@ public abstract class DBHandler {
         return rankingList;
     }
 
+    /**
+     * Insert the values of a json object with data from the database, into a RankingList (ArrayList).
+     * This is used for the getting the rankings.
+     *
+     * @param rankingList the list to insert the json values into.
+     * @param json the json object to extract the values from.
+     */
     private static void jsonToRankingList (ArrayList<HashMap<String, String>> rankingList, JSONObject json) {
 
         try {
@@ -420,6 +469,13 @@ public abstract class DBHandler {
         }
     }
 
+    /**
+     * Add a friend to the logged in users friend list.
+     *
+     * @param friend the friend to add.
+     * @return 0, if the action was unsuccessful.
+     *         1, if the action was successful.
+     */
     public static JSONObject addFriend (String friend) {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("action", ConstantData.TAG_SETFRIEND));
@@ -435,6 +491,13 @@ public abstract class DBHandler {
         return json;
     }
 
+    /**
+     * Remove a friend from the logged in users friend list.
+     *
+     * @param friend the friend to remove.
+     * @return 0, if the action was unsuccessful.
+     *         1, if the action was successful.
+     */
     public static JSONObject removeFriend (String friend) {
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("action", ConstantData.TAG_REMOVEFRIEND));
@@ -450,6 +513,12 @@ public abstract class DBHandler {
         return json;
     }
 
+    /**
+     * Returns a list containing the friends of a specific user.
+     *
+     * @param user the user to get the friends from.
+     * @return a list containing the friends of the specific user.
+     */
     public static List<String> getAllFriends (String user) {
         List<String> response = new ArrayList<>();
         List<NameValuePair> params = new ArrayList<>();
