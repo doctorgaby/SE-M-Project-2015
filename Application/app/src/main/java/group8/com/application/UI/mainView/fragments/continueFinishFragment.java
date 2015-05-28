@@ -93,7 +93,6 @@ public class continueFinishFragment extends Fragment implements View.OnClickList
         }
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.

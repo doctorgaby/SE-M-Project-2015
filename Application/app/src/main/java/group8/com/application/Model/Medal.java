@@ -1,8 +1,7 @@
 package group8.com.application.Model;
 
-/**
- * Created by Kristiyan on 5/12/2015.
- */
+
+
 public class Medal {
 
     public String id;
@@ -10,6 +9,14 @@ public class Medal {
     public int img_url;
     public boolean isAchieved;
 
+    /**
+     * Medal object, used to create
+     * multiple medals
+     *
+     * @param medal_title
+     * @param medal_img_url
+     * @param achieved
+     */
 
     public Medal(String medal_title, int medal_img_url, boolean achieved) {
         title = medal_title;
@@ -17,6 +24,11 @@ public class Medal {
         isAchieved = achieved;
     }
 
+    /**
+     * getter for the title of the medal object
+     *
+     * @return title
+     */
     public String getTitle(){
         return title;
     }

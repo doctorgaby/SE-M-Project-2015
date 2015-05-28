@@ -107,6 +107,12 @@ public class MedalsView extends Activity implements AbsListView.OnScrollListener
                 break;
         }
     }
+
+    /**
+     * method for checking if the
+     * view if busy
+     * @return boolean
+     */
     public boolean isLvBusy(){
         return lvBusy;
     }

@@ -23,6 +23,14 @@ public class MedalAdapter extends ArrayAdapter<Medal> {
     private Context mContext;
     List<Medal> mylist;
 
+    /**
+     * the adapter for the grid view
+     * and it's items
+     *
+     * @param context
+     * @param mylist container for medals
+     */
+
     public MedalAdapter(Context context, List<Medal> mylist) {
         super(context, R.layout.medal_item, mylist);
 
@@ -30,11 +38,23 @@ public class MedalAdapter extends ArrayAdapter<Medal> {
         this.mylist = mylist;
     }
 
+    /** Core method
+     *
+     * Method necessary for the grid view
+     *
+     * @param position of the item in grid view
+     * @param convertView the view
+     * @param parent parent view group
+     * @return
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
         Medal medal = getItem(position);
 
+        //holder for the medals
         MedalViewHolder holder;
 
+        //if the convert view does not exist , create one
+        //inflates a the grid view
         if (convertView == null) {
             convertView = new LinearLayout(getContext());
             String inflater = Context.LAYOUT_INFLATER_SERVICE;
@@ -56,10 +76,15 @@ public class MedalAdapter extends ArrayAdapter<Medal> {
         return convertView;
     }
 
+    /**
+     * inner class used for holding
+     * the medal items
+     */
     static class MedalViewHolder {
         public ImageView img;
         public TextView title;
 
+        //method for populating the grid view
         void populate(Medal m, boolean isBusy) {
             title.setText(m.title);
 

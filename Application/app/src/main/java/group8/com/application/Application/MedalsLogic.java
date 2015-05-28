@@ -18,6 +18,15 @@ import group8.com.application.R;
 
 public class MedalsLogic {
 
+    /**
+     * Creates a map on which to set
+     * the medal status,
+     * locked - false
+     * unlocked - true
+     *
+     * @return map
+     */
+
     private static Map<String, Boolean> initiateMedals(){
 
         Map<String, Boolean> medalMap = new HashMap<>();
@@ -30,6 +39,12 @@ public class MedalsLogic {
         return medalMap;
     }
 
+    /**
+     * Updates the map depending on the last session
+     *
+     * @param map
+     * @return updated map
+     */
     private static Map<String, Boolean> updateMap(Map map){
 
         int speedScore = Session.getSpeedScore();
@@ -62,12 +77,30 @@ public class MedalsLogic {
 
     }
 
+    /**
+     * method for getting the status of a
+     * specific medal
+     *
+     * @param s medal name
+     * @return status of the medal
+     */
+
     private static boolean setUpdatedMap(String s){
 
         return updateMap(initiateMedals()).get(s);
 
     }
 
+    /**
+     * Method for getting data
+     * about the medals from
+     * shared preferences, gets the
+     * achievement status
+     *
+     * @param s
+     * @param context
+     * @return status
+     */
     public static boolean medalStatus(String s, Context context){
 
         SharedPreferences prefs = context.getSharedPreferences("Save_Medal_Data", 0);
@@ -82,6 +115,15 @@ public class MedalsLogic {
 
     }
 
+    /**
+     * a method for adding the achievement status
+     * to shared preferences and updating it if
+     * changes were made
+     *
+     * @param s medal name
+     * @param context
+     * @return updated status
+     */
     public static boolean medalStatusUpdate(String s,Context context){
 
         SharedPreferences.Editor editor = context.getSharedPreferences("Save_Medal_Data", 0).edit();
@@ -102,6 +144,16 @@ public class MedalsLogic {
 
     }
 
+    /**
+     * method for displaying a dialog when
+     * a medal is clicked
+     * message depends on the medal clicked
+     * and it's status
+     *
+     * @param title title of the dialog
+     * @param state state of the medal - locked/unlcoked
+     * @param context
+     */
     public static void showDialog(String title, boolean state, Context context){
 
         String [] name = {"braking", "distraction", "speed", "fuel consumption"};

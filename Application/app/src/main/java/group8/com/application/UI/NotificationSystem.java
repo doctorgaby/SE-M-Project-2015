@@ -30,6 +30,17 @@ public class NotificationSystem{
     private static boolean fuel = false;
     private static boolean brake = false;
 
+    /** Core method
+     *
+     * takes the information from the
+     * other methods and constructs a
+     * custom toast
+     *
+     * @param context
+     * @param view
+     * @return custom toast
+     */
+
     public static Toast customToast(Context context, View view) {
 
         list = Controller.eventGetFinalPoints();
@@ -64,6 +75,16 @@ public class NotificationSystem{
 
     }
 
+    /** Core Method
+     *
+     * constructs the custom toast
+     * for the medal achievements
+     *
+     * @param context
+     * @param view
+     * @return custom toast
+     */
+
     public static Toast medalUpdateMessage(Context context, View view){
 
         int duration = Toast.LENGTH_SHORT;
@@ -87,6 +108,15 @@ public class NotificationSystem{
 
     }
 
+    /**
+     * Constructs the message
+     * for the custom toast
+     *
+     *
+     * @param context
+     * @return message
+     */
+
     private static CharSequence setMedalMessage(Context context){
 
         CharSequence msg = medalMessage(evaluateMedal(context));
@@ -94,7 +124,17 @@ public class NotificationSystem{
 
     }
 
-    //Checks if the score is positive or negative
+    /** Utility method - checker
+     *
+     * checks all possible cases of evaluation
+     * to return the right parameter
+     *
+     * @param sp speed
+     * @param br brake
+     * @param ddl driver distraction level
+     * @param fc fuel consumption
+     * @return return the bigger parameter
+     */
     private static boolean checker(int sp, int br, int ddl, int fc){
 
         if (sp > avg && br > avg && ddl > avg && fc > avg){
@@ -149,6 +189,11 @@ public class NotificationSystem{
         return false;
     }
 
+    /**
+     * structures the toast message
+     *
+     * @return message
+     */
     private static CharSequence setMessage(){
 
         CharSequence msg = message(evaluateList(), getPosition());
@@ -258,6 +303,13 @@ public class NotificationSystem{
         return "terminate";
 
     }
+
+    /**evaluation method for the medal
+     * toasts,
+     *
+     * @param context
+     * @return a string determining the correct medal
+     */
 
     private static String evaluateMedal(Context context){
 
@@ -407,6 +459,14 @@ public class NotificationSystem{
         return set;
     }
 
+    /**
+     * method for setting the right message
+     *
+     * @param s medal ID received
+     *
+     * @return string message
+     */
+
     private static String medalMessage(String s){
 
         String speed = "You have achieved the Master of Speed medal!";
@@ -504,7 +564,14 @@ public class NotificationSystem{
         return "terminate";
     }
 
-    //Display the right picture
+    /**
+     * method for setting the right
+     * measurement warning message
+     * takes a view and position
+     *
+     * @param view
+     * @param pos
+     */
     public static void setImage(ImageView view, int pos){
         String temp = evaluateList();
 
@@ -554,6 +621,14 @@ public class NotificationSystem{
         }
 
     }
+
+    /**
+     * method for setting the right medal message
+     * which take a view and a medal ID string
+     *
+     * @param view
+     * @param s
+     */
 
     private static void setMedalImage(ImageView view, String s){
 
